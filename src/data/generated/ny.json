@@ -1,7 +1,7 @@
 {
  "state": "ny",
  "name": "New York",
- "generated": "2026-10-20T13:06:34.226118+00:00",
+ "generated": "2026-10-20T13:29:19.280584+00:00",
  "asOf": "October 20, 2026",
  "occupations": [
   {
@@ -2424,11 +2424,11 @@
   "Binghamton, NY": 13090
  },
  "live": {
-  "total": 583,
+  "total": 584,
   "byCategory": {
    "engineering": 144,
    "computing": 51,
-   "science": 39,
+   "science": 40,
    "health": 306,
    "trades": 9,
    "data": 28,
@@ -2444,6 +2444,17 @@
     "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
     "category": "health",
     "grade": "10",
+    "posted": "10/20/26"
+   },
+   {
+    "title": "Biologist 3 (Wildlife)",
+    "employer": "Environmental Conservation, Department of",
+    "location": "Albany",
+    "salaryMin": null,
+    "salaryMax": null,
+    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
+    "category": "science",
+    "grade": "25",
     "posted": "10/20/26"
    },
    {
@@ -2863,17 +2874,6 @@
     "category": "health",
     "grade": "10",
     "posted": "10/15/26"
-   },
-   {
-    "title": "Information Technology Specialist 3 Programming - 10156",
-    "employer": "Information Technology Services, Office of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "computing",
-    "grade": "23",
-    "posted": "10/15/26"
    }
   ],
   "sources": [
@@ -2885,7 +2885,7 @@
    },
    {
     "name": "StateJobsNY",
-    "count": 359,
+    "count": 360,
     "url": "https://statejobs.ny.gov/",
     "kind": "postings"
    },
