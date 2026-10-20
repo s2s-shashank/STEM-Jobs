@@ -59,6 +59,10 @@ skilled-trade occupations that students usually think of as STEM careers.
 Every occupation code is listed in `pipeline/taxonomy.py`, so the rule set is
 easy to read and easy to change.
 
+## Live site
+
+<https://s2s-shashank.github.io/stem-jobs/>
+
 ## Deploying
 
 `.github/workflows/pages.yml` runs on every push and once a day. It refreshes
