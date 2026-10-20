@@ -1,7 +1,7 @@
 {
  "state": "ny",
  "name": "New York",
- "generated": "2026-10-20T12:55:32.004224+00:00",
+ "generated": "2026-10-20T12:59:22.629338+00:00",
  "asOf": "October 20, 2026",
  "occupations": [
   {
@@ -31,20 +31,6 @@
    "openings": 95.3,
    "education": "Bachelor's degree",
    "blurb": "Building software, websites, networks and cyber security."
-  },
-  {
-   "soc": "43-6013",
-   "title": "Medical Secretaries and Administrative Assistants",
-   "category": "health",
-   "employment": 57720,
-   "meanWage": 49540,
-   "medianWage": 47710,
-   "entryWage": 38430,
-   "topWage": 61160,
-   "growth": 4.8,
-   "openings": 89.2,
-   "education": "High school diploma or equivalent",
-   "blurb": "Caring for people and the technology that keeps them healthy."
   },
   {
    "soc": "11-3021",
@@ -87,20 +73,6 @@
    "openings": 39.7,
    "education": "Some college, no degree",
    "blurb": "Building software, websites, networks and cyber security."
-  },
-  {
-   "soc": "49-3023",
-   "title": "Automotive Service Technicians and Mechanics",
-   "category": "trades",
-   "employment": 32020,
-   "meanWage": 59110,
-   "medianWage": 54120,
-   "entryWage": 35470,
-   "topWage": 91490,
-   "growth": 5.0,
-   "openings": 66.2,
-   "education": "Postsecondary nondegree award",
-   "blurb": "Installing, repairing and operating the equipment that keeps things running."
   },
   {
    "soc": "29-2052",
@@ -2442,27 +2414,49 @@
   }
  ],
  "metros": {
-  "New York-Newark-Jersey City, NY-NJ": 1289450,
-  "Buffalo-Cheektowaga, NY": 81280,
-  "Rochester, NY": 80570,
-  "Albany-Schenectady-Troy, NY": 74180,
-  "Syracuse, NY": 45480,
-  "Kiryas Joel-Poughkeepsie-Newburgh, NY": 31200,
-  "Utica-Rome, NY": 15270,
-  "Binghamton, NY": 14230
+  "New York-Newark-Jersey City, NY-NJ": 1208390,
+  "Buffalo-Cheektowaga, NY": 75580,
+  "Rochester, NY": 73750,
+  "Albany-Schenectady-Troy, NY": 69800,
+  "Syracuse, NY": 41960,
+  "Kiryas Joel-Poughkeepsie-Newburgh, NY": 27630,
+  "Utica-Rome, NY": 13910,
+  "Binghamton, NY": 13090
  },
  "live": {
-  "total": 581,
+  "total": 583,
   "byCategory": {
    "engineering": 144,
    "computing": 51,
-   "science": 38,
-   "health": 305,
+   "science": 39,
+   "health": 306,
    "trades": 9,
    "data": 28,
    "architecture": 6
   },
   "postings": [
+   {
+    "title": "Licensed Practical Nurse - Orange",
+    "employer": "People With Developmental Disabilities, Office for",
+    "location": "Orange",
+    "salaryMin": null,
+    "salaryMax": null,
+    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
+    "category": "health",
+    "grade": "10",
+    "posted": "10/20/26"
+   },
+   {
+    "title": "Assistant Geologist / Geologist Trainee - NY HELPS",
+    "employer": "Environmental Conservation, Department of",
+    "location": "Jefferson",
+    "salaryMin": null,
+    "salaryMax": null,
+    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
+    "category": "science",
+    "grade": "NS",
+    "posted": "10/20/26"
+   },
    {
     "title": "Registered Nurse 2 (Community)",
     "employer": "People With Developmental Disabilities, Office for",
@@ -2880,28 +2874,6 @@
     "category": "computing",
     "grade": "23",
     "posted": "10/15/26"
-   },
-   {
-    "title": "Data Analyst 3 - 78120",
-    "employer": "Health, Department of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "data",
-    "grade": "27",
-    "posted": "10/15/26"
-   },
-   {
-    "title": "Data Analyst 1/Trainee 1/Trainee 2",
-    "employer": "Transportation, Department of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "data",
-    "grade": "18",
-    "posted": "10/15/26"
    }
   ],
   "sources": [
@@ -2912,7 +2884,7 @@
    },
    {
     "name": "StateJobsNY",
-    "count": 357,
+    "count": 359,
     "url": "https://statejobs.ny.gov/"
    }
   ]

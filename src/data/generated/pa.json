@@ -1,7 +1,7 @@
 {
  "state": "pa",
  "name": "Pennsylvania",
- "generated": "2026-10-20T12:55:32.004224+00:00",
+ "generated": "2026-10-20T12:59:22.629338+00:00",
  "asOf": "October 20, 2026",
  "occupations": [
   {
@@ -59,34 +59,6 @@
    "openings": 39.7,
    "education": "Some college, no degree",
    "blurb": "Building software, websites, networks and cyber security."
-  },
-  {
-   "soc": "49-3023",
-   "title": "Automotive Service Technicians and Mechanics",
-   "category": "trades",
-   "employment": 29400,
-   "meanWage": 54340,
-   "medianWage": 49800,
-   "entryWage": 35600,
-   "topWage": 77630,
-   "growth": 5.0,
-   "openings": 66.2,
-   "education": "Postsecondary nondegree award",
-   "blurb": "Installing, repairing and operating the equipment that keeps things running."
-  },
-  {
-   "soc": "43-6013",
-   "title": "Medical Secretaries and Administrative Assistants",
-   "category": "health",
-   "employment": 27600,
-   "meanWage": 45580,
-   "medianWage": 44930,
-   "entryWage": 36280,
-   "topWage": 58170,
-   "growth": 4.8,
-   "openings": 89.2,
-   "education": "High school diploma or equivalent",
-   "blurb": "Caring for people and the technology that keeps them healthy."
   },
   {
    "soc": "11-3021",
@@ -2358,14 +2330,14 @@
   }
  ],
  "metros": {
-  "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD": 456400,
-  "Pittsburgh, PA": 189570,
-  "Allentown-Bethlehem-Easton, PA-NJ": 57400,
-  "Harrisburg-Carlisle, PA": 49420,
-  "Scranton--Wilkes-Barre, PA": 30840,
-  "Lancaster, PA": 30060,
-  "York-Hanover, PA": 24550,
-  "Reading, PA": 22340
+  "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD": 428150,
+  "Pittsburgh, PA": 177120,
+  "Allentown-Bethlehem-Easton, PA-NJ": 53610,
+  "Harrisburg-Carlisle, PA": 46630,
+  "Scranton--Wilkes-Barre, PA": 28540,
+  "Lancaster, PA": 27540,
+  "York-Hanover, PA": 22660,
+  "Reading, PA": 20760
  },
  "live": {
   "total": 348,

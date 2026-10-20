@@ -1,7 +1,7 @@
 {
  "state": "nj",
  "name": "New Jersey",
- "generated": "2026-10-20T12:55:32.004224+00:00",
+ "generated": "2026-10-20T12:59:22.629338+00:00",
  "asOf": "October 20, 2026",
  "occupations": [
   {
@@ -47,20 +47,6 @@
    "blurb": "Building software, websites, networks and cyber security."
   },
   {
-   "soc": "43-6013",
-   "title": "Medical Secretaries and Administrative Assistants",
-   "category": "health",
-   "employment": 20980,
-   "meanWage": 50630,
-   "medianWage": 48660,
-   "entryWage": 38310,
-   "topWage": 62400,
-   "growth": 4.8,
-   "openings": 89.2,
-   "education": "High school diploma or equivalent",
-   "blurb": "Caring for people and the technology that keeps them healthy."
-  },
-  {
    "soc": "15-1232",
    "title": "Computer User Support Specialists",
    "category": "computing",
@@ -73,20 +59,6 @@
    "openings": 39.7,
    "education": "Some college, no degree",
    "blurb": "Building software, websites, networks and cyber security."
-  },
-  {
-   "soc": "49-3023",
-   "title": "Automotive Service Technicians and Mechanics",
-   "category": "trades",
-   "employment": 17640,
-   "meanWage": 58830,
-   "medianWage": 56610,
-   "entryWage": 33500,
-   "topWage": 91210,
-   "growth": 5.0,
-   "openings": 66.2,
-   "education": "Postsecondary nondegree award",
-   "blurb": "Installing, repairing and operating the equipment that keeps things running."
   },
   {
    "soc": "29-2061",
@@ -2358,12 +2330,12 @@
   }
  ],
  "metros": {
-  "New York-Newark-Jersey City, NY-NJ": 1282900,
-  "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD": 454440,
-  "Allentown-Bethlehem-Easton, PA-NJ": 56960,
-  "Trenton-Princeton, NJ": 39450,
-  "Atlantic City-Hammonton, NJ": 16330,
-  "Vineland, NJ": 5390
+  "New York-Newark-Jersey City, NY-NJ": 1201840,
+  "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD": 426190,
+  "Allentown-Bethlehem-Easton, PA-NJ": 53170,
+  "Trenton-Princeton, NJ": 37730,
+  "Atlantic City-Hammonton, NJ": 15180,
+  "Vineland, NJ": 4760
  },
  "live": {
   "total": 69,
