@@ -39,6 +39,12 @@ const bestPay = perState.reduce((best, row) =>
   (row.occ!.medianWage ?? 0) > (best.occ!.medianWage ?? 0) ? row : best,
 );
 
+// Private-sector postings for this exact occupation, per state.
+const openings = perState.map((row) => ({
+  state: row.state,
+  count: row.data?.live.private?.occupationCounts?.[soc] ?? 0,
+}));
+
 // Live postings that look like this job, from the first state that has them.
 const liveSamples = perState
   .flatMap((row) =>
@@ -75,6 +81,7 @@ const liveSamples = perState
               <th scope="col" class="num">Median pay</th>
               <th scope="col" class="num">Average pay</th>
               <th scope="col" class="num">Starting pay</th>
+              <th scope="col" class="num">Open now</th>
               <th scope="col" class="num">Growth</th>
             </tr>
           </thead>
@@ -89,12 +96,21 @@ const liveSamples = perState
                   <td class="num">{formatMoney(occ!.medianWage)}</td>
                   <td class="num">{formatMoney(occ!.meanWage)}</td>
                   <td class="num">{formatMoney(occ!.entryWage)}</td>
+                  <td class="num">
+                    {formatNumber(
+                      openings.find((o) => o.state.code === state.code)?.count,
+                    )}
+                  </td>
                   <td class="num">{formatGrowth(occ!.growth)}</td>
                 </tr>
               ))
             }
           </tbody>
         </table>
+        <p class="source-note table-note">
+          <strong>Open now</strong> counts private-sector job postings for this
+          occupation in the last 30 days, within 50 miles of the state.
+        </p>
       </div>
 
       <div class="grid grid--2 two-col">
@@ -189,6 +205,11 @@ const liveSamples = perState
   }
   .live {
     margin-top: var(--space-xl);
+  }
+  .table-note {
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    border-top: 1px solid var(--paper-sunk);
   }
   .postings {
     list-style: none;

@@ -46,7 +46,7 @@ LIVE_SOURCES = {
 
 # CareerOneStop answers "how many jobs match this word?", so its numbers can
 # overlap with each other. We keep them separate instead of adding them up.
-SEARCH_SOURCES = {"CareerOneStop"}
+# (CareerOneStop counts are tracked separately, under live.private)
 
 SOURCE_URLS = {
     "USAJOBS": "https://www.usajobs.gov/",
@@ -132,20 +132,41 @@ def main() -> int:
         # live postings
         postings: list[dict[str, Any]] = []
         source_rows: list[dict[str, Any]] = []
+        private: dict[str, Any] = {}
+
         for module, label in LIVE_SOURCES[slug]:
-            result = safe(label, module.collect, state_code)
+            if module is careeronestop:
+                # CareerOneStop is asked about occupations, not job titles,
+                # so it gets the list of occupations to ask about.
+                result = safe(label, module.collect, state_code, merged)
+            else:
+                result = safe(label, module.collect, state_code)
+
             if result is None:
                 # keep whatever we had for this source last time
                 for row in previous.get("live", {}).get("sources", []):
                     if row.get("name") == label:
                         source_rows.append(row)
                 continue
+
+            if module is careeronestop:
+                private = result
+                source_rows.append(
+                    {
+                        "name": label,
+                        "count": result.get("total", 0),
+                        "url": SOURCE_URLS.get(label, ""),
+                        "kind": "search",
+                    }
+                )
+                continue
+
             source_rows.append(
                 {
                     "name": label,
                     "count": result["total"],
                     "url": SOURCE_URLS.get(label, ""),
-                    "kind": "search" if label in SEARCH_SOURCES else "postings",
+                    "kind": "postings",
                 }
             )
             postings.extend(result["postings"])
@@ -171,6 +192,7 @@ def main() -> int:
                 "byCategory": by_category,
                 "postings": sample,
                 "sources": source_rows,
+                "private": private,
             },
         }
 

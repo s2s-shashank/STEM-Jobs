@@ -1,14 +1,27 @@
-"""CareerOneStop - open private-sector STEM jobs.
+"""CareerOneStop - private-sector STEM job postings.
 
 CareerOneStop is the Department of Labor's job aggregator, built on the
-National Labor Exchange. Two endpoints are used:
+National Labor Exchange. We use the v1 endpoint:
 
-* ``/v1/jobsearch/...`` returns a plain count of matching postings
-* ``/v2/jobsearch/...`` returns the postings themselves
+    https://api.careeronestop.org/v1/jobsearch/{userId}/{keyword}/{location}/{radius}/{days}
 
-Both need a free user id and token from https://api.careeronestop.org/.
-When they are not set, this source quietly returns nothing so the rest of
-the build still works.
+It accepts an O*NET/SOC occupation code (for example ``15-1252.00``) as the
+keyword, which means we can ask "how many Software Developer postings are
+open in New Jersey?" for every occupation we track. The response also lists
+the top cities and the top employers for that search.
+
+Each call returns:
+
+    {
+      "Jobcount": "1518",
+      "Locations": [{"LocationName": "Trenton, NJ", "LocationCount": "..."}],
+      "Companies": [{"CompanyName": "...", "LocationCount": "..."}]
+    }
+
+The v2 "List Jobs" endpoint (which returns full postings) needs a separate
+data request to the National Labor Exchange, so we do not depend on it.
+
+Credentials: free user id and token from https://api.careeronestop.org/.
 """
 
 from __future__ import annotations
@@ -16,31 +29,27 @@ from __future__ import annotations
 import json
 import os
 import urllib.parse
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any
 
-from .. import taxonomy
 from ..fetcher import fetch
 
 V1 = "https://api.careeronestop.org/v1/jobsearch/{user_id}/{keyword}/{location}/{radius}/{days}"
-V2 = (
-    "https://api.careeronestop.org/v2/jobsearch/{user_id}/{keyword}/{location}"
-    "/{radius}/{sort}/{order}/{start}/{page_size}/{days}"
-)
 
-# Search terms chosen to cover the STEM fields without pulling in everything.
-KEYWORDS = (
-    "engineer",
-    "scientist",
-    "software developer",
-    "data analyst",
-    "nurse",
-    "technician",
-    "computer",
-    "research scientist",
-)
-
-DAYS = 30
+#: How far from the state to include postings, in miles.
 RADIUS = 50
+
+#: Postings published in the last N days.
+DAYS = 30
+
+#: How many API calls to make at once.
+WORKERS = 6
+
+LOCATION_NAMES = {
+    "NJ": "New Jersey",
+    "NY": "New York",
+    "PA": "Pennsylvania",
+}
 
 
 def _credentials() -> tuple[str, str] | None:
@@ -58,132 +67,110 @@ def _headers(token: str) -> dict[str, str]:
     }
 
 
-def _get(url: str, token: str) -> Any:
-    payload = fetch(url, headers=_headers(token), timeout=60).decode("utf-8", errors="replace")
-    return json.loads(payload)
-
-
-def _count(user_id: str, token: str, keyword: str, location: str) -> int:
+def _query(user_id: str, token: str, keyword: str, location: str) -> dict[str, Any] | None:
     url = V1.format(
         user_id=user_id,
-        keyword=urllib.parse.quote(keyword),
-        location=urllib.parse.quote(location),
+        keyword=urllib.parse.quote(keyword, safe=""),
+        location=urllib.parse.quote(location, safe=""),
         radius=RADIUS,
         days=DAYS,
     )
-    data = _get(url, token)
-    if isinstance(data, dict):
-        for key in ("TotalJobs", "Total", "JobSearchTotal", "total"):
-            if key in data:
-                try:
-                    return int(data[key])
-                except (TypeError, ValueError):
-                    pass
-    if isinstance(data, (int, float)):
-        return int(data)
-    return 0
-
-
-def _postings(user_id: str, token: str, keyword: str, location: str) -> list[dict[str, Any]]:
-    url = V2.format(
-        user_id=user_id,
-        keyword=urllib.parse.quote(keyword),
-        location=urllib.parse.quote(location),
-        radius=RADIUS,
-        sort="DESC",
-        order="RELEVANCE",
-        start=1,
-        page_size=50,
-        days=DAYS,
-    )
-    data = _get(url, token)
-    if isinstance(data, dict):
-        for key in ("Jobs", "JobPosting", "SearchResult", "JobSearchResult"):
-            value = data.get(key)
-            if isinstance(value, list):
-                return value
-            if isinstance(value, dict):
-                for inner in ("Jobs", "JobPosting"):
-                    if isinstance(value.get(inner), list):
-                        return value[inner]
-    return []
-
-
-def _salary(posting: dict[str, Any]) -> tuple[int | None, int | None]:
-    """Salary can arrive as a string, a list, or a nested object."""
-    raw = posting.get("Salary") or posting.get("salary") or {}
-    if isinstance(raw, str):
-        digits = [part for part in raw.replace(",", " ").split() if part.replace(".", "").isdigit()]
-        if len(digits) >= 2:
-            return int(float(digits[0])), int(float(digits[1]))
+    try:
+        body = fetch(url, headers=_headers(token), timeout=60, retries=2).decode(
+            "utf-8", errors="replace"
+        )
+        return json.loads(body)
+    except Exception:  # noqa: BLE001 - one bad occupation should not stop the run
         return None
-    if isinstance(raw, list) and raw:
-        raw = raw[0]
-    if isinstance(raw, dict):
-        low = raw.get("SalaryMin") or raw.get("Min") or raw.get("min")
-        high = raw.get("SalaryMax") or raw.get("Max") or raw.get("max")
-        try:
-            return (int(float(low)) if low else None, int(float(high)) if high else None)
-        except (TypeError, ValueError):
-            return None
-    return None
 
 
-def collect(state: str = "") -> dict[str, Any]:
-    print("CareerOneStop")
+def _to_int(value: Any) -> int:
+    try:
+        return int(str(value).replace(",", "").strip())
+    except (TypeError, ValueError):
+        return 0
+
+
+def collect(state: str = "", occupations: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    """Fetch private-sector posting counts for a state.
+
+    ``occupations`` is the list of occupation records (with ``soc`` and
+    ``category``) for that state, normally straight from the BLS data.
+    """
+    print(f"CareerOneStop {state}")
     credentials = _credentials()
     if not credentials:
         print("  no CareerOneStop credentials - skipping")
-        return {"postings": [], "total": 0}
+        return {"occupationCounts": {}, "byCategory": {}, "total": 0, "topLocations": [], "topEmployers": []}
 
     user_id, token = credentials
-    location = {"NJ": "New Jersey", "NY": "New York", "PA": "Pennsylvania"}.get(state, state)
+    location = LOCATION_NAMES.get(state, state)
+    occupations = occupations or []
 
-    postings: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    counted = 0
+    results: dict[str, dict[str, Any]] = {}
 
-    for keyword in KEYWORDS:
-        try:
-            counted += _count(user_id, token, keyword, location)
-        except Exception as exc:  # noqa: BLE001
-            print(f"  count '{keyword}' failed: {exc}")
-        try:
-            results = _postings(user_id, token, keyword, location)
-        except Exception as exc:  # noqa: BLE001
-            print(f"  search '{keyword}' failed: {exc}")
+    def fetch_one(occupation: dict[str, Any]) -> tuple[str, dict[str, Any] | None]:
+        soc = occupation.get("soc", "")
+        return soc, _query(user_id, token, f"{soc}.00", location)
+
+    if occupations:
+        with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+            for soc, payload in pool.map(fetch_one, occupations):
+                if payload is not None:
+                    results[soc] = payload
+
+    counts: dict[str, int] = {}
+    by_category: dict[str, int] = {}
+    locations: dict[str, int] = {}
+    employers: dict[str, int] = {}
+
+    for occupation in occupations:
+        soc = occupation.get("soc", "")
+        payload = results.get(soc)
+        if not payload:
             continue
+        count = _to_int(payload.get("Jobcount"))
+        if count:
+            counts[soc] = count
+            category = occupation.get("category")
+            if category:
+                by_category[category] = by_category.get(category, 0) + count
 
-        for posting in results:
-            title = (posting.get("JobTitle") or posting.get("Title") or "").strip()
-            if not title:
-                continue
-            identifier = posting.get("JobID") or posting.get("Id") or f"{title}|{posting.get('Company', '')}"
-            if identifier in seen:
-                continue
-            category = taxonomy.category_for_title(title)
-            if not category:
-                continue
-            seen.add(identifier)
-            salary_min, salary_max = _salary(posting)
-            location_field = posting.get("Location") or {}
-            city = ""
-            if isinstance(location_field, dict):
-                city = location_field.get("CityName") or location_field.get("LocationName") or ""
-            elif isinstance(location_field, str):
-                city = location_field
-            postings.append(
-                {
-                    "title": title,
-                    "employer": (posting.get("Company") or posting.get("CompanyName") or "").strip(),
-                    "location": city,
-                    "salaryMin": salary_min,
-                    "salaryMax": salary_max,
-                    "url": posting.get("Url") or posting.get("JobURL") or "",
-                    "category": category,
-                }
-            )
+        for entry in payload.get("Locations") or []:
+            name = (entry.get("LocationName") or "").strip()
+            if name:
+                locations[name] = locations.get(name, 0) + _to_int(entry.get("LocationCount"))
+        for entry in payload.get("Companies") or []:
+            name = (entry.get("CompanyName") or "").strip()
+            if name:
+                # Companies report their count as "JobCount", cities as
+                # "LocationCount".
+                count = _to_int(entry.get("JobCount") or entry.get("LocationCount"))
+                employers[name] = employers.get(name, 0) + count
 
-    total = counted or len(postings)
-    print(f"  {len(postings)} sample postings, {total} counted")
-    return {"postings": postings, "total": total}
+    def top(counter: dict[str, int], limit: int = 8) -> list[dict[str, Any]]:
+        return [
+            {"name": name, "count": count}
+            for name, count in sorted(counter.items(), key=lambda item: -item[1])[:limit]
+        ]
+
+    total = sum(by_category.values())
+    print(
+        f"  {len(counts)} occupations with postings, {total:,} private-sector postings"
+    )
+
+    return {
+        "occupationCounts": counts,
+        "byCategory": by_category,
+        "total": total,
+        "topLocations": top(locations),
+        "topEmployers": top(employers),
+    }
+
+
+if __name__ == "__main__":
+    from ..env import load_env
+
+    load_env()
+    result = collect("NJ", [{"soc": "15-1252", "category": "computing"}])
+    print(json.dumps(result, indent=2)[:800])

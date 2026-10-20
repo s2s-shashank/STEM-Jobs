@@ -43,6 +43,16 @@ export interface LivePosting {
   category: string;
 }
 
+export interface PrivateSector {
+  /** Postings per occupation code, e.g. { "15-1252": 1518 } */
+  occupationCounts: Record<string, number>;
+  /** Postings per category id */
+  byCategory: Record<string, number>;
+  total: number;
+  topLocations: { name: string; count: number }[];
+  topEmployers: { name: string; count: number }[];
+}
+
 export interface StateData {
   state: string;
   /** ISO timestamp of the pipeline run that produced this file. */
@@ -55,7 +65,9 @@ export interface StateData {
     byCategory: Record<string, number>;
     postings: LivePosting[];
     /** Which live sources contributed. */
-    sources: { name: string; count: number; url: string }[];
+    sources: { name: string; count: number; url: string; kind?: string }[];
+    /** Private-sector posting counts from CareerOneStop. */
+    private?: PrivateSector;
   };
 }
 

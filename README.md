@@ -45,10 +45,21 @@ npm run build           # static site in dist/
 | BLS Employment Projections | Job growth, openings, typical education | No |
 | O*NET | Job descriptions and study pathways | No |
 | USAJOBS | Open federal STEM jobs | Yes (free) |
-| CareerOneStop | Open private-sector STEM jobs | Yes (free) |
+| CareerOneStop | Open private-sector STEM jobs, counted per occupation | Yes (free) |
 | NJ Civil Service | Open NJ state and local announcements | No |
 | StateJobsNY | Open NY State vacancies | No |
 | Commonwealth Careers | Open PA state jobs | No |
+
+## Private-sector job counts
+
+CareerOneStop accepts an O*NET occupation code in its search, so the pipeline
+asks it about every occupation it tracks - "how many Software Developer
+postings are open in New Jersey?". The answers become the "open now" column on
+each career page and the "who is hiring" charts on the state pages.
+
+We use the **v1** endpoint on purpose. The v2 endpoint (which returns full
+postings) needs a separate data request to the National Labor Exchange, so
+depending on it would make the site fragile.
 
 ## What counts as STEM here
 

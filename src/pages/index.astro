@@ -30,7 +30,10 @@ const updated = lastUpdated();
 const nj = getStateData('nj');
 const allOccupations = nj?.occupations ?? [];
 const totalStemWorkers = allOccupations.reduce((sum, o) => sum + o.employment, 0);
-const openNow = STATES.reduce((sum, s) => sum + (getStateData(s.code)?.live.total ?? 0), 0);
+const openNow = STATES.reduce(
+  (sum, s) => sum + (getStateData(s.code)?.live.private?.total ?? 0),
+  0,
+);
 const bestPay = [...allOccupations]
   .filter((o) => o.employment >= 500)
   .sort((a, b) => b.meanWage - a.meanWage)[0];
@@ -72,8 +75,8 @@ const fastestGrowing = [...allOccupations]
             <StatTile
               accent
               value={formatNumber(openNow)}
-              label="STEM jobs open right now"
-              note="Across New Jersey, New York and Pennsylvania"
+              label="Private-sector STEM job postings"
+              note="Across all three states, last 30 days"
             />
             <StatTile
               value={formatNumber(totalStemWorkers)}
