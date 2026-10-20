@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://s2s-shashank.github.io/STEM-Jobs/sitemap-index.xml

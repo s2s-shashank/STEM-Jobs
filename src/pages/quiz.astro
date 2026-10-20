@@ -1,0 +1,240 @@
+---
+import { withBase } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import { allStateData, formatMoney } from '../lib/data';
+
+interface QuizItem {
+  soc: string;
+  title: string;
+  median: number;
+  category: string;
+}
+
+const bySoc = new Map<string, QuizItem>();
+for (const state of allStateData()) {
+  for (const o of state.occupations) {
+    if (!bySoc.has(o.soc) && o.medianWage > 0) {
+      bySoc.set(o.soc, {
+        soc: o.soc,
+        title: o.title,
+        median: o.medianWage,
+        category: o.category,
+      });
+    }
+  }
+}
+
+const pool = [...bySoc.values()].sort((a, b) => b.median - a.median);
+const items = pool.slice(0, 12);
+const questions = [];
+for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
+  const trio = items.slice(i, i + 3);
+  const best = [...trio].sort((a, b) => b.median - a.median)[0];
+  const shuffled = [...trio].sort(() => Math.random() - 0.5);
+  questions.push({ trio: shuffled, best: best.soc });
+}
+---
+
+<Base
+  title="Guess the salary"
+  description="A quick quiz: which STEM career pays the most? Test your instincts with real salary data."
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag"><span aria-hidden="true">●</span> Quiz</span>
+      <h1>Guess the salary</h1>
+      <p class="lede">
+        Three STEM careers. One of them pays the most. How many can you get?
+        (Real median pay, straight from the Bureau of Labor Statistics.)
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      {
+        questions.length === 0 ? (
+          <p class="lede">The quiz is being loaded with new questions — check back soon.</p>
+        ) : (
+          <div class="quiz card" id="quiz">
+            <div class="quiz__top">
+              <span class="quiz__score">
+                Question <strong id="q-num">1</strong> of {questions.length}
+              </span>
+              <span class="quiz__score">
+                Score <strong id="q-score">0</strong>
+              </span>
+            </div>
+
+            <p class="quiz__ask" id="q-ask">Which one pays the most?</p>
+            <div class="quiz__options" id="q-options"></div>
+            <p class="quiz__feedback" id="q-feedback" role="status" aria-live="polite" />
+
+            <p class="quiz__final" id="q-final" hidden>
+              <span id="q-final-text" />
+              <a class="btn btn--primary" href={withBase("/quiz")}>Play again</a>
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+{
+  questions.length > 0 && (
+    <script is:inline type="application/json" id="quiz-data" set:html={JSON.stringify(questions)} />
+  )
+}
+
+<script>
+  const root = document.getElementById('quiz');
+  const dataEl = document.getElementById('quiz-data');
+  if (root && dataEl) {
+    const questions = JSON.parse(dataEl.textContent || '[]');
+    let index = 0;
+    let score = 0;
+
+    const numEl = document.getElementById('q-num')!;
+    const scoreEl = document.getElementById('q-score')!;
+    const optionsEl = document.getElementById('q-options')!;
+    const feedbackEl = document.getElementById('q-feedback')!;
+    const finalEl = document.getElementById('q-final')!;
+    const finalText = document.getElementById('q-final-text')!;
+
+    const money = (n: number) =>
+      '$' + Math.round(n).toLocaleString('en-US');
+
+    function render() {
+      const q = questions[index];
+      numEl.textContent = String(index + 1);
+      scoreEl.textContent = String(score);
+      feedbackEl.textContent = '';
+      feedbackEl.className = 'quiz__feedback';
+      optionsEl.innerHTML = '';
+
+      for (const item of q.trio) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz__option';
+        btn.textContent = item.title;
+        btn.addEventListener('click', () => answer(btn, item, q));
+        optionsEl.appendChild(btn);
+      }
+    }
+
+    function answer(btn: HTMLButtonElement, item: any, q: any) {
+      const buttons = Array.from(
+        optionsEl.querySelectorAll<HTMLButtonElement>('.quiz__option'),
+      );
+      buttons.forEach((b) => (b.disabled = true));
+
+      const correct = item.soc === q.best;
+      if (correct) {
+        score += 1;
+        btn.classList.add('is-correct');
+        feedbackEl.classList.add('is-good');
+        feedbackEl.textContent = `Correct! ${item.title} pays ${money(
+          item.median,
+        )} a year.`;
+      } else {
+        btn.classList.add('is-wrong');
+        buttons.forEach((b) => {
+          if (b.textContent === item.title) b.classList.add('is-wrong');
+        });
+        const best = q.trio.find((t: any) => t.soc === q.best);
+        buttons.forEach((b) => {
+          if (b.textContent === best.title) b.classList.add('is-correct');
+        });
+        feedbackEl.classList.add('is-bad');
+        feedbackEl.textContent = `Not quite. ${best.title} pays ${money(
+          best.median,
+        )} a year — ${money(best.median - item.median)} more.`;
+      }
+
+      scoreEl.textContent = String(score);
+      setTimeout(() => {
+        index += 1;
+        if (index >= questions.length) {
+          const msg =
+            score === questions.length
+              ? 'Perfect score. You really know your STEM salaries.'
+              : score >= questions.length - 1
+                ? 'So close! One more round?'
+                : 'Nice try — now you know more than you did before.';
+          finalText.textContent = `You scored ${score} out of ${questions.length}. ${msg}`;
+          finalEl.hidden = false;
+          optionsEl.innerHTML = '';
+        } else {
+          render();
+        }
+      }, 2600);
+    }
+
+    render();
+  }
+</script>
+
+<style>
+  .quiz__top {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    color: var(--ink-500);
+    margin-bottom: var(--space-s);
+  }
+  .quiz__ask {
+    font-size: var(--step-1);
+    font-weight: 700;
+    margin-bottom: var(--space-s);
+  }
+  .quiz__options {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+  .quiz__option {
+    text-align: left;
+    font: inherit;
+    font-weight: 650;
+    padding: 0.9rem 1.1rem;
+    border-radius: var(--radius-m);
+    border: 2px solid var(--paper-sunk);
+    background: var(--paper);
+    color: var(--ink-900);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz__option:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .quiz__option:disabled {
+    cursor: default;
+  }
+  .quiz__option.is-correct {
+    border-color: var(--good);
+    background: color-mix(in srgb, var(--good) 12%, transparent);
+  }
+  .quiz__option.is-wrong {
+    border-color: #dc2626;
+    background: color-mix(in srgb, #dc2626 10%, transparent);
+  }
+  .quiz__feedback {
+    min-height: 3.5rem;
+    margin-top: var(--space-s);
+    font-weight: 600;
+  }
+  .quiz__feedback.is-good {
+    color: var(--good);
+  }
+  .quiz__feedback.is-bad {
+    color: #b91c1c;
+  }
+  .quiz__final {
+    margin-top: var(--space-s);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s);
+  }
+</style>

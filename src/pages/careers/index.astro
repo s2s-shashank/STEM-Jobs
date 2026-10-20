@@ -1,0 +1,126 @@
+---
+import { withBase } from '../../lib/url';
+import Base from '../../layouts/Base.astro';
+import { allStateData, formatMoney, formatNumber } from '../../lib/data';
+import { CATEGORIES, STATES } from '../../data/states';
+
+interface Career {
+  soc: string;
+  title: string;
+  category: string;
+  employment: number;
+  meanWage: number;
+  medianWage: number;
+  entryWage: number;
+  growth?: number;
+  blurb?: string;
+  education?: string;
+}
+
+const careers = new Map<string, Career>();
+for (const state of allStateData()) {
+  for (const o of state.occupations) {
+    const existing = careers.get(o.soc);
+    const merged: Career = {
+      soc: o.soc,
+      title: o.title,
+      category: o.category,
+      employment: (existing?.employment ?? 0) + o.employment,
+      meanWage: o.meanWage,
+      medianWage: o.medianWage,
+      entryWage: o.entryWage,
+      growth: o.growth ?? existing?.growth,
+      blurb: o.blurb ?? existing?.blurb,
+      education: o.education ?? existing?.education,
+    };
+    careers.set(o.soc, merged);
+  }
+}
+
+const list = [...careers.values()].sort(
+  (a, b) => b.employment - a.employment,
+);
+
+const groups = CATEGORIES.map((c) => ({
+  category: c,
+  items: list.filter((x) => x.category === c.id),
+})).filter((g) => g.items.length > 0);
+---
+
+<Base
+  title="STEM careers"
+  description="Browse every STEM career we track, with salaries, job counts and growth for New Jersey, New York and Pennsylvania combined."
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag"><span aria-hidden="true">●</span> Career library</span>
+      <h1>Every STEM career we track</h1>
+      <p class="lede">
+        Pick any career to see what it involves, what it pays across the three
+        states, and whether it is growing.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {
+        groups.length === 0 ? (
+          <p class="lede">Careers are still being loaded — check back soon.</p>
+        ) : (
+          groups.map((g) => (
+            <section class="cat-section">
+              <h2>
+                <span aria-hidden="true">{g.category.icon}</span>{' '}
+                {g.category.label}
+              </h2>
+              <div class="table-wrap">
+                <table>
+                  <caption class="sr-only">
+                    {g.category.label} careers with employment, pay and growth
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Career</th>
+                      <th scope="col" class="num">People working</th>
+                      <th scope="col" class="num">Median pay</th>
+                      <th scope="col" class="num">Starting pay</th>
+                      <th scope="col" class="num">Growth</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {g.items.map((c) => (
+                      <tr>
+                        <th scope="row">
+                          <a href={withBase(`/careers/${c.soc}`)}>{c.title}</a>
+                        </th>
+                        <td class="num">{formatNumber(c.employment)}</td>
+                        <td class="num">{formatMoney(c.medianWage)}</td>
+                        <td class="num">{formatMoney(c.entryWage)}</td>
+                        <td class="num">
+                          {typeof c.growth === 'number'
+                            ? `+${c.growth.toFixed(1)}%`
+                            : '—'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          ))
+        )
+      }
+      <p class="source-note">
+        Employment and pay are the totals for {STATES.map((s) => s.name).join(', ')}.
+        <a href={withBase("/sources")}>See sources</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cat-section {
+    margin-bottom: var(--space-xl);
+  }
+</style>

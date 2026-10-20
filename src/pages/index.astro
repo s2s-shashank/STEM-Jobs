@@ -1,0 +1,133 @@
+---
+import { withBase } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import StateCard from '../components/StateCard.astro';
+import { STATES } from '../data/states';
+import { getStateData, formatNumber, lastUpdated } from '../lib/data';
+import { CATEGORIES } from '../data/states';
+
+const stateData = STATES.map((s) => {
+  const d = getStateData(s.code);
+  return {
+    state: s,
+    headline: d?.live.total ? `${formatNumber(d.live.total)} open STEM jobs` : undefined,
+    headlineNote: d ? 'right now' : undefined,
+    available: Boolean(d),
+  };
+});
+
+const updated = lastUpdated();
+---
+
+<Base
+  title="STEM Jobs in New Jersey, New York and Pennsylvania"
+  description="See how many STEM jobs are open right now, what they pay, and where the jobs are — real numbers for students in New Jersey, New York and Pennsylvania."
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag">
+        <span aria-hidden="true">●</span> Live data from official government sources
+      </span>
+      <h1>What does a STEM career actually look like where you live?</h1>
+      <p class="lede">
+        Real numbers on science, technology, engineering and math jobs in New
+        Jersey, New York and Pennsylvania — how many are open, what they pay,
+        and what you would study to get there.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={withBase("/nj")}>Start with New Jersey</a>
+        <a class="btn btn--ghost" href={withBase("/compare")}>Compare all three states</a>
+      </div>
+      {updated && <p class="stamp">Last updated {updated.slice(0, 10)}</p>}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Pick your state</span>
+        <h2>Three states, one question: where are the STEM jobs?</h2>
+        <p class="lede">
+          Every figure comes straight from a government agency — the Bureau of
+          Labor Statistics, state civil service commissions, and the federal job
+          board — and is stamped with the date it was collected.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        {stateData.map((s) => <StateCard state={s.state} headline={s.headline} headlineNote={s.headlineNote} available={s.available} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The eight kinds of STEM work</span>
+        <h2>STEM is not one thing</h2>
+        <p class="lede">
+          A civil engineer and a cybersecurity analyst both count as STEM, and
+          they do very different work. Here is how we group them.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        {
+          CATEGORIES.map((c) => (
+            <article class="card card--flat" style={`--accent:${c.color}`}>
+              <div class="cat__icon" aria-hidden="true">
+                {c.icon}
+              </div>
+              <h3 class="card__title">{c.label}</h3>
+              <p class="muted">{c.blurb}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How this site works</span>
+        <h2>Where do the numbers come from?</h2>
+      </div>
+      <div class="grid grid--3">
+        <article class="card card--flat">
+          <h3 class="card__title">📊 How many jobs &amp; what they pay</h3>
+          <p class="muted">
+            The Bureau of Labor Statistics surveys employers every year and
+            publishes how many people work in each job and what they earn.
+          </p>
+        </article>
+        <article class="card card--flat">
+          <h3 class="card__title">📣 What is open right now</h3>
+          <p class="muted">
+            State civil service boards, the federal USAJOBS board and
+            CareerOneStop publish every open posting, and we count the STEM
+            ones.
+          </p>
+        </article>
+        <article class="card card--flat">
+          <h3 class="card__title">🧭 What to study next</h3>
+          <p class="muted">
+            O*NET — the U.S. Department of Labor's career database — tells us
+            what each job actually involves and what students usually study.
+          </p>
+        </article>
+      </div>
+      <p class="source-note">
+        Want the details? <a href={withBase("/sources")}>See every source and how we use it.</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cat__icon {
+    font-size: 1.75rem;
+    line-height: 1;
+    margin-bottom: var(--space-2xs);
+  }
+</style>

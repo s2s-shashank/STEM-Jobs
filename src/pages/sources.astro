@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import { allStateData, formatDate } from '../lib/data';
+
+const generated = allStateData();
+const updated = generated.length
+  ? generated.map((d) => d.asOf).sort().at(-1)
+  : undefined;
+---
+
+<Base
+  title="Where the data comes from"
+  description="Every data source behind STEM Jobs, what we take from it, and how often we check it."
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag"><span aria-hidden="true">●</span> Full transparency</span>
+      <h1>Where the numbers come from</h1>
+      <p class="lede">
+        Nothing on this site is made up. Here is every source, what we pull
+        from it, and how to check it yourself.
+      </p>
+      {updated && <p class="stamp">Last data run: {formatDate(updated)}</p>}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">Data sources used on this site</caption>
+          <thead>
+            <tr>
+              <th scope="col">Source</th>
+              <th scope="col">What we use it for</th>
+              <th scope="col">How often</th>
+              <th scope="col">Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">
+                <a href="https://www.bls.gov/oes/">Bureau of Labor Statistics</a>
+              </th>
+              <td>How many people work in each occupation, and what they earn</td>
+              <td>Yearly (May survey)</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="https://www.bls.gov/emp/">BLS Employment Projections</a>
+              </th>
+              <td>Which careers are growing, and by how much</td>
+              <td>Yearly</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="https://www.onetonline.org/">O*NET</a>
+              </th>
+              <td>What each job actually involves and what students usually study</td>
+              <td>Yearly</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="https://www.usajobs.gov/">USAJOBS</a>
+              </th>
+              <td>Open federal STEM jobs in each state</td>
+              <td>Daily</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="https://www.careeronestop.org/">CareerOneStop</a>
+              </th>
+              <td>Open private-sector STEM jobs in each state</td>
+              <td>Daily</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="https://info.csc.nj.gov/jobannouncements/">NJ Civil Service</a>
+              </th>
+              <td>Open New Jersey state and local government jobs</td>
+              <td>Daily</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="https://statejobs.ny.gov/">StateJobsNY</a>
+              </th>
+              <td>Open New York state government jobs</td>
+              <td>Daily</td>
+              <td>Free</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <a href="https://careers.employment.pa.gov/">Commonwealth Careers</a>
+              </th>
+              <td>Open Pennsylvania state government jobs</td>
+              <td>Daily</td>
+              <td>Free</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid--2 notes">
+        <article class="card card--flat">
+          <h3 class="card__title">How we decide what counts as STEM</h3>
+          <p class="muted">
+            We use the Department of Labor's official occupation codes and group
+            them into eight fields: computing, engineering, science, health,
+            data, construction, architecture and everything else technical.
+            The mapping is public and you can see exactly how a posting was
+            counted.
+          </p>
+        </article>
+        <article class="card card--flat">
+          <h3 class="card__title">What we do with your data</h3>
+          <p class="muted">
+            We do not collect any information about you, and there is no
+            tracking or advertising on this site. The site is a set of static
+            files, so there is no database behind it and no one to ask about
+            your data.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .notes {
+    margin-top: var(--space-l);
+  }
+</style>

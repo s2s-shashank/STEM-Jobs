@@ -1,0 +1,471 @@
+---
+import { withBase } from '../lib/url';
+import type { StateMeta } from '../data/states';
+import { CATEGORIES } from '../data/states';
+import Bars from './Bars.astro';
+import StatTile from './StatTile.astro';
+import {
+  getStateData,
+  formatDate,
+  formatMoney,
+  formatNumber,
+  formatMetro,
+  byEmployment,
+  byCategory,
+} from '../lib/data';
+
+interface Props {
+  state: StateMeta;
+}
+
+const { state } = Astro.props;
+const data = getStateData(state.code);
+const has = Boolean(data);
+const occ = data?.occupations ?? [];
+const live = data?.live;
+
+const topJobs = byEmployment(occ).slice(0, 10);
+const topPay = [...occ]
+  .filter((o) => o.employment >= 200)
+  .sort((a, b) => b.meanWage - a.meanWage)
+  .slice(0, 10);
+const growing = [...occ]
+  .filter((o) => typeof o.growth === 'number')
+  .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))
+  .slice(0, 8);
+
+const categoryGroups = byCategory(occ, CATEGORIES);
+const fieldBars = categoryGroups
+  .map((g) => ({
+    label: g.category.label,
+    value: g.employment,
+    color: g.category.color,
+  }))
+  .sort((a, b) => b.value - a.value);
+
+const metroBars = Object.entries(data?.metros ?? {})
+  .map(([title, value]) => {
+    const { name, shared } = formatMetro(title);
+    return {
+      label: name,
+      value,
+      shared,
+    };
+  })
+  .sort((a, b) => b.value - a.value)
+  .slice(0, 6);
+
+const totalEmployment = occ.reduce((s, o) => s + o.employment, 0);
+const medianAll =
+  occ.length > 0
+    ? occ.map((o) => o.medianWage).sort((a, b) => a - b)[Math.floor(occ.length / 2)]
+    : undefined;
+
+const liveBars = live
+  ? CATEGORIES.map((c) => ({
+      label: c.label,
+      value: live.byCategory[c.id] ?? 0,
+      color: c.color,
+    }))
+    .filter((bar) => bar.value > 0)
+    .sort((a, b) => b.value - a.value)
+  : [];
+
+const SOURCE_NOTES: Record<string, string> = {
+  USAJOBS: 'Open federal jobs - these are positions you can apply for today.',
+  'NJ Civil Service':
+    'Open New Jersey state and local government exams - applying puts you on a hiring list.',
+  StateJobsNY:
+    'Open New York State government vacancies - these are positions you can apply for today.',
+  'Commonwealth Careers':
+    'Open Pennsylvania state government jobs - these are positions you can apply for today.',
+};
+---
+
+<section class="state-hero" style={`--accent:${state.color}`}>
+  <div class="wrap">
+    <span class="hero__tag">
+      <span aria-hidden="true">●</span> {state.abbr} STEM jobs
+    </span>
+    <h1>{state.name} STEM jobs</h1>
+    <p class="lede">{state.blurb}</p>
+    {data && <p class="stamp">Numbers as of {formatDate(data.asOf)}</p>}
+  </div>
+</section>
+
+{
+  !has ? (
+    <section class="section">
+      <div class="wrap wrap--narrow">
+        <h2>Data is on its way</h2>
+        <p class="lede">
+          We are still collecting {state.name} numbers. Check back soon - the
+          live job board, salary charts and metro breakdowns will appear here.
+        </p>
+        <p>
+          <a class="btn btn--primary" href={withBase('/sources')}>
+            See what we collect and why
+          </a>
+        </p>
+      </div>
+    </section>
+  ) : (
+    <>
+      <section class="section">
+        <div class="wrap">
+          <div class="grid grid--3">
+            <StatTile
+              accent
+              value={formatNumber(live?.total)}
+              label="STEM jobs open right now"
+              note="Counted today from official job boards"
+            />
+            <StatTile
+              value={formatNumber(totalEmployment)}
+              label="People working in STEM jobs here"
+              note="Bureau of Labor Statistics, May 2025 survey"
+            />
+            <StatTile
+              value={formatMoney(medianAll)}
+              label="Typical STEM salary (median)"
+              note="What the person in the middle earns"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="eyebrow">The kinds of work</span>
+            <h2>STEM is not one thing</h2>
+            <p class="lede">
+              Here is how many people work in each field of STEM across{' '}
+              {state.name}.
+            </p>
+          </div>
+          <div class="card">
+            <Bars
+              items={fieldBars}
+              label={`STEM employment by field in ${state.name}`}
+              suffix=" people"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="eyebrow">Open right now</span>
+            <h2>What kind of STEM jobs are hiring in {state.short}?</h2>
+            <p class="lede">
+              These are the live postings we counted, grouped by field. Counts
+              change every day.
+            </p>
+          </div>
+          <div class="split">
+            <div class="card">
+              <Bars
+                items={liveBars}
+                label={`Open STEM postings in ${state.name} by field`}
+                suffix=" jobs"
+              />
+              <table class="sources-table">
+                <caption class="sr-only">
+                  Where the open job counts come from
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Source</th>
+                    <th scope="col" class="num">Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(live?.sources ?? []).map((source) => (
+                    <tr>
+                      <th scope="row">
+                        <a href={source.url} rel="noopener">
+                          {source.name}
+                        </a>
+                        <span class="source-note">{SOURCE_NOTES[source.name] ?? ''}</span>
+                      </th>
+                      <td class="num">{formatNumber(source.count)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div class="card">
+              <h3 class="card__title">Fresh examples</h3>
+              <ul class="postings">
+                {(live?.postings ?? []).slice(0, 10).map((p) => (
+                  <li class="posting">
+                    <a class="posting__title" href={p.url} rel="noopener">
+                      {p.title}
+                    </a>
+                    <span class="posting__meta">
+                      {p.employer}
+                      {p.location ? ` · ${p.location}` : ''}
+                      {p.salaryMin && p.salaryMax
+                        ? ` · ${formatMoney(p.salaryMin)}–${formatMoney(p.salaryMax)}`
+                        : ''}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {live?.postings.length === 0 && (
+                <p class="muted">No postings recorded yet.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="eyebrow">The biggest STEM jobs</span>
+            <h2>Where the most people work</h2>
+          </div>
+          <div class="card">
+            <Bars
+              items={topJobs.map((o) => ({
+                label: o.title,
+                value: o.employment,
+                href: `/careers/${o.soc}`,
+              }))}
+              label={`Largest STEM occupations in ${state.name}`}
+              suffix=" people"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="eyebrow">The pay</span>
+            <h2>STEM jobs that pay the most</h2>
+            <p class="lede">
+              Average yearly pay for jobs with 200 or more workers in{' '}
+              {state.name}.
+            </p>
+          </div>
+          <div class="card">
+            <Bars
+              items={topPay.map((o) => ({
+                label: o.title,
+                value: o.meanWage,
+                color: state.color,
+                href: `/careers/${o.soc}`,
+              }))}
+              label={`Highest paying STEM jobs in ${state.name}`}
+              format="currency"
+            />
+          </div>
+        </div>
+      </section>
+
+      {metroBars.length > 0 && (
+        <section class="section section--alt">
+          <div class="wrap">
+            <div class="section-head">
+              <span class="eyebrow">Where the jobs are</span>
+              <h2>STEM jobs by metro area</h2>
+              <p class="lede">
+                A metro area can stretch across more than one state - the
+                biggest one here includes {state.abbr} and its neighbours.
+              </p>
+            </div>
+            <div class="card">
+              <Bars
+                items={metroBars.map((m) => ({
+                  label: m.label,
+                  value: m.value,
+                  color: state.color,
+                }))}
+                label={`STEM employment by metro area in ${state.name}`}
+                suffix=" people"
+              />
+              <ul class="metro-shared">
+                {metroBars
+                  .filter((m) => m.shared.length > 0)
+                  .map((m) => (
+                    <li>
+                      <strong>{m.label}</strong> also covers{' '}
+                      {m.shared.join(', ')}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {growing.length > 0 && (
+        <section class="section">
+          <div class="wrap">
+            <div class="section-head">
+              <span class="eyebrow">What's growing</span>
+              <h2>STEM careers on the way up</h2>
+              <p class="lede">
+                How much each job is projected to grow, nationally, between 2025
+                and 2035.
+              </p>
+            </div>
+            <div class="card">
+              <Bars
+                items={growing.map((o) => ({
+                  label: o.title,
+                  value: o.growth ?? 0,
+                  display: `+${(o.growth ?? 0).toFixed(1)}%`,
+                  color: 'var(--c-good)',
+                }))}
+                label={`Fastest growing STEM jobs for ${state.name}`}
+                format="percent"
+              />
+              <p class="source-note">
+                Growth is a national projection from the Bureau of Labor
+                Statistics.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section class="section section--alt">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="eyebrow">Go deeper</span>
+            <h2>Explore each career</h2>
+            <p class="lede">
+              What the job involves, what you would study, and what it pays in{' '}
+              {state.name}.
+            </p>
+          </div>
+          <div class="grid grid--3">
+            {categoryGroups.map((g) => (
+              <article class="card card--flat" style={`--accent:${g.category.color}`}>
+                <div class="cat__icon" aria-hidden="true">
+                  {g.category.icon}
+                </div>
+                <h3 class="card__title">{g.category.label}</h3>
+                <p class="muted">
+                  {formatNumber(g.employment)} people work in this field in{' '}
+                  {state.abbr}.
+                </p>
+                <ul class="career-links">
+                  {g.occupations.slice(0, 6).map((o) => (
+                    <li>
+                      <a href={withBase(`/careers/${o.soc}`)}>{o.title}</a>
+                      <span class="muted"> · {formatMoney(o.meanWage)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+<style>
+  .state-hero {
+    background:
+      radial-gradient(
+        900px 380px at 12% -20%,
+        color-mix(in srgb, var(--accent) 45%, transparent) 0%,
+        transparent 62%
+      ),
+      var(--navy-900);
+    color: #eaf0fb;
+    padding-block: var(--space-2xl);
+  }
+  .state-hero h1 {
+    color: #fff;
+  }
+  .state-hero .lede {
+    color: #b9c8e0;
+  }
+
+  .split {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    align-items: start;
+  }
+
+  .postings {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .posting {
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--paper-sunk);
+  }
+  .posting:last-child {
+    border-bottom: 0;
+  }
+  .posting__title {
+    display: block;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .posting__title:hover {
+    text-decoration: underline;
+  }
+  .posting__meta {
+    display: block;
+    font-size: var(--step--1);
+    color: var(--ink-500);
+  }
+
+  .cat__icon {
+    font-size: 1.75rem;
+    line-height: 1;
+    margin-bottom: var(--space-2xs);
+  }
+
+  .career-links {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-s) 0 0;
+    font-size: var(--step--1);
+  }
+  .career-links li + li {
+    margin-top: 0.3rem;
+  }
+
+  .sources-table {
+    margin-top: var(--space-m);
+    font-size: var(--step--1);
+  }
+  .sources-table thead th {
+    padding: 0.4rem 0.6rem;
+  }
+  .sources-table th,
+  .sources-table td {
+    padding: 0.5rem 0.6rem;
+  }
+  .sources-table .source-note {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: var(--step--1);
+    color: var(--ink-500);
+  }
+
+  .metro-shared {
+    list-style: none;
+    margin: var(--space-s) 0 0;
+    padding: 0;
+    font-size: var(--step--1);
+    color: var(--ink-500);
+  }
+  .metro-shared li + li {
+    margin-top: 0.25rem;
+  }
+</style>

@@ -1,0 +1,111 @@
+name: Refresh data and publish
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 05:00 UTC every day - job boards update overnight
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ------------------------------------------------------------------
+  # 1. Pull fresh numbers from BLS, O*NET, USAJOBS and the state boards
+  # ------------------------------------------------------------------
+  data:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run the data pipeline
+        env:
+          USAJOBS_API_KEY: ${{ secrets.USAJOBS_API_KEY }}
+          BLS_CONTACT_EMAIL: ${{ secrets.BLS_CONTACT_EMAIL }}
+          CAREERONESTOP_USER_ID: ${{ secrets.CAREERONESTOP_USER_ID }}
+          CAREERONESTOP_TOKEN: ${{ secrets.CAREERONESTOP_TOKEN }}
+        run: |
+          python3 -m pipeline.build_data
+
+      - name: Commit refreshed data
+        id: commit
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/data/generated || true
+          if git diff --staged --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No data changes - nothing to commit."
+          else
+            git commit -m "data: refresh statistics ($(date -u +%Y-%m-%d))"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload data
+        uses: actions/upload-artifact@v4
+        with:
+          name: data
+          path: src/data/generated
+          if-no-files-found: ignore
+
+  # ------------------------------------------------------------------
+  # 2. Build the static site
+  # ------------------------------------------------------------------
+  build:
+    needs: data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore refreshed data
+        uses: actions/download-artifact@v4
+        with:
+          name: data
+          path: src/data/generated
+          continue-on-error: true
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  # ------------------------------------------------------------------
+  # 3. Publish to GitHub Pages
+  # ------------------------------------------------------------------
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

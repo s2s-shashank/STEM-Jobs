@@ -1,0 +1,97 @@
+---
+import { withBase } from '../lib/url';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Adds " | STEM Jobs" to the title automatically. */
+  raw?: boolean;
+}
+
+const { title, description, raw = false } = Astro.props;
+const fullTitle = raw ? title : `${title} | STEM Jobs`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <link rel="sitemap" href={withBase("/sitemap-index.xml")} />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og-default.svg', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0b1220" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href={withBase("/")}>
+          <span class="brand__mark" aria-hidden="true">⚗️</span>
+          <span>STEM Jobs</span>
+        </a>
+        <nav class="nav" aria-label="Main">
+          <a href={withBase("/nj")}>New Jersey</a>
+          <a href={withBase("/ny")}>New York</a>
+          <a href={withBase("/pa")}>Pennsylvania</a>
+          <a href={withBase("/compare")}>Compare</a>
+          <a href={withBase("/sources")}>Sources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div>
+            <h2>STEM Jobs</h2>
+            <p>
+              Real numbers about science, technology, engineering and math careers
+              in New Jersey, New York and Pennsylvania — built for students who
+              are figuring out what to do next.
+            </p>
+          </div>
+          <div>
+            <h2>States</h2>
+            <ul>
+              <li><a href={withBase("/nj")}>New Jersey</a></li>
+              <li><a href={withBase("/ny")}>New York</a></li>
+              <li><a href={withBase("/pa")}>Pennsylvania</a></li>
+              <li><a href={withBase("/compare")}>Compare all three</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Learn</h2>
+            <ul>
+              <li><a href={withBase("/quiz")}>Guess the salary</a></li>
+              <li><a href={withBase("/careers")}>Browse careers</a></li>
+              <li><a href={withBase("/sources")}>Where the data comes from</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-note">
+          Every number on this site comes from an official government source and
+          is labeled with its date. Nothing here is advice about your future —
+          it is a starting point for exploring.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

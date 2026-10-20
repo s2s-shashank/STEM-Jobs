@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import { STATES } from '../data/states';
+import {
+  getStateData,
+  formatNumber,
+  formatMoney,
+  formatDate,
+  allStateData,
+} from '../lib/data';
+
+const rows = STATES.map((s) => {
+  const d = getStateData(s.code);
+  const occ = d?.occupations ?? [];
+  const total = occ.reduce((sum, o) => sum + o.employment, 0);
+  const wages = occ.map((o) => o.medianWage).sort((a, b) => a - b);
+  return {
+    state: s,
+    data: d,
+    open: d?.live.total,
+    employment: total,
+    median: wages.length ? wages[Math.floor(wages.length / 2)] : undefined,
+  };
+});
+
+const ready = rows.filter((r) => r.data);
+const anyGrowth = allStateData().some((d) =>
+  d.occupations.some((o) => typeof o.growth === 'number'),
+);
+---
+
+<Base
+  title="Compare New Jersey, New York and Pennsylvania STEM jobs"
+  description="Side-by-side STEM job numbers for New Jersey, New York and Pennsylvania: open jobs, total employment, salaries and growth."
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag"><span aria-hidden="true">●</span> Side by side</span>
+      <h1>New Jersey vs New York vs Pennsylvania</h1>
+      <p class="lede">
+        The same questions, asked the same way, for all three states. Useful if
+        you are deciding where to look for a first job.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {
+        ready.length === 0 ? (
+          <div class="wrap--narrow">
+            <h2>Nothing to compare yet</h2>
+            <p class="lede">
+              The first data run is still in progress. As soon as it lands, this
+              page fills in automatically.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div class="table-wrap">
+              <table>
+                <caption class="sr-only">
+                  STEM job statistics compared across New Jersey, New York and
+                  Pennsylvania
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Measure</th>
+                    {rows.map((r) => (
+                      <th scope="col" class="num">
+                        {r.state.short}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">STEM jobs open right now</th>
+                    {rows.map((r) => (
+                      <td class="num">{formatNumber(r.open)}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <th scope="row">People working in STEM jobs</th>
+                    {rows.map((r) => (
+                      <td class="num">{formatNumber(r.employment)}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <th scope="row">Median STEM salary</th>
+                    {rows.map((r) => (
+                      <td class="num">{formatMoney(r.median)}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <th scope="row">Data as of</th>
+                    {rows.map((r) => (
+                      <td class="num small muted">{formatDate(r.data?.asOf)}</td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="source-note">
+              {anyGrowth
+                ? 'Growth projections come from the Bureau of Labor Statistics.'
+                : 'Open-job counts change daily; the other numbers come from the annual BLS survey.'}
+            </p>
+          </>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Worth knowing</span>
+        <h2>How to read these numbers</h2>
+      </div>
+      <div class="grid grid--3">
+        <article class="card card--flat">
+          <h3 class="card__title">Open jobs ≠ jobs that will last</h3>
+          <p class="muted">
+            A posting is one job opening today. It might be filled next week. It
+            is a sign that employers are hiring, not a promise of a career.
+          </p>
+        </article>
+        <article class="card card--flat">
+          <h3 class="card__title">Median beats average</h3>
+          <p class="muted">
+            A few very high salaries drag the average up. The median is the
+            person in the middle — usually a better guide for you.
+          </p>
+        </article>
+        <article class="card card--flat">
+          <h3 class="card__title">Most STEM jobs need college</h3>
+          <p class="muted">
+            Plenty of STEM careers — technicians, machinists, IT support,
+            surveying — start with a certificate, an apprenticeship or a
+            two-year degree.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,22 @@
+---
+import { withBase } from '../lib/url';
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page not found"
+  description="That page does not exist on STEM Jobs."
+>
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <h1>Hmm, that page isn't here</h1>
+      <p class="lede">
+        It may have moved, or the link might be old. Try one of these instead.
+      </p>
+      <p>
+        <a class="btn btn--primary" href={withBase("/")}>Back to the start</a>
+        <a class="btn btn--outline" href={withBase("/compare")}>Compare states</a>
+      </p>
+    </div>
+  </section>
+</Base>

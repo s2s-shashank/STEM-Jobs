@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import StatePage from '../components/StatePage.astro';
+import { STATE_MAP } from '../data/states';
+
+const state = STATE_MAP.nj;
+---
+
+<Base
+  title="New Jersey STEM jobs"
+  description="How many STEM jobs are open in New Jersey right now, what they pay, where the jobs are, and what to study to get one."
+>
+  <StatePage state={state} />
+</Base>

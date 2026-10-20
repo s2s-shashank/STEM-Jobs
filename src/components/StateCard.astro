@@ -1,0 +1,60 @@
+---
+import { withBase } from '../lib/url';
+import type { StateMeta } from '../data/states';
+
+interface Props {
+  state: StateMeta;
+  /** Optional headline number, e.g. "12,400 open STEM jobs" */
+  headline?: string;
+  headlineNote?: string;
+  available?: boolean;
+}
+
+const { state, headline, headlineNote, available = true } = Astro.props;
+---
+
+<article class="card card--link state-card" style={`--accent:${state.color}`}>
+  <div class="state-card__flag" aria-hidden="true">{state.abbr}</div>
+  <h3 class="card__title">
+    <a href={withBase(`/${state.code}`)}>{state.name}</a>
+  </h3>
+  <p class="muted">{state.blurb}</p>
+  {
+    headline ? (
+      <p class="state-card__headline">
+        <strong>{headline}</strong>
+        {headlineNote && <span class="muted"> {headlineNote}</span>}
+      </p>
+    ) : (
+      <p class="muted small">Data loading…</p>
+    )
+  }
+  <span class="state-card__cta">
+    {available ? `Explore ${state.short} STEM jobs →` : `Coming soon →`}
+  </span>
+</article>
+
+<style>
+  .state-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .state-card__flag {
+    font-size: var(--step--1);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .state-card__headline {
+    margin: 0.5rem 0 0;
+    font-size: var(--step-1);
+  }
+  .state-card__cta {
+    margin-top: auto;
+    padding-top: var(--space-s);
+    font-weight: 700;
+    color: var(--accent);
+  }
+</style>

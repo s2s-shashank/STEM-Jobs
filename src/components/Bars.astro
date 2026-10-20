@@ -1,0 +1,104 @@
+---
+import { withBase } from '../lib/url';
+interface Item {
+  label: string;
+  value: number;
+  /** Optional override, e.g. "$92,400" instead of 92400 */
+  display?: string;
+  /** Optional relative width (0-100). Defaults to value / max. */
+  pct?: number;
+  color?: string;
+  href?: string;
+}
+
+interface Props {
+  items: Item[];
+  /** Suffix shown after the formatted number, e.g. " jobs" */
+  suffix?: string;
+  /** Prefix shown before the formatted number, e.g. "$" */
+  prefix?: string;
+  /** How to format the number. */
+  format?: 'number' | 'currency' | 'percent';
+  /** Accessible name for the chart. */
+  label: string;
+}
+
+const {
+  items,
+  suffix = '',
+  prefix = '',
+  format = 'number',
+  label,
+} = Astro.props;
+
+const max = Math.max(...items.map((i) => i.pct ?? i.value), 1);
+
+const fmt = (n: number) => {
+  if (format === 'currency')
+    return n.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    });
+  if (format === 'percent') return `${n.toFixed(1)}%`;
+  return n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+};
+
+/** "1 job" instead of "1 jobs" (and never "1 peoples") */
+const plural = (n: number, word: string) => {
+  if (word === 'people') return word;
+  return `${word}${n === 1 ? '' : 's'}`;
+};
+---
+
+<div class="bars" role="img" aria-label={label}>
+  {
+    items.map((item) => {
+      const width = item.pct ?? (item.value / max) * 100;
+      return (
+        <div class="bar">
+          <div class="bar__head">
+            <span class="bar__label">
+              {item.href ? <a href={item.href ? withBase(item.href) : undefined}>{item.label}</a> : item.label}
+            </span>
+            <span class="bar__value">
+              {prefix}
+              {item.display ?? fmt(item.value)}
+              {suffix ? plural(item.value, suffix.trim()) : ''}
+            </span>
+          </div>
+          <div class="bar__track">
+            <div
+              class="bar__fill"
+              style={`width:${width}%; background:${item.color ?? 'var(--accent)'}`}
+            />
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
+
+<table class="sr-only">
+  <caption>{label}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      items.map((item) => (
+        <tr>
+          <th scope="row">{item.label}</th>
+          <td>
+            {prefix}
+            {item.display ?? fmt(item.value)}
+            {suffix ? plural(item.value, suffix.trim()) : ''}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

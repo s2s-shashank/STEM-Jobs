@@ -1,0 +1,129 @@
+---
+import { withBase } from '../../lib/url';
+import Base from '../../layouts/Base.astro';
+import { allStateData, formatMoney, formatNumber, formatDate } from '../../lib/data';
+import { CATEGORY_MAP, STATES } from '../../data/states';
+
+export async function getStaticPaths() {
+  const socs = new Set<string>();
+  for (const state of allStateData()) {
+    for (const o of state.occupations) socs.add(o.soc);
+  }
+  return [...socs].map((soc) => ({ params: { soc } }));
+}
+
+const { soc } = Astro.params;
+
+const perState = STATES.map((s) => {
+  const data = allStateData().find((d) => d.state === s.code);
+  const occ = data?.occupations.find((o) => o.soc === soc);
+  return { state: s, occ, data };
+}).filter((r) => r.occ);
+
+if (perState.length === 0) {
+  return Astro.redirect('/careers');
+}
+
+const title = perState[0].occ!.title;
+const category = CATEGORY_MAP[perState[0].occ!.category];
+const blurb =
+  perState[0].occ!.blurb ??
+  `${title} is part of the ${category?.label ?? 'STEM'} field. Below is what the data says about this career in each state we track.`;
+const education =
+  perState[0].occ!.education ??
+  'Most people in this field start with a two-year degree, a certificate or an apprenticeship, then move to a four-year degree once they are working.';
+---
+
+<Base
+  title={`${title}: jobs, pay and what to study`}
+  description={`${title} in New Jersey, New York and Pennsylvania: how many people work in it, what it pays, and what to study to get started.`}
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag">
+        <span aria-hidden="true">{category?.icon ?? '⚗️'}</span> {category?.label ?? 'STEM'}
+      </span>
+      <h1>{title}</h1>
+      <p class="lede">{blurb}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">{title} in each state</caption>
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col" class="num">People working</th>
+              <th scope="col" class="num">Median pay</th>
+              <th scope="col" class="num">Average pay</th>
+              <th scope="col" class="num">Starting pay</th>
+              <th scope="col" class="num">Growth</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              perState.map(({ state, occ }) => (
+                <tr>
+                  <th scope="row">
+                    <a href={withBase(`/${state.code}`)}>{state.name}</a>
+                  </th>
+                  <td class="num">{formatNumber(occ!.employment)}</td>
+                  <td class="num">{formatMoney(occ!.medianWage)}</td>
+                  <td class="num">{formatMoney(occ!.meanWage)}</td>
+                  <td class="num">{formatMoney(occ!.entryWage)}</td>
+                  <td class="num">
+                    {typeof occ!.growth === 'number'
+                      ? `+${occ!.growth.toFixed(1)}%`
+                      : '—'}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid--2 two-col">
+        <article class="card card--flat">
+          <h2 class="card__title">How to get started</h2>
+          <p class="muted">{education}</p>
+          <h3 class="card__title">Good questions to ask</h3>
+          <ul class="muted">
+            <li>Do I want to work with my hands, with data, or with people?</li>
+            <li>Is there a local apprenticeship or certificate program?</li>
+            <li>Which classes should I sign up for next year?</li>
+            <li>Who is already working in this job near me — could I ask them?</li>
+          </ul>
+        </article>
+
+        <article class="card card--flat">
+          <h2 class="card__title">What the numbers mean</h2>
+          <p class="muted">
+            <strong>Starting pay</strong> is what a new graduate with no
+            experience typically earns. <strong>Median pay</strong> is what the
+            person in the middle of the pay range earns — usually a better
+            target than the average, which can be pulled up by a few very high
+            earners.
+          </p>
+          <p class="muted">
+            <strong>Growth</strong> is the projected change in the number of
+            jobs over the next decade, straight from the Bureau of Labor
+            Statistics.
+          </p>
+          <p class="source-note">
+            Data as of {formatDate(perState[0].data?.asOf)}. <a href={withBase("/sources")}>Sources</a>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .two-col {
+    margin-top: var(--space-l);
+  }
+</style>

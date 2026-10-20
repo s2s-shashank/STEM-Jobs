@@ -1,0 +1,94 @@
+/* ------------------------------------------------------------------
+   Design tokens
+   One place to change every colour, size and curve on the site.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Brand palette -------------------------------------------------- */
+  --navy-900: #0b1220;
+  --navy-800: #111c33;
+  --navy-700: #1b2942;
+  --navy-600: #27395a;
+
+  --ink-900: #0d1526;
+  --ink-700: #33415c;
+  --ink-500: #5a6a86;
+  --ink-300: #9aa7bd;
+  --ink-100: #d7deea;
+
+  --paper: #ffffff;
+  --paper-alt: #f4f7fc;
+  --paper-sunk: #e9eef7;
+
+  /* STEM category accents (also the chart series colours) ----------- */
+  --c-computing: #2f7df6;
+  --c-engineering: #f2801d;
+  --c-science: #10a37f;
+  --c-health: #e04f7f;
+  --c-data: #7c5cff;
+  --c-construction: #0f9bb4;
+  --c-architecture: #b25a1e;
+  --c-other: #6b7a94;
+
+  /* Semantic ------------------------------------------------------- */
+  --accent: var(--c-computing);
+  --accent-soft: #e8f0fe;
+  --good: #0f9d58;
+  --warn: #d97706;
+
+  /* Type ----------------------------------------------------------- */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  --step--1: clamp(0.82rem, 0.79rem + 0.14vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.11rem + 0.42vw, 1.45rem);
+  --step-2: clamp(1.45rem, 1.28rem + 0.8vw, 1.95rem);
+  --step-3: clamp(1.75rem, 1.45rem + 1.4vw, 2.6rem);
+  --step-4: clamp(2.1rem, 1.6rem + 2.3vw, 3.4rem);
+  --step-5: clamp(2.5rem, 1.7rem + 3.6vw, 4.6rem);
+
+  /* Space ---------------------------------------------------------- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+
+  /* Shape ---------------------------------------------------------- */
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 22px;
+  --radius-pill: 999px;
+
+  --shadow-s: 0 1px 2px rgb(13 21 38 / 6%), 0 1px 3px rgb(13 21 38 / 5%);
+  --shadow-m: 0 2px 4px rgb(13 21 38 / 4%), 0 8px 24px rgb(13 21 38 / 8%);
+  --shadow-l: 0 4px 8px rgb(13 21 38 / 5%), 0 20px 48px rgb(13 21 38 / 12%);
+
+  --border: 1px solid var(--paper-sunk);
+
+  /* Layout --------------------------------------------------------- */
+  --wrap: 1120px;
+  --wrap-narrow: 720px;
+}
+
+/* Dark mode ------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0e1626;
+    --paper-alt: #131e32;
+    --paper-sunk: #1d2a42;
+    --ink-900: #f2f6fc;
+    --ink-700: #c3cddf;
+    --ink-500: #93a2ba;
+    --ink-300: #64748b;
+    --ink-100: #2a3a55;
+    --accent-soft: #16273f;
+    --border: 1px solid #22314c;
+  }
+}
