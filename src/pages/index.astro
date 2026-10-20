@@ -53,11 +53,11 @@ const fastestGrowing = [...allOccupations]
       <span class="hero__tag">
         <span aria-hidden="true">●</span> Live data from official government sources
       </span>
-      <h1>What does a STEM career actually look like where you live?</h1>
+      <h1>What does a STEM job actually look like where you live?</h1>
       <p class="lede">
-        Real numbers on science, technology, engineering and math jobs in New
-        Jersey, New York and Pennsylvania — how many are open, what they pay,
-        and what you would study to get there.
+        Real numbers about science, technology, engineering and maths jobs in
+        New Jersey, New York and Pennsylvania. How many are open. What they
+        pay. And what you would study to get one.
       </p>
       <div class="hero__actions">
         <a class="btn btn--primary" href={withBase("/nj")}>Start with New Jersey</a>
@@ -74,19 +74,19 @@ const fastestGrowing = [...allOccupations]
           <div class="grid grid--3">
             <StatTile
               accent
-              value={formatNumber(openNow)}
-              label="Private-sector STEM job postings"
-              note="Across all three states, last 30 days"
+              value={formatNumber(totalStemWorkers)}
+              label="people already work in STEM jobs in New Jersey"
+              note="From a survey of every employer in the state"
             />
             <StatTile
-              value={formatNumber(totalStemWorkers)}
-              label="People work in STEM jobs in New Jersey"
-              note="Bureau of Labor Statistics, May 2025"
+              value={formatNumber(openNow)}
+              label="private-sector STEM job postings right now"
+              note="Across all three states, posted in the last 30 days"
             />
             <StatTile
               value={formatNumber(biggestJob?.employment)}
-              label={`Biggest STEM job in NJ: ${biggestJob?.title ?? ''}`}
-              note="How many people do that job in New Jersey"
+              label={`people work as ${biggestJob?.title ?? 'STEM workers'} in New Jersey`}
+              note="That is the most common STEM job in the state"
             />
           </div>
         </div>
@@ -98,11 +98,11 @@ const fastestGrowing = [...allOccupations]
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Pick your state</span>
-        <h2>Three states, one question: where are the STEM jobs?</h2>
+        <h2>Where are the STEM jobs?</h2>
         <p class="lede">
-          Every figure comes straight from a government agency — the Bureau of
-          Labor Statistics, state civil service commissions, and the federal job
-          board — and is stamped with the date it was collected.
+          Every number here comes straight from a government agency, and each
+          one is stamped with the date it was collected. Pick the state you
+          live in.
         </p>
       </div>
 
@@ -119,7 +119,7 @@ const fastestGrowing = [...allOccupations]
         <h2>STEM is not one thing</h2>
         <p class="lede">
           A civil engineer and a cybersecurity analyst both count as STEM, and
-          they do very different work. Here is how we group them.
+          they do very different work. Here is how we split them up.
         </p>
       </div>
 
@@ -144,33 +144,40 @@ const fastestGrowing = [...allOccupations]
       <div class="section-head">
         <span class="eyebrow">How this site works</span>
         <h2>Where do the numbers come from?</h2>
+        <p class="lede">
+          Nothing here is made up. Every figure comes from a US government
+          agency, and we say which one and when.
+        </p>
       </div>
       <div class="grid grid--3">
         <article class="card card--flat">
-          <h3 class="card__title">📊 How many jobs &amp; what they pay</h3>
+          <h3 class="card__title">📊 How many jobs, and what they pay</h3>
           <p class="muted">
-            The Bureau of Labor Statistics surveys employers every year and
-            publishes how many people work in each job and what they earn.
+            Once a year the Bureau of Labor Statistics asks every employer in
+            the country how many people they employ and what they pay. That
+            survey is where the job counts and the salaries come from.
           </p>
         </article>
         <article class="card card--flat">
           <h3 class="card__title">📣 What is open right now</h3>
           <p class="muted">
-            State civil service boards, the federal USAJOBS board and
-            CareerOneStop publish every open posting, and we count the STEM
-            ones.
+            Job boards publish every opening as it appears. We ask each one
+            about every STEM job we track, so the counts are exact rather than
+            a guess from the job title.
           </p>
         </article>
         <article class="card card--flat">
           <h3 class="card__title">🧭 What to study next</h3>
           <p class="muted">
-            O*NET — the U.S. Department of Labor's career database — tells us
-            what each job actually involves and what students usually study.
+            The Bureau of Labor Statistics also records what education people
+            usually need to get into each job. We put that on every career
+            page, next to a plain-English description of the work.
           </p>
         </article>
       </div>
       <p class="source-note">
         Want the details? <a href={withBase("/sources")}>See every source and how we use it.</a>
+        · <a href={withBase("/glossary")}>Not sure what a word means? Try the glossary.</a>
       </p>
     </div>
   </section>

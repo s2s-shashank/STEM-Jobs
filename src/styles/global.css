@@ -490,7 +490,7 @@ hr {
    ------------------------------------------------------------------ */
 .bars {
   display: grid;
-  gap: var(--space-s);
+  gap: var(--space-m);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -501,23 +501,37 @@ hr {
   justify-content: space-between;
   align-items: baseline;
   gap: var(--space-s);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
 }
 
 .bar__label {
   font-weight: 650;
   font-size: var(--step-0);
+  line-height: 1.35;
+}
+
+.bar__label a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 2px solid var(--paper-sunk);
+}
+
+.bar__label a:hover {
+  border-bottom-color: var(--accent);
+  text-decoration: none;
 }
 
 .bar__value {
-  font-weight: 750;
+  font-weight: 800;
+  font-size: var(--step-0);
   font-variant-numeric: tabular-nums;
-  color: var(--ink-500);
+  color: var(--ink-700);
   white-space: nowrap;
+  flex: none;
 }
 
 .bar__track {
-  height: 14px;
+  height: 16px;
   border-radius: var(--radius-pill);
   background: var(--paper-sunk);
   overflow: hidden;
@@ -527,7 +541,18 @@ hr {
   height: 100%;
   border-radius: var(--radius-pill);
   background: var(--accent);
-  min-width: 3px;
+  min-width: 4px;
+}
+
+@media (max-width: 480px) {
+  .bar__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+  .bar__value {
+    order: -1;
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -652,4 +677,62 @@ tbody tr:last-child td {
   font-size: var(--step--1);
   color: var(--ink-500);
   font-family: var(--font-mono);
+}
+
+/* ------------------------------------------------------------------
+   Print - students often print a page for a class project
+   ------------------------------------------------------------------ */
+@media print {
+  .site-header,
+  .site-footer,
+  .hero__actions,
+  .explain,
+  .skip-link {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .hero,
+  .state-hero {
+    background: none !important;
+    color: #000 !important;
+    padding-block: 0 1rem;
+  }
+
+  .hero h1,
+  .state-hero h1,
+  .hero .lede,
+  .state-hero .lede {
+    color: #000 !important;
+  }
+
+  .section {
+    padding-block: 1rem;
+  }
+
+  .card,
+  .stat,
+  .table-wrap {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /* Show where a link points, so a printed page still works. */
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    color: #555;
+    word-break: break-all;
+  }
 }

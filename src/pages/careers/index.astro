@@ -1,8 +1,9 @@
 ---
-import { withBase } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
+import { withBase } from '../../lib/url';
 import { allStateData, formatMoney, formatNumber, formatGrowth } from '../../lib/data';
 import { CATEGORIES, STATES } from '../../data/states';
+import { describe } from '../../lib/descriptions';
 
 interface Career {
   soc: string;
@@ -13,15 +14,13 @@ interface Career {
   medianWage: number;
   entryWage: number;
   growth?: number;
-  blurb?: string;
-  education?: string;
 }
 
 const careers = new Map<string, Career>();
 for (const state of allStateData()) {
   for (const o of state.occupations) {
     const existing = careers.get(o.soc);
-    const merged: Career = {
+    careers.set(o.soc, {
       soc: o.soc,
       title: o.title,
       category: o.category,
@@ -30,10 +29,7 @@ for (const state of allStateData()) {
       medianWage: o.medianWage,
       entryWage: o.entryWage,
       growth: o.growth ?? existing?.growth,
-      blurb: o.blurb ?? existing?.blurb,
-      education: o.education ?? existing?.education,
-    };
-    careers.set(o.soc, merged);
+    });
   }
 }
 
@@ -49,30 +45,44 @@ const groups = CATEGORIES.map((c) => ({
 
 <Base
   title="STEM careers"
-  description="Browse every STEM career we track, with salaries, job counts and growth for New Jersey, New York and Pennsylvania combined."
+  description="Every STEM career we track, with what the job involves, how many people do it, what it pays and whether it is growing."
 >
   <section class="hero">
     <div class="wrap">
-      <span class="hero__tag"><span aria-hidden="true">●</span> Career library</span>
+      <span class="hero__tag"><span aria-hidden="true">●</span> Career list</span>
       <h1>Every STEM career we track</h1>
       <p class="lede">
-        Pick any career to see what it involves, what it pays across the three
-        states, and whether it is growing.
+        {list.length} careers, grouped by field. Pick one to see what the job
+        involves, what it pays, and how many openings there are right now.
       </p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
+      <div class="search-box">
+        <label for="career-search">Search for a job</label>
+        <input
+          type="search"
+          id="career-search"
+          placeholder="nurse, engineer, teacher, ..."
+          autocomplete="off"
+        />
+        <p class="search-note" id="search-note">
+          {list.length} careers listed. Type to narrow the list down.
+        </p>
+      </div>
+
       {
         groups.length === 0 ? (
-          <p class="lede">Careers are still being loaded — check back soon.</p>
+          <p class="lede">Careers are still being loaded - check back soon.</p>
         ) : (
           groups.map((g) => (
-            <section class="cat-section">
+            <section class="cat-section" data-category={g.category.label}>
               <h2>
                 <span aria-hidden="true">{g.category.icon}</span>{' '}
                 {g.category.label}
+                <span class="cat-count">{g.items.length} careers</span>
               </h2>
               <div class="table-wrap">
                 <table>
@@ -82,10 +92,11 @@ const groups = CATEGORIES.map((c) => ({
                   <thead>
                     <tr>
                       <th scope="col">Career</th>
+                      <th scope="col">What you would do</th>
                       <th scope="col" class="num">People working</th>
-                      <th scope="col" class="num">Median pay</th>
+                      <th scope="col" class="num">Middle pay</th>
                       <th scope="col" class="num">Starting pay</th>
-                      <th scope="col" class="num">Growth</th>
+                      <th scope="col" class="num">Growing</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -94,6 +105,7 @@ const groups = CATEGORIES.map((c) => ({
                         <th scope="row">
                           <a href={withBase(`/careers/${c.soc}`)}>{c.title}</a>
                         </th>
+                        <td class="what">{describe(c.soc, c.category).what}</td>
                         <td class="num">{formatNumber(c.employment)}</td>
                         <td class="num">{formatMoney(c.medianWage)}</td>
                         <td class="num">{formatMoney(c.entryWage)}</td>
@@ -109,14 +121,104 @@ const groups = CATEGORIES.map((c) => ({
       }
       <p class="source-note">
         Employment and pay are the totals for {STATES.map((s) => s.name).join(', ')}.
-        <a href={withBase("/sources")}>See sources</a>.
+        <a href={withBase('/sources')}>See sources</a>
+        · <a href={withBase('/glossary')}>Glossary</a>
       </p>
     </div>
   </section>
 </Base>
 
+<script>
+  const input = document.getElementById('career-search') as HTMLInputElement | null;
+  const note = document.getElementById('search-note');
+
+  if (input && note) {
+    const rows = Array.from(
+      document.querySelectorAll<HTMLTableRowElement>('tbody tr'),
+    );
+    const sections = Array.from(
+      document.querySelectorAll<HTMLElement>('.cat-section'),
+    );
+
+    const apply = () => {
+      const term = input.value.trim().toLowerCase();
+      let shown = 0;
+
+      for (const row of rows) {
+        const match = !term || (row.textContent || '').toLowerCase().includes(term);
+        row.hidden = !match;
+        if (match) shown += 1;
+      }
+      for (const section of sections) {
+        const any = Array.from(
+          section.querySelectorAll<HTMLTableRowElement>('tbody tr'),
+        ).some((row) => !row.hidden);
+        section.hidden = !any;
+      }
+
+      note.textContent = term
+        ? `${shown} career${shown === 1 ? '' : 's'} match "${input.value.trim()}".`
+        : `${rows.length} careers listed. Type to narrow the list down.`;
+    };
+
+    input.addEventListener('input', apply);
+    input.addEventListener('search', apply);
+  }
+</script>
+
 <style>
+  .search-box {
+    margin-bottom: var(--space-l);
+    max-width: 30rem;
+  }
+  .search-box label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+  .search-box input {
+    width: 100%;
+    font: inherit;
+    padding: 0.7rem 1rem;
+    border: 2px solid var(--paper-sunk);
+    border-radius: var(--radius-m);
+    background: var(--paper);
+    color: var(--ink-900);
+  }
+  .search-box input:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .search-note {
+    margin: 0.4rem 0 0;
+    font-size: var(--step--1);
+    color: var(--ink-500);
+  }
+
   .cat-section {
     margin-bottom: var(--space-xl);
+  }
+  .cat-section h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .cat-count {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--ink-500);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  td.what {
+    color: var(--ink-700);
+    font-size: var(--step--1);
+    min-width: 16rem;
+  }
+  @media (max-width: 700px) {
+    td.what {
+      display: none;
+    }
   }
 </style>

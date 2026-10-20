@@ -2,8 +2,16 @@
 import Base from '../../layouts/Base.astro';
 import Bars from '../../components/Bars.astro';
 import PayTranslation from '../../components/PayTranslation.astro';
+import Explain from '../../components/Explain.astro';
 import { withBase } from '../../lib/url';
-import { allStateData, formatMoney, formatNumber, formatDate, formatGrowth } from '../../lib/data';
+import {
+  allStateData,
+  formatMoney,
+  formatNumber,
+  formatDate,
+  formatGrowth,
+} from '../../lib/data';
+import { describe } from '../../lib/descriptions';
 import { CATEGORY_MAP, STATES } from '../../data/states';
 
 export async function getStaticPaths() {
@@ -29,12 +37,7 @@ if (perState.length === 0) {
 const primary = perState[0].occ!;
 const title = primary.title;
 const category = CATEGORY_MAP[primary.category];
-const blurb =
-  primary.blurb ??
-  `${title} is part of the ${category?.label ?? 'STEM'} field. Here is what the data says about this career in each state we track.`;
-const education =
-  primary.education ??
-  'Most people in this field start with a two-year degree, a certificate or an apprenticeship, then move to a four-year degree once they are working.';
+const job = describe(soc, primary.category);
 const bestPay = perState.reduce((best, row) =>
   (row.occ!.medianWage ?? 0) > (best.occ!.medianWage ?? 0) ? row : best,
 );
@@ -45,19 +48,15 @@ const openings = perState.map((row) => ({
   count: row.data?.live.private?.occupationCounts?.[soc] ?? 0,
 }));
 
-// Live postings that look like this job, from the first state that has them.
-const liveSamples = perState
-  .flatMap((row) =>
-    (row.data?.live.postings ?? [])
-      .filter((p) => p.title.toLowerCase().includes(title.split(' ')[0].toLowerCase()))
-      .map((p) => ({ ...p, state: row.state.short })),
-  )
-  .slice(0, 6);
+// Where the people who already do this job work, in the biggest state.
+const busiest = perState.reduce((best, row) =>
+  (row.occ!.employment ?? 0) > (best.occ!.employment ?? 0) ? row : best,
+);
 ---
 
 <Base
-  title={`${title}: jobs, pay and what to study`}
-  description={`${title} in New Jersey, New York and Pennsylvania: how many people work in it, what it pays, and what to study to get started.`}
+  title={`${title}: what it's like, what it pays`}
+  description={`${title} in New Jersey, New York and Pennsylvania: what the job involves, what it pays, how many openings there are, and what to study.`}
 >
   <section class="hero">
     <div class="wrap">
@@ -65,24 +64,40 @@ const liveSamples = perState
         <span aria-hidden="true">{category?.icon ?? '⚗️'}</span> {category?.label ?? 'STEM'}
       </span>
       <h1>{title}</h1>
-      <p class="lede">{blurb}</p>
+      <p class="lede">{job.what}</p>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
+      <div class="grid grid--2 job-intro">
+        <article class="card card--flat">
+          <h2 class="card__title">A typical day</h2>
+          <p class="muted">{job.day}</p>
+        </article>
+        <article class="card card--flat">
+          <h2 class="card__title">What to study</h2>
+          <p class="muted">{job.school}</p>
+          <p class="source-note">
+            {primary.education
+              ? `Most people in this job have a ${primary.education.charAt(0).toLowerCase()}${primary.education.slice(1)}.`
+              : 'Most paths start with a certificate, apprenticeship or two-year degree.'}
+          </p>
+        </article>
+      </div>
+
+      <h2 class="section-title">The numbers</h2>
       <div class="table-wrap">
         <table>
           <caption class="sr-only">{title} in each state</caption>
           <thead>
             <tr>
               <th scope="col">State</th>
-              <th scope="col" class="num">People working</th>
-              <th scope="col" class="num">Median pay</th>
-              <th scope="col" class="num">Average pay</th>
+              <th scope="col" class="num">People doing this job</th>
+              <th scope="col" class="num">Middle pay</th>
               <th scope="col" class="num">Starting pay</th>
-              <th scope="col" class="num">Open now</th>
-              <th scope="col" class="num">Growth</th>
+              <th scope="col" class="num">Jobs open now</th>
+              <th scope="col" class="num">Is it growing?</th>
             </tr>
           </thead>
           <tbody>
@@ -94,7 +109,6 @@ const liveSamples = perState
                   </th>
                   <td class="num">{formatNumber(occ!.employment)}</td>
                   <td class="num">{formatMoney(occ!.medianWage)}</td>
-                  <td class="num">{formatMoney(occ!.meanWage)}</td>
                   <td class="num">{formatMoney(occ!.entryWage)}</td>
                   <td class="num">
                     {formatNumber(
@@ -108,22 +122,36 @@ const liveSamples = perState
           </tbody>
         </table>
         <p class="source-note table-note">
-          <strong>Open now</strong> counts private-sector job postings for this
-          occupation in the last 30 days, within 50 miles of the state.
+          <strong>Middle pay</strong> is what the person in the middle earns -
+          half earn more, half earn less.
+          <Explain
+            label="?"
+            text="The median is the middle salary. It is more useful than the average, because a few very high salaries can drag an average up and make a job look better than it is for most people."
+          />
+          <br />
+          <strong>Jobs open now</strong> counts private-sector job postings for
+          this exact job in the last 30 days, within 50 miles of the state.
+          <Explain
+            label="?"
+            text="These come from CareerOneStop, the federal site that collects job postings from thousands of private employers. A posting is one opening - it does not mean the job will last forever."
+          />
+          <br />
+          <strong>Is it growing?</strong> is the Bureau of Labor Statistics
+          prediction for how many more jobs there will be by 2035.
         </p>
       </div>
 
       <div class="grid grid--2 two-col">
         <div>
-          <h2>What that salary feels like</h2>
+          <h2 class="section-title">What that salary feels like</h2>
           <PayTranslation annual={bestPay.occ!.medianWage} label="a year" />
           <p class="source-note">
-            Based on the median pay in {bestPay.state.name}. Before taxes, and
-            it varies a lot with experience and where you live.
+            Based on the middle pay in {bestPay.state.name}, before taxes. Real
+            pay depends on experience, overtime and where you live.
           </p>
         </div>
         <div>
-          <h2>Median pay compared</h2>
+          <h2 class="section-title">Where the pay is highest</h2>
           <div class="card">
             <Bars
               items={perState.map((row) => ({
@@ -131,7 +159,7 @@ const liveSamples = perState
                 value: row.occ!.medianWage ?? 0,
                 color: row.state.color,
               }))}
-              label={`Median pay for ${title} in each state`}
+              label={`Middle pay for ${title} in each state`}
               format="currency"
             />
           </div>
@@ -140,9 +168,23 @@ const liveSamples = perState
 
       <div class="grid grid--2 two-col">
         <article class="card card--flat">
-          <h2 class="card__title">How to get started</h2>
-          <p class="muted">{education}</p>
-          <h3 class="card__title">Good questions to ask</h3>
+          <h2 class="card__title">How many people already do this?</h2>
+          <p class="muted">
+            In {busiest.state.name}, about{' '}
+            <strong>{formatNumber(busiest.occ!.employment)}</strong> people work
+            as {title.toLowerCase()}. Across all three states, the job is done by
+            roughly{' '}
+            <strong>
+              {formatNumber(
+                perState.reduce((sum, row) => sum + (row.occ!.employment ?? 0), 0),
+              )}
+            </strong>{' '}
+            people.
+          </p>
+        </article>
+
+        <article class="card card--flat">
+          <h2 class="card__title">Good questions to ask</h2>
           <ul class="muted">
             <li>Do I want to work with my hands, with data, or with people?</li>
             <li>Is there a local apprenticeship or certificate program?</li>
@@ -150,90 +192,36 @@ const liveSamples = perState
             <li>Who is already working in this job near me - could I ask them?</li>
           </ul>
         </article>
-
-        <article class="card card--flat">
-          <h2 class="card__title">What the numbers mean</h2>
-          <p class="muted">
-            <strong>Starting pay</strong> is what a new graduate with no
-            experience typically earns. <strong>Median pay</strong> is what the
-            person in the middle of the pay range earns - usually a better
-            target than the average, which can be pulled up by a few very high
-            earners.
-          </p>
-          <p class="muted">
-            <strong>Growth</strong> is the projected change in the number of
-            jobs over the next decade, straight from the Bureau of Labor
-            Statistics.
-          </p>
-          <p class="source-note">
-            Data as of {formatDate(perState[0].data?.asOf)}. <a href={withBase('/sources')}>Sources</a>
-          </p>
-        </article>
       </div>
 
-      {
-        liveSamples.length > 0 && (
-          <section class="live">
-            <h2>Jobs like this, open right now</h2>
-            <ul class="postings">
-              {liveSamples.map((p) => (
-                <li class="posting">
-                  <a class="posting__title" href={p.url} rel="noopener">
-                    {p.title}
-                  </a>
-                  <span class="posting__meta">
-                    {p.employer}
-                    {p.location ? ` · ${p.location}` : ''} · {p.state}
-                    {p.salaryMin && p.salaryMax
-                      ? ` · ${formatMoney(p.salaryMin)}–${formatMoney(p.salaryMax)}`
-                      : ''}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )
-      }
+      <p class="source-note final-note">
+        Data as of {formatDate(perState[0].data?.asOf)}. Employment and pay come
+        from the Bureau of Labor Statistics. <a href={withBase('/sources')}>See all sources</a>
+        · <a href={withBase('/glossary')}>New to these words? Read the glossary</a>
+      </p>
     </div>
   </section>
 </Base>
 
 <style>
+  .job-intro {
+    margin-bottom: var(--space-xl);
+  }
+  .section-title {
+    font-size: var(--step-2);
+    margin-bottom: var(--space-s);
+  }
   .two-col {
     margin-top: var(--space-l);
     align-items: start;
   }
-  .live {
-    margin-top: var(--space-xl);
-  }
   .table-note {
     margin: 0;
-    padding: 0.6rem 0.9rem;
+    padding: 0.8rem 1rem;
     border-top: 1px solid var(--paper-sunk);
+    line-height: 1.7;
   }
-  .postings {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .posting {
-    padding-block: 0.6rem;
-    border-bottom: 1px solid var(--paper-sunk);
-  }
-  .posting:last-child {
-    border-bottom: 0;
-  }
-  .posting__title {
-    display: block;
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .posting__title:hover {
-    text-decoration: underline;
-  }
-  .posting__meta {
-    display: block;
-    font-size: var(--step--1);
-    color: var(--ink-500);
+  .final-note {
+    margin-top: var(--space-xl);
   }
 </style>

@@ -1,0 +1,442 @@
+{
+  "15-1252": {
+    "what": "You write the code that makes apps, websites and games work.",
+    "day": "Sit down at a computer, break a big problem into small pieces, write code for each one, then test it to see what breaks.",
+    "school": "Computer science, maths, and lots of practice building things"
+  },
+  "29-1141": {
+    "what": "You look after sick and injured people in hospitals, clinics and schools.",
+    "day": "Check on your patients, give them medicine, help doctors, write down what you did, and hand over to the next nurse.",
+    "school": "Biology, chemistry and health science"
+  },
+  "11-3021": {
+    "what": "You run a company's computer systems and the team that looks after them.",
+    "day": "Meet with your team, plan what projects to start, explain technical stuff to people who are not technical, and deal with problems when a system goes down.",
+    "school": "Computer science plus business"
+  },
+  "15-1232": {
+    "what": "You help people fix their computer problems, usually over the phone or by visiting their desk.",
+    "day": "Answer calls, work out what is wrong, walk people through the fix step by step, and write down what you did.",
+    "school": "Computer science, and practice explaining things clearly"
+  },
+  "29-2061": {
+    "what": "You care for patients in hospitals, nursing homes and doctor's offices under a nurse's direction.",
+    "day": "Help people wash, dress and eat, check on them through the night, and keep the nurse updated about how they are doing.",
+    "school": "Biology and health science"
+  },
+  "15-1211": {
+    "what": "You work out what a company needs its computers to do, and help build it.",
+    "day": "Talk to the people who will use the system, write down what they need, test the software, and fix the parts that do not work.",
+    "school": "Computer science and maths"
+  },
+  "29-2052": {
+    "what": "You do most of the behind-the-scenes work in a pharmacy, like filling prescriptions.",
+    "day": "Take prescriptions, count and label medicine, answer phone calls, and help customers find what they need.",
+    "school": "Chemistry and biology"
+  },
+  "15-1299": {
+    "what": "You do computing jobs that do not have their own special name, like database work or tech support.",
+    "day": "It depends on the job, but usually it means using computers to solve a problem for a team.",
+    "school": "Computer science"
+  },
+  "11-9121": {
+    "what": "You lead a team of scientists and make sure their research gets done properly.",
+    "day": "Plan research projects, write proposals for funding, check on experiments, and present results.",
+    "school": "Science, then a degree in research or management"
+  },
+  "29-1171": {
+    "what": "You are a nurse who can diagnose and treat patients, usually in a doctor's office.",
+    "day": "See patients, examine them, diagnose common problems, write prescriptions and treatment plans, and follow up later.",
+    "school": "Biology, chemistry, and a nursing degree"
+  },
+  "29-1123": {
+    "what": "You help people recover movement and strength after an injury or surgery.",
+    "day": "Work with patients, watch how they move, design exercises for them, and cheer them on as they get stronger.",
+    "school": "Biology, physics and anatomy"
+  },
+  "29-1229": {
+    "what": "You are a doctor who treats patients in a hospital or clinic.",
+    "day": "See patients, examine them, order tests, treat illness or injury, and write notes for the next doctor.",
+    "school": "Biology, chemistry, physics, then medical school"
+  },
+  "29-1051": {
+    "what": "You mix and dispense the medicine that doctors prescribe, and advise people how to use it safely.",
+    "day": "Check prescriptions, talk to doctors, counsel patients, and keep the shelves stocked.",
+    "school": "Chemistry and biology"
+  },
+  "15-1244": {
+    "what": "You keep an organisation's computers and networks running and secure.",
+    "day": "Set up and fix servers, watch for security problems, add new users, and make sure everything keeps working.",
+    "school": "Computer science and networking"
+  },
+  "49-9041": {
+    "what": "You repair and maintain the big machines used in factories.",
+    "day": "Diagnose a broken machine, take it apart, replace worn parts, and get it running again.",
+    "school": "Physics, maths and hands-on technical work"
+  },
+  "29-1292": {
+    "what": "You clean people's teeth and prevent gum disease.",
+    "day": "Examine teeth, take x-rays, clean teeth, and teach people how to brush properly.",
+    "school": "Biology and chemistry"
+  },
+  "29-1129": {
+    "what": "You help people recover or cope using therapy of different kinds.",
+    "day": "Meet with patients, work out what would help them most, and run therapy sessions.",
+    "school": "Psychology and health science"
+  },
+  "29-2010": {
+    "what": "You test blood and other samples to help doctors diagnose illness.",
+    "day": "Run lab tests on samples, check the results carefully, and report anything unusual to the doctor.",
+    "school": "Biology and chemistry"
+  },
+  "17-2051": {
+    "what": "You design roads, bridges, water systems and buildings so they are safe.",
+    "day": "Draw plans, work out loads and costs, check building sites, and make sure designs follow the rules.",
+    "school": "Maths, physics and physics-based design"
+  },
+  "17-2112": {
+    "what": "You make factories and businesses work better and waste less.",
+    "day": "Watch how work is actually done, time each step, and redesign it so it is faster, safer or cheaper.",
+    "school": "Maths and engineering"
+  },
+  "29-1127": {
+    "what": "You help people who have trouble speaking, hearing or understanding language.",
+    "day": "Test how well a child or adult can hear and speak, then design exercises to help them improve.",
+    "school": "Biology, physics and linguistics"
+  },
+  "15-1253": {
+    "what": "You test software to find the bugs before users do.",
+    "day": "Try to break the software in every way you can, write down exactly what went wrong, and check the fixes.",
+    "school": "Computer science and attention to detail"
+  },
+  "15-2051": {
+    "what": "You find useful patterns in huge amounts of data and help people make decisions with them.",
+    "day": "Clean data, write code to analyse it, build models, and explain the findings to people who are not scientists.",
+    "school": "Maths, statistics and computer science"
+  },
+  "29-2034": {
+    "what": "You take x-ray pictures of people's bodies so doctors can see what is wrong.",
+    "day": "Position the patient, take the images, check the quality, and describe what you see for the doctor.",
+    "school": "Physics and anatomy"
+  },
+  "51-2028": {
+    "what": "You build electrical and electronic parts that go into phones, cars and machines.",
+    "day": "Set up and run assembly lines, check quality, fix faulty parts, and keep records of what was made.",
+    "school": "Physics and technical design"
+  },
+  "29-1122": {
+    "what": "You help people get back to doing everyday tasks after an injury or illness.",
+    "day": "Plan what a patient needs to do again, practise it with them, and adapt the plan when it is hard.",
+    "school": "Biology and health science"
+  },
+  "19-1042": {
+    "what": "You study disease to work out what causes it and how to treat or stop it.",
+    "day": "Run experiments, look at results, write up what you found, and plan the next study.",
+    "school": "Biology, chemistry and research methods"
+  },
+  "29-2042": {
+    "what": "You are the first person to help people in an emergency before a doctor arrives.",
+    "day": "Respond to calls, treat injuries and illnesses on the scene, and drive the ambulance if needed.",
+    "school": "Biology, maths and first aid training"
+  },
+  "29-2099": {
+    "what": "You do health jobs that do not have a specific name, like running a clinic or medical equipment.",
+    "day": "Varies a lot, but usually means using health knowledge and technology to support doctors and patients.",
+    "school": "Biology and health science"
+  },
+  "15-1241": {
+    "what": "You design the networks that connect an organisation's computers together.",
+    "day": "Plan how data should move, set up the network equipment, and make it fast and safe.",
+    "school": "Computer science"
+  },
+  "19-2031": {
+    "what": "You study what things are made of and how they react with each other.",
+    "day": "Mix and test chemicals in a lab, record what happens, and check results against what other scientists found.",
+    "school": "Chemistry and lab technique"
+  },
+  "15-1212": {
+    "what": "You protect computers and data from people who try to break into them.",
+    "day": "Look for weaknesses, test systems, watch alerts for suspicious activity, and help staff stay safe.",
+    "school": "Computer science and maths"
+  },
+  "29-1071": {
+    "what": "You are a medical professional who examines patients, diagnoses illness and treats them.",
+    "day": "See patients, examine them, order tests, prescribe treatment, and follow up on how they are doing.",
+    "school": "Biology, chemistry, then medical school"
+  },
+  "11-9041": {
+    "what": "You lead teams of engineers and make sure projects get built safely and on time.",
+    "day": "Plan projects, pick and check designs, meet with clients and builders, and solve problems when something goes wrong.",
+    "school": "Engineering plus management"
+  },
+  "17-2199": {
+    "what": "You are an engineer in a field that does not have its own special name.",
+    "day": "Analyse a problem, design a solution, test it, and work with other engineers to build it for real.",
+    "school": "Maths and physics"
+  },
+  "29-2072": {
+    "what": "You keep patients' medical records organised, accurate and safe.",
+    "day": "Enter and check medical information, answer questions from other staff, and protect patient privacy.",
+    "school": "Health science and careful record-keeping"
+  },
+  "17-2141": {
+    "what": "You design machines, engines and structures that move and work safely.",
+    "day": "Turn an idea into a design, calculate how it will handle stress and heat, then test and improve it.",
+    "school": "Maths and physics"
+  },
+  "29-2057": {
+    "what": "You do eye-care jobs in a clinic, like taking eye measurements for glasses.",
+    "day": "Test patients' vision, prepare equipment and lenses, and support the eye doctor during procedures.",
+    "school": "Biology and physics"
+  },
+  "15-1251": {
+    "what": "You write the instructions that tell a computer what to do, step by step.",
+    "day": "Write and test code, fix errors, and update programs when something needs to change.",
+    "school": "Computer science and maths"
+  },
+  "19-5011": {
+    "what": "You check workplaces for dangers and make sure people are safe and healthy.",
+    "day": "Visit workplaces, spot hazards, write reports, and suggest fixes before someone gets hurt.",
+    "school": "Science, health and law"
+  },
+  "51-4121": {
+    "what": "You join metal parts together using heat, to build frames, pipes, cars and ships.",
+    "day": "Set up your equipment, join pieces to plan, inspect your work, and follow safety rules.",
+    "school": "Physics and hands-on technical training"
+  },
+  "17-2011": {
+    "what": "You design aircraft, rockets and the parts that make them fly safely.",
+    "day": "Work out how a design will handle stress and heat, build and test models, and check the maths behind every part.",
+    "school": "Maths, physics and design"
+  },
+  "15-1231": {
+    "what": "You fix computer network problems, like slow internet or dropped connections.",
+    "day": "Track down where a problem is happening, repair or replace equipment, and check the fix works.",
+    "school": "Computer science and networking"
+  },
+  "29-2032": {
+    "what": "You use sound waves to take pictures of inside the body.",
+    "day": "Explain the scan to the patient, run the machine, check the images, and write the report.",
+    "school": "Physics and anatomy"
+  },
+  "29-1126": {
+    "what": "You help people who have trouble breathing, from asthma to serious lung disease.",
+    "day": "Test lung function, give treatments, teach patients how to use their inhalers, and work with doctors on care plans.",
+    "school": "Biology, physics and chemistry"
+  },
+  "15-2031": {
+    "what": "You use maths to help organisations make better decisions.",
+    "day": "Ask what question needs answering, build a model, test it against real data, and explain the options.",
+    "school": "Maths and statistics"
+  },
+  "51-4041": {
+    "what": "You use machines to cut and shape metal into exact parts for machines and products.",
+    "day": "Read the drawing, set up the machine, cut the part, check it against the plan, and fix what is out of tolerance.",
+    "school": "Maths and technical workshop training"
+  },
+  "19-2041": {
+    "what": "You study how pollution and climate change affect land, water and wildlife.",
+    "day": "Collect samples, run tests in the lab, analyse the data, and write reports that help people make decisions.",
+    "school": "Biology, chemistry, earth science and statistics"
+  },
+  "15-1243": {
+    "what": "You design the way information is stored so big systems stay fast and safe.",
+    "day": "Plan how data should be organised, test how systems handle it, and fix slow or fragile parts.",
+    "school": "Computer science and maths"
+  },
+  "29-1215": {
+    "what": "You are a doctor who looks after whole families, from babies to grandparents.",
+    "day": "Run appointments, treat common illnesses, give check-ups, and refer people to specialists when needed.",
+    "school": "Biology, chemistry, physics, then medical school"
+  },
+  "29-1021": {
+    "what": "You look after people's teeth and gums and fix problems with them.",
+    "day": "Examine teeth, take x-rays, fill or remove teeth, and help patients keep their mouths healthy.",
+    "school": "Biology, chemistry and dental school"
+  },
+  "17-2071": {
+    "what": "You design electrical systems for buildings, machines and power grids.",
+    "day": "Plan circuits and systems, calculate loads and safety margins, and check the work before it is built.",
+    "school": "Maths and physics"
+  },
+  "29-1216": {
+    "what": "You are a doctor who treats adults with illnesses across the body.",
+    "day": "Examine patients, work out what is wrong, order tests, treat them, and follow up in clinic.",
+    "school": "Biology, chemistry, physics, then medical school"
+  },
+  "29-2056": {
+    "what": "You help vets look after animals, doing the hands-on clinical work.",
+    "day": "Prepare animals for treatment, assist with surgery, run lab tests, and help keep the animals comfortable.",
+    "school": "Biology and animal science"
+  },
+  "29-1031": {
+    "what": "You help people eat well and stay healthy through food and advice.",
+    "day": "Talk to patients about their health and food, build eating plans, and run programmes for groups.",
+    "school": "Biology, chemistry and nutrition"
+  },
+  "29-2055": {
+    "what": "You support surgeons in an operating room during surgery.",
+    "day": "Prepare the operating room, hand the surgeon the right instruments, and keep everything sterile.",
+    "school": "Biology and health science"
+  },
+  "49-2098": {
+    "what": "You install and service alarms, cameras and security systems in homes and buildings.",
+    "day": "Plan where equipment goes, run cables, connect and test it, and show customers how to use it.",
+    "school": "Physics, electronics and technical training"
+  },
+  "19-4031": {
+    "what": "You do lab work with chemicals, supporting scientists and production teams.",
+    "day": "Prepare solutions, run experiments or quality checks, record results carefully, and tidy the lab.",
+    "school": "Chemistry and lab technique"
+  },
+  "49-2022": {
+    "what": "You install and repair the equipment that carries phone, TV and internet signals.",
+    "day": "Climb poles and towers, run and connect cables, test signals, and repair broken lines.",
+    "school": "Physics and technical training"
+  },
+  "19-1021": {
+    "what": "You study the chemistry of living things, like how cells work and how drugs act.",
+    "day": "Run experiments, use lab equipment, analyse results, and write up findings with other scientists.",
+    "school": "Biology and chemistry"
+  },
+  "49-9052": {
+    "what": "You climb and repair the cables and poles that carry telephone and internet lines.",
+    "day": "Climb, find the fault, splice and test cable, and restore service before too many people lose it.",
+    "school": "Physics and technical training"
+  },
+  "29-2053": {
+    "what": "You support mental health care teams, helping patients with day-to-day treatment.",
+    "day": "Prepare for sessions, keep records, support group sessions, and help with referrals.",
+    "school": "Psychology and health science"
+  },
+  "51-8031": {
+    "what": "You run the equipment that turns dirty water into clean drinking water.",
+    "day": "Monitor the plant, test the water at every stage, adjust the process, and keep detailed records.",
+    "school": "Chemistry, biology and maths"
+  },
+  "29-2031": {
+    "what": "You help doctors test and treat the heart and blood vessels.",
+    "day": "Set up and run heart tests, prepare patients, watch for problems during tests, and write up results.",
+    "school": "Biology, physics and anatomy"
+  },
+  "49-9062": {
+    "what": "You repair the medical machines hospitals rely on, from pumps to scanners.",
+    "day": "Diagnose the fault, order or fit parts, test the repair, and check the machine meets safety rules.",
+    "school": "Physics, electronics and technical training"
+  },
+  "17-1011": {
+    "what": "You design buildings that are safe, useful and good to look at.",
+    "day": "Sketch ideas, make drawings and models, work with clients and engineers, and check plans follow building rules.",
+    "school": "Maths, physics and art"
+  },
+  "17-3011": {
+    "what": "You turn an engineer's design into precise drawings that builders can follow.",
+    "day": "Read the design, produce drawings and models, check measurements, and revise when the design changes.",
+    "school": "Maths, technical drawing and design"
+  },
+  "15-1254": {
+    "what": "You build the websites people use every day.",
+    "day": "Write the code for pages, make them work on phones and laptops, test the links, and fix what breaks.",
+    "school": "Computer science and design"
+  },
+  "17-3023": {
+    "what": "You build and test electrical and electronic systems, working under an engineer.",
+    "day": "Read the plans, assemble and wire equipment, run tests, record the results and help fix problems.",
+    "school": "Physics, maths and technical training"
+  },
+  "15-1255": {
+    "what": "You design how websites and apps look and how people move through them.",
+    "day": "Sketch screens, make clickable versions, test them with real people, and improve them.",
+    "school": "Design, art and computer science"
+  },
+  "19-4099": {
+    "what": "You do lab and field work supporting scientists in biology, chemistry and earth science.",
+    "day": "Set up equipment, run standard tests, collect and prepare samples, and record results carefully.",
+    "school": "Biology and chemistry"
+  },
+  "29-2081": {
+    "what": "You help people find and fit glasses and contact lenses.",
+    "day": "Take eye measurements, talk customers through choices, order lenses, and fit and adjust glasses.",
+    "school": "Physics and health science"
+  },
+  "29-1131": {
+    "what": "You treat sick and injured animals.",
+    "day": "Examine animals, diagnose problems, do surgery or give medicine, and check on recovering patients.",
+    "school": "Biology and animal science"
+  },
+  "49-3011": {
+    "what": "You repair and maintain aircraft and the parts that keep them flying.",
+    "day": "Inspect engines and systems, diagnose faults, replace worn parts, and record every job done.",
+    "school": "Physics, maths and technical training"
+  },
+  "17-2072": {
+    "what": "You design electronic circuits, from phones to medical equipment.",
+    "day": "Work out how the circuit should behave, test it, and improve the design when it does not work.",
+    "school": "Physics, maths and electronics"
+  },
+  "15-1242": {
+    "what": "You look after the databases where an organisation stores its information.",
+    "day": "Keep data safe and backed up, speed up slow queries, and make sure the right people can get what they need.",
+    "school": "Computer science"
+  },
+  "29-9021": {
+    "what": "You keep digital medical records safe and organised, and make sure the data is right.",
+    "day": "Check records for errors, protect sensitive information, train staff on the system, and solve data problems.",
+    "school": "Health science and computer skills"
+  },
+  "15-1221": {
+    "what": "You research new computing methods, like how machines can learn or how to store huge amounts of data.",
+    "day": "Read what other researchers have done, design experiments, build prototypes, and publish what you find.",
+    "school": "Maths, computer science and research"
+  },
+  "51-8021": {
+    "what": "You operate and maintain the boilers and heating systems that keep buildings warm.",
+    "day": "Check gauges and readings, control the equipment, spot problems early, and follow safety procedures.",
+    "school": "Physics and technical training"
+  },
+  "29-1041": {
+    "what": "You examine eyes and vision and prescribe glasses or contact lenses.",
+    "day": "Test eyesight, check eye health, write prescriptions, and fit lenses for patients.",
+    "school": "Biology, physics and optometry school"
+  },
+  "29-1011": {
+    "what": "You treat problems with people's backs and joints without surgery.",
+    "day": "Examine patients, adjust the spine and joints, give advice on exercise, and track progress.",
+    "school": "Biology, anatomy and chiropractic training"
+  },
+  "49-9051": {
+    "what": "You build and repair the high-voltage lines that carry electricity across the country.",
+    "day": "Climb towers, replace damaged equipment, test lines before they are switched back on, and work as a team.",
+    "school": "Physics and technical training"
+  },
+  "19-4021": {
+    "what": "You do lab work with living organisms, like plants, cells and bacteria.",
+    "day": "Care for cultures, run experiments, look at samples under microscopes, and keep careful records.",
+    "school": "Biology and lab technique"
+  },
+  "29-1223": {
+    "what": "You treat mental health conditions with therapy and, sometimes, medicine.",
+    "day": "Assess patients, plan treatment, see people regularly, and work with other mental health teams.",
+    "school": "Psychology, biology and then medical or clinical training"
+  },
+  "49-2094": {
+    "what": "You repair industrial electrical and electronic equipment in factories and workshops.",
+    "day": "Diagnose faults on site, replace or repair components, test the equipment, and report the work.",
+    "school": "Physics, electronics and technical training"
+  },
+  "29-1221": {
+    "what": "You are a doctor who treats babies, children and teenagers.",
+    "day": "Run child health clinics, vaccinate, treat common illnesses, and check children's growth and development.",
+    "school": "Biology, chemistry, physics, then medical school"
+  },
+  "15-2011": {
+    "what": "You work out how much money to set aside for risks, like insurance companies and pensions.",
+    "day": "Build mathematical models, test them against real data, and explain the risk to people who make decisions.",
+    "school": "Maths and statistics"
+  },
+  "29-2035": {
+    "what": "You operate MRI scanners that take detailed pictures inside the body.",
+    "day": "Prepare the patient, run the scan, check the images for quality, and work with the radiologist.",
+    "school": "Physics and anatomy"
+  }
+}

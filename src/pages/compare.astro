@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/url';
 import { STATES } from '../data/states';
 import {
   getStateData,
@@ -18,20 +19,18 @@ const rows = STATES.map((s) => {
     state: s,
     data: d,
     open: d?.live.total,
+    privateOpen: d?.live.private?.total,
     employment: total,
     median: wages.length ? wages[Math.floor(wages.length / 2)] : undefined,
   };
 });
 
 const ready = rows.filter((r) => r.data);
-const anyGrowth = allStateData().some((d) =>
-  d.occupations.some((o) => typeof o.growth === 'number'),
-);
 ---
 
 <Base
-  title="Compare New Jersey, New York and Pennsylvania STEM jobs"
-  description="Side-by-side STEM job numbers for New Jersey, New York and Pennsylvania: open jobs, total employment, salaries and growth."
+  title="Compare New Jersey, New York and Pennsylvania"
+  description="STEM job numbers side by side for New Jersey, New York and Pennsylvania: people working, jobs open, salaries and how to read them."
 >
   <section class="hero">
     <div class="wrap">
@@ -50,10 +49,7 @@ const anyGrowth = allStateData().some((d) =>
         ready.length === 0 ? (
           <div class="wrap--narrow">
             <h2>Nothing to compare yet</h2>
-            <p class="lede">
-              The first data run is still in progress. As soon as it lands, this
-              page fills in automatically.
-            </p>
+            <p class="lede">The first data run is still in progress.</p>
           </div>
         ) : (
           <>
@@ -65,7 +61,7 @@ const anyGrowth = allStateData().some((d) =>
                 </caption>
                 <thead>
                   <tr>
-                    <th scope="col">Measure</th>
+                    <th scope="col">What we measured</th>
                     {rows.map((r) => (
                       <th scope="col" class="num">
                         {r.state.short}
@@ -75,25 +71,31 @@ const anyGrowth = allStateData().some((d) =>
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">STEM jobs open right now</th>
-                    {rows.map((r) => (
-                      <td class="num">{formatNumber(r.open)}</td>
-                    ))}
-                  </tr>
-                  <tr>
-                    <th scope="row">People working in STEM jobs</th>
+                    <th scope="row">People already working in STEM jobs</th>
                     {rows.map((r) => (
                       <td class="num">{formatNumber(r.employment)}</td>
                     ))}
                   </tr>
                   <tr>
-                    <th scope="row">Median STEM salary</th>
+                    <th scope="row">Private-sector job postings (30 days)</th>
+                    {rows.map((r) => (
+                      <td class="num">{formatNumber(r.privateOpen)}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <th scope="row">Government jobs open today</th>
+                    {rows.map((r) => (
+                      <td class="num">{formatNumber(r.open)}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <th scope="row">Typical STEM salary (middle pay)</th>
                     {rows.map((r) => (
                       <td class="num">{formatMoney(r.median)}</td>
                     ))}
                   </tr>
                   <tr>
-                    <th scope="row">Data as of</th>
+                    <th scope="row">Data collected on</th>
                     {rows.map((r) => (
                       <td class="num small muted">{formatDate(r.data?.asOf)}</td>
                     ))}
@@ -102,9 +104,10 @@ const anyGrowth = allStateData().some((d) =>
               </table>
             </div>
             <p class="source-note">
-              {anyGrowth
-                ? 'Growth projections come from the Bureau of Labor Statistics.'
-                : 'Open-job counts change daily; the other numbers come from the annual BLS survey.'}
+              The first two rows count different things, on purpose. The first
+              is everyone on the payroll. The second is job openings advertised
+              in the last month. You cannot compare them directly - and neither
+              can the government.
             </p>
           </>
         )
@@ -117,31 +120,39 @@ const anyGrowth = allStateData().some((d) =>
       <div class="section-head">
         <span class="eyebrow">Worth knowing</span>
         <h2>How to read these numbers</h2>
+        <p class="lede">
+          Three things that trip people up when they read jobs data.
+        </p>
       </div>
       <div class="grid grid--3">
         <article class="card card--flat">
-          <h3 class="card__title">Open jobs ≠ jobs that will last</h3>
+          <h3 class="card__title">An opening is not a career</h3>
           <p class="muted">
-            A posting is one job opening today. It might be filled next week. It
-            is a sign that employers are hiring, not a promise of a career.
+            A posting is one job opening today. It might be filled next week.
+            It shows you that employers are hiring, not that a job is waiting
+            for you.
           </p>
         </article>
         <article class="card card--flat">
-          <h3 class="card__title">Median beats average</h3>
+          <h3 class="card__title">Middle beats average</h3>
           <p class="muted">
-            A few very high salaries drag the average up. The median is the
-            person in the middle — usually a better guide for you.
+            A few very high salaries drag the average up. The middle salary is
+            what the person in the middle earns - a much better guide to what
+            you would actually get.
           </p>
         </article>
         <article class="card card--flat">
-          <h3 class="card__title">Most STEM jobs need college</h3>
+          <h3 class="card__title">STEM is not only university</h3>
           <p class="muted">
-            Plenty of STEM careers — technicians, machinists, IT support,
-            surveying — start with a certificate, an apprenticeship or a
+            Plenty of STEM careers - technicians, machinists, IT support,
+            surveying - start with a certificate, an apprenticeship or a
             two-year degree.
           </p>
         </article>
       </div>
+      <p class="source-note">
+        Words you might not know? <a href={withBase('/glossary')}>The glossary explains them.</a>
+      </p>
     </div>
   </section>
 </Base>

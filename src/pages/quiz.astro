@@ -24,8 +24,29 @@ for (const state of allStateData()) {
   }
 }
 
-const pool = [...bySoc.values()].sort((a, b) => b.median - a.median);
-const items = pool.slice(0, 12);
+// Use the most common jobs, so students recognise them, then shuffle.
+// Only use jobs common enough that a student may have heard of them.
+const common = new Map<string, QuizItem>();
+for (const state of allStateData()) {
+  for (const o of state.occupations) {
+    if (o.employment >= 2000 && !common.has(o.soc)) {
+      common.set(o.soc, {
+        soc: o.soc,
+        title: o.title,
+        median: o.medianWage,
+        category: o.category,
+      });
+    }
+  }
+}
+const pool = [...common.values()].sort((a, b) => b.median - a.median);
+// Take a spread from the top earners down to the mid-range, so each round has
+// one clear winner but not always the same kind of job.
+const step = Math.max(3, Math.floor(pool.length / 15));
+const items: QuizItem[] = [];
+for (let i = 0; i < pool.length && items.length < 15; i += step) {
+  items.push(pool[i]);
+}
 const questions = [];
 for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
   const trio = items.slice(i, i + 3);
@@ -44,8 +65,13 @@ for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
       <span class="hero__tag"><span aria-hidden="true">●</span> Quiz</span>
       <h1>Guess the salary</h1>
       <p class="lede">
-        Three STEM careers. One of them pays the most. How many can you get?
-        (Real median pay, straight from the Bureau of Labor Statistics.)
+        Three STEM jobs. Only one of them pays the most. How many can you get?
+        The numbers are real - the middle salary for each job, straight from the
+        Bureau of Labor Statistics.
+      </p>
+      <p class="small muted">
+        There are five questions. Click the job you think pays the most, and
+        you will find out straight away.
       </p>
     </div>
   </section>

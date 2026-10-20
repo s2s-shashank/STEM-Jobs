@@ -4,6 +4,7 @@ import type { StateMeta } from '../data/states';
 import { CATEGORIES } from '../data/states';
 import Bars from './Bars.astro';
 import StatTile from './StatTile.astro';
+import Explain from './Explain.astro';
 import {
   getStateData,
   formatDate,
@@ -24,12 +25,13 @@ const data = getStateData(state.code);
 const has = Boolean(data);
 const occ = data?.occupations ?? [];
 const live = data?.live;
+const priv = live?.private;
 
-const topJobs = byEmployment(occ).slice(0, 10);
+const topJobs = byEmployment(occ).slice(0, 8);
 const topPay = [...occ]
   .filter((o) => o.employment >= 200)
   .sort((a, b) => b.meanWage - a.meanWage)
-  .slice(0, 10);
+  .slice(0, 8);
 const growing = [...occ]
   .filter((o) => typeof o.growth === 'number' && (o.growth ?? 0) > 0)
   .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))
@@ -47,11 +49,7 @@ const fieldBars = categoryGroups
 const metroBars = Object.entries(data?.metros ?? {})
   .map(([title, value]) => {
     const { name, shared } = formatMetro(title);
-    return {
-      label: name,
-      value,
-      shared,
-    };
+    return { label: name, value, shared };
   })
   .sort((a, b) => b.value - a.value)
   .slice(0, 6);
@@ -68,42 +66,39 @@ const liveBars = live
       value: live.byCategory[c.id] ?? 0,
       color: c.color,
     }))
-    .filter((bar) => bar.value > 0)
-    .sort((a, b) => b.value - a.value)
+      .filter((bar) => bar.value > 0)
+      .sort((a, b) => b.value - a.value)
   : [];
 
-// Private-sector postings (CareerOneStop), counted by occupation code.
-const priv = live?.private;
 const privateBars = priv
   ? CATEGORIES.map((c) => ({
       label: c.label,
       value: priv.byCategory[c.id] ?? 0,
       color: c.color,
     }))
-    .filter((bar) => bar.value > 0)
-    .sort((a, b) => b.value - a.value)
+      .filter((bar) => bar.value > 0)
+      .sort((a, b) => b.value - a.value)
   : [];
-const cityBars = (priv?.topLocations ?? []).slice(0, 8).map((c) => ({
+const cityBars = (priv?.topLocations ?? []).slice(0, 6).map((c) => ({
   label: c.name.replace(/,\s*[A-Z]{2}$/, ''),
   value: c.count,
   color: state.color,
 }));
-const employerBars = (priv?.topEmployers ?? []).slice(0, 8).map((c) => ({
+const employerBars = (priv?.topEmployers ?? []).slice(0, 6).map((c) => ({
   label: c.name,
   value: c.count,
   color: 'var(--c-data)',
 }));
 
 const SOURCE_NOTES: Record<string, string> = {
-  USAJOBS: 'Open federal jobs - these are positions you can apply for today.',
+  USAJOBS: 'Open federal jobs. You can apply for these today.',
   'NJ Civil Service':
-    'Open New Jersey state and local government exams - applying puts you on a hiring list.',
-  StateJobsNY:
-    'Open New York State government vacancies - these are positions you can apply for today.',
+    'Open New Jersey state and local government exams. Applying puts you on a hiring list.',
+  StateJobsNY: 'Open New York State government jobs. You can apply for these today.',
   'Commonwealth Careers':
-    'Open Pennsylvania state government jobs - these are positions you can apply for today.',
+    'Open Pennsylvania state government jobs. You can apply for these today.',
   CareerOneStop:
-    'Private-sector jobs, counted by searching for STEM words - the same job can be counted twice, so this number is kept separate.',
+    'Private-sector jobs, counted by searching for each STEM occupation. The same job can be counted twice, so this number is kept separate.',
 };
 ---
 
@@ -112,7 +107,7 @@ const SOURCE_NOTES: Record<string, string> = {
     <span class="hero__tag">
       <span aria-hidden="true">●</span> {state.abbr} STEM jobs
     </span>
-    <h1>{state.name} STEM jobs</h1>
+    <h1>STEM jobs in {state.name}</h1>
     <p class="lede">{state.blurb}</p>
     {data && <p class="stamp">Numbers as of {formatDate(data.asOf)}</p>}
   </div>
@@ -136,30 +131,58 @@ const SOURCE_NOTES: Record<string, string> = {
     </section>
   ) : (
     <>
-      <section class="section">
+      <section class="section section--tight">
         <div class="wrap">
           <div class="grid grid--2">
             <StatTile
               accent
+              value={formatNumber(totalEmployment)}
+              label="people already work in STEM jobs here"
+              note="From a survey of every employer in the state"
+            />
+            <StatTile
               value={formatNumber(priv?.total)}
-              label="Private-sector STEM job postings"
-              note="Last 30 days, within 50 miles of the state"
+              label="private-sector STEM job postings right now"
+              note="Posted in the last 30 days"
             />
             <StatTile
               value={formatNumber(live?.total)}
-              label="Government STEM jobs open right now"
-              note="Federal, state and local postings we can see"
-            />
-            <StatTile
-              value={formatNumber(totalEmployment)}
-              label="People working in STEM jobs here"
-              note="Bureau of Labor Statistics, May 2025 survey"
+              label="government STEM jobs open today"
+              note="Federal, state and local"
             />
             <StatTile
               value={formatMoney(medianAll)}
-              label="Typical STEM salary (median)"
+              label="a typical STEM salary"
               note="What the person in the middle earns"
             />
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="wrap wrap--narrow">
+          <div class="card start-card">
+            <h2 class="card__title">How to read this page</h2>
+            <p>
+              There are three different numbers on this page, and they are
+              counting different things. Knowing which is which is most of
+              the work.
+            </p>
+            <ul class="start-list">
+              <li>
+                <strong>People who already work in STEM</strong> - a count of
+                everyone on the payroll, from a survey of employers. It changes
+                slowly, once a year.
+              </li>
+              <li>
+                <strong>Job postings</strong> - openings advertised right now.
+                A posting is one job. It might be filled next week.
+              </li>
+              <li>
+                <strong>Government jobs</strong> - a smaller set of openings
+                you can apply for directly, listed on official job boards.
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -167,12 +190,33 @@ const SOURCE_NOTES: Record<string, string> = {
       <section class="section section--alt">
         <div class="wrap">
           <div class="section-head">
-            <span class="eyebrow">Who is hiring</span>
+            <span class="eyebrow">What kinds of STEM work?</span>
+            <h2>Where people work</h2>
+            <p class="lede">
+              This is every person in {state.name} working in a STEM job, split
+              into the seven fields we use.
+            </p>
+          </div>
+          <div class="card">
+            <Bars
+              items={fieldBars}
+              label={`People in STEM jobs in ${state.name}, by field`}
+              suffix=" people"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="eyebrow">Who's hiring right now</span>
             <h2>Private-sector STEM jobs in {state.name}</h2>
             <p class="lede">
-              These are the job postings on CareerOneStop - the federal job
-              board that collects openings from thousands of private employers
-              - counted for every STEM occupation we track.
+              Job postings from CareerOneStop, the federal site that collects
+              openings from thousands of private employers. We ask it about
+              every STEM job we track, so these counts are exact for each
+              occupation.
             </p>
           </div>
           {priv && priv.total > 0 ? (
@@ -212,9 +256,7 @@ const SOURCE_NOTES: Record<string, string> = {
             </>
           ) : (
             <div class="card">
-              <p class="muted">
-                Private-sector posting counts are not available right now.
-              </p>
+              <p class="muted">Private-sector posting counts are not available right now.</p>
             </div>
           )}
         </div>
@@ -223,44 +265,22 @@ const SOURCE_NOTES: Record<string, string> = {
       <section class="section section--alt">
         <div class="wrap">
           <div class="section-head">
-            <span class="eyebrow">The kinds of work</span>
-            <h2>STEM is not one thing</h2>
+            <span class="eyebrow">Government jobs</span>
+            <h2>Jobs you can apply for today</h2>
             <p class="lede">
-              Here is how many people work in each field of STEM across{' '}
-              {state.name}.
-            </p>
-          </div>
-          <div class="card">
-            <Bars
-              items={fieldBars}
-              label={`STEM employment by field in ${state.name}`}
-              suffix=" people"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="wrap">
-          <div class="section-head">
-            <span class="eyebrow">Open right now</span>
-            <h2>What kind of STEM jobs are hiring in {state.short}?</h2>
-            <p class="lede">
-              These are the live postings we counted, grouped by field. Counts
-              change every day.
+              Federal, state and local openings - the kind you can apply for
+              right now on an official website.
             </p>
           </div>
           <div class="split">
             <div class="card">
               <Bars
                 items={liveBars}
-                label={`Open STEM postings in ${state.name} by field`}
+                label={`Open government STEM jobs in ${state.name} by field`}
                 suffix=" job"
               />
               <table class="sources-table">
-                <caption class="sr-only">
-                  Where the open job counts come from
-                </caption>
+                <caption class="sr-only">Where the open job counts come from</caption>
                 <thead>
                   <tr>
                     <th scope="col">Source</th>
@@ -268,29 +288,26 @@ const SOURCE_NOTES: Record<string, string> = {
                   </tr>
                 </thead>
                 <tbody>
-                  {(live?.sources ?? []).map((source) => (
-                    <tr>
-                      <th scope="row">
-                        <a href={source.url} rel="noopener">
-                          {source.name}
-                        </a>
-                        <span class="source-note">{SOURCE_NOTES[source.name] ?? ''}</span>
-                      </th>
-                      <td class="num">{formatNumber(source.count)}</td>
-                    </tr>
-                  ))}
+                  {(live?.sources ?? [])
+                    .filter((source) => source.kind !== 'search')
+                    .map((source) => (
+                      <tr>
+                        <th scope="row">
+                          <a href={source.url} rel="noopener">
+                            {source.name}
+                          </a>
+                          <span class="source-note">{SOURCE_NOTES[source.name] ?? ''}</span>
+                        </th>
+                        <td class="num">{formatNumber(source.count)}</td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
-              <p class="source-note">
-                The big number above counts actual postings we could see. Where
-                a source only gives a search count, we show it separately
-                instead of adding it in.
-              </p>
             </div>
             <div class="card">
-              <h3 class="card__title">Fresh examples</h3>
+              <h3 class="card__title">Some real examples</h3>
               <ul class="postings">
-                {(live?.postings ?? []).slice(0, 10).map((p) => (
+                {(live?.postings ?? []).slice(0, 8).map((p) => (
                   <li class="posting">
                     <a class="posting__title" href={p.url} rel="noopener">
                       {p.title}
@@ -305,19 +322,21 @@ const SOURCE_NOTES: Record<string, string> = {
                   </li>
                 ))}
               </ul>
-              {live?.postings.length === 0 && (
-                <p class="muted">No postings recorded yet.</p>
-              )}
+              {live?.postings.length === 0 && <p class="muted">No postings recorded yet.</p>}
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section section--alt">
+      <section class="section">
         <div class="wrap">
           <div class="section-head">
-            <span class="eyebrow">The biggest STEM jobs</span>
-            <h2>Where the most people work</h2>
+            <span class="eyebrow">The most common jobs</span>
+            <h2>What most STEM workers actually do</h2>
+            <p class="lede">
+              Click any job to see what it involves, what it pays and how many
+              openings there are right now.
+            </p>
           </div>
           <div class="card">
             <Bars
@@ -326,18 +345,18 @@ const SOURCE_NOTES: Record<string, string> = {
                 value: o.employment,
                 href: `/careers/${o.soc}`,
               }))}
-              label={`Largest STEM occupations in ${state.name}`}
+              label={`Biggest STEM jobs in ${state.name}`}
               suffix=" people"
             />
           </div>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section section--alt">
         <div class="wrap">
           <div class="section-head">
-            <span class="eyebrow">The pay</span>
-            <h2>STEM jobs that pay the most</h2>
+            <span class="eyebrow">The money</span>
+            <h2>Which jobs pay the most?</h2>
             <p class="lede">
               Average yearly pay for jobs with 200 or more workers in{' '}
               {state.name}.
@@ -354,19 +373,24 @@ const SOURCE_NOTES: Record<string, string> = {
               label={`Highest paying STEM jobs in ${state.name}`}
               format="currency"
             />
+            <p class="source-note">
+              Average pay is pulled up a little by the highest earners, so the
+              <a href={withBase('/careers')}>career pages</a> show the middle
+              salary too.
+            </p>
           </div>
         </div>
       </section>
 
       {metroBars.length > 0 && (
-        <section class="section section--alt">
+        <section class="section">
           <div class="wrap">
             <div class="section-head">
-              <span class="eyebrow">Where the jobs are</span>
-              <h2>STEM jobs by metro area</h2>
+              <span class="eyebrow">Where they work</span>
+              <h2>Which cities have the most STEM jobs?</h2>
               <p class="lede">
-                A metro area can stretch across more than one state - the
-                biggest one here includes {state.abbr} and its neighbours.
+                A metro area is a city plus everything around it that shares the
+                same job market. Some of them cross state lines.
               </p>
             </div>
             <div class="card">
@@ -384,8 +408,7 @@ const SOURCE_NOTES: Record<string, string> = {
                   .filter((m) => m.shared.length > 0)
                   .map((m) => (
                     <li>
-                      <strong>{m.label}</strong> also covers{' '}
-                      {m.shared.join(', ')}
+                      <strong>{m.label}</strong> also covers {m.shared.join(', ')}
                     </li>
                   ))}
               </ul>
@@ -395,13 +418,13 @@ const SOURCE_NOTES: Record<string, string> = {
       )}
 
       {growing.length > 0 && (
-        <section class="section">
+        <section class="section section--alt">
           <div class="wrap">
             <div class="section-head">
-              <span class="eyebrow">What's growing</span>
-              <h2>STEM careers on the way up</h2>
+              <span class="eyebrow">What is growing</span>
+              <h2>Which STEM jobs are on the way up?</h2>
               <p class="lede">
-                How much each job is projected to grow, nationally, between 2025
+                How much each job is predicted to grow, nationwide, between 2025
                 and 2035.
               </p>
             </div>
@@ -417,22 +440,21 @@ const SOURCE_NOTES: Record<string, string> = {
                 format="percent"
               />
               <p class="source-note">
-                Growth is a national projection from the Bureau of Labor
-                Statistics.
+                A prediction, not a promise. The Bureau of Labor Statistics
+                publishes these every year.
               </p>
             </div>
           </div>
         </section>
       )}
 
-      <section class="section section--alt">
+      <section class="section">
         <div class="wrap">
           <div class="section-head">
             <span class="eyebrow">Go deeper</span>
-            <h2>Explore each career</h2>
+            <h2>Pick a field and see the jobs inside it</h2>
             <p class="lede">
-              What the job involves, what you would study, and what it pays in{' '}
-              {state.name}.
+              Every job, what it involves, and what it pays in {state.name}.
             </p>
           </div>
           <div class="grid grid--3">
@@ -482,6 +504,18 @@ const SOURCE_NOTES: Record<string, string> = {
     color: #b9c8e0;
   }
 
+  .start-card {
+    border-left: 5px solid var(--accent);
+  }
+  .start-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--ink-700);
+  }
+  .start-list li + li {
+    margin-top: 0.6rem;
+  }
+
   .split {
     display: grid;
     gap: var(--space-m);
@@ -495,7 +529,7 @@ const SOURCE_NOTES: Record<string, string> = {
     padding: 0;
   }
   .posting {
-    padding-block: 0.6rem;
+    padding-block: 0.7rem;
     border-bottom: 1px solid var(--paper-sunk);
   }
   .posting:last-child {
@@ -531,10 +565,6 @@ const SOURCE_NOTES: Record<string, string> = {
     margin-top: 0.3rem;
   }
 
-  .top-employers {
-    margin-top: var(--space-m);
-  }
-
   .sources-table {
     margin-top: var(--space-m);
     font-size: var(--step--1);
@@ -551,6 +581,10 @@ const SOURCE_NOTES: Record<string, string> = {
     margin-top: 0.15rem;
     font-size: var(--step--1);
     color: var(--ink-500);
+  }
+
+  .top-employers {
+    margin-top: var(--space-m);
   }
 
   .metro-shared {

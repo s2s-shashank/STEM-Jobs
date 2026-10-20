@@ -1,0 +1,62 @@
+---
+/**
+ * A small "?" that explains a word or number, using <details> so it works
+ * with no JavaScript and is keyboard and screen-reader friendly.
+ */
+interface Props {
+  /** Short label for the button. */
+  label?: string;
+  /** The explanation. */
+  text: string;
+}
+
+const { label = '?', text } = Astro.props;
+---
+
+<details class="explain">
+  <summary aria-label={`What does this mean? ${text}`}>{label}</summary>
+  <div class="explain__body" role="note">{text}</div>
+</details>
+
+<style>
+  .explain {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 0.3rem;
+  }
+  .explain summary {
+    display: grid;
+    place-items: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .explain summary::-webkit-details-marker {
+    display: none;
+  }
+  .explain summary:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+  .explain__body {
+    position: absolute;
+    z-index: 30;
+    width: max-content;
+    max-width: 17rem;
+    margin-top: 0.4rem;
+    padding: 0.6rem 0.75rem;
+    background: var(--navy-900);
+    color: #eaf0fb;
+    font-size: var(--step--1);
+    line-height: 1.45;
+    border-radius: var(--radius-s);
+    box-shadow: var(--shadow-l);
+  }
+</style>
