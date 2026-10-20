@@ -1,0 +1,171 @@
+---
+import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/url';
+import { STATES } from '../data/states';
+import { allStateData, formatNumber, formatMoney } from '../lib/data';
+
+const byState = STATES.map((state) => {
+  const data = allStateData().find((d) => d.state === state.code);
+  const occupations = data?.occupations ?? [];
+  const total = occupations.reduce((sum, o) => sum + o.employment, 0);
+  const top = [...occupations].sort((a, b) => b.employment - a.employment).slice(0, 3);
+  return { state, data, total, top };
+});
+
+const questions = [
+  {
+    q: 'Pick a STEM job you have never heard of. Look it up in the career list. What does the person actually do all day?',
+    space: 4,
+  },
+  {
+    q: 'Find the median pay for that job in your state. Convert it to an hourly rate. Would that pay cover your rent, a car payment and some fun money?',
+    space: 4,
+  },
+  {
+    q: 'Is that job growing or shrinking? What would have to happen for the answer to change?',
+    space: 3,
+  },
+  {
+    q: 'Find one real opening in that field on your state page. What did the employer ask for? Which of those things can you start this year?',
+    space: 4,
+  },
+  {
+    q: 'Compare two states on the same job. Why might the pay be different? (Think about cost of living, and who is hiring.)',
+    space: 3,
+  },
+];
+---
+
+<Base
+  title="For teachers: classroom worksheets"
+  description="Printable STEM career worksheets for middle and high school classes, using real data from New Jersey, New York and Pennsylvania."
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag"><span aria-hidden="true">●</span> For teachers</span>
+      <h1>Classroom worksheets</h1>
+      <p class="lede">
+        Print this page, hand it to a student, and let them work with real
+        numbers. Every answer is on the site - the questions are about making
+        sense of them.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={withBase('/print/teachers-worksheet')}>
+          Open the print version
+        </a>
+        <a class="btn btn--ghost" href={withBase('/glossary')}>Glossary for students</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <h2>Part 1 - The numbers for your state</h2>
+      <div class="table-wrap">
+        <table>
+          <caption class="sr-only">STEM job numbers for each state</caption>
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col" class="num">People in STEM jobs</th>
+              <th scope="col">Biggest jobs there</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              byState.map((row) => (
+                <tr>
+                  <th scope="row">{row.state.name}</th>
+                  <td class="num">{formatNumber(row.total)}</td>
+                  <td>
+                    {row.top.map((o) => o.title).join(', ') || '—'}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Part 2 - Pick a job and dig in</h2>
+      <ol class="worksheet">
+        {
+          questions.map((question, index) => (
+            <li>
+              <p class="worksheet__q">
+                <span class="worksheet__num">{index + 1}</span>
+                {question.q}
+              </p>
+              <div class="worksheet__lines" aria-hidden="true">
+                {Array.from({ length: question.space }).map(() => (
+                  <span />
+                ))}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <h2>Part 3 - Extension questions</h2>
+      <ul class="muted">
+        <li>
+          What is the difference between a <strong>median</strong> and an{' '}
+          <strong>average</strong>? Why do we show the median?
+        </li>
+        <li>
+          Our list of STEM jobs starts with the Bureau of Labor Statistics
+          definition. Who would you add or remove, and why?
+        </li>
+        <li>
+          A posting is one job opening today. Why is that different from
+          "there are 600 STEM jobs in New York"? What would you need to know to
+          compare them fairly?
+        </li>
+        <li>
+          Pick a career from your own family or neighbourhood. Does the data on
+          this site match what you would expect? What might explain the
+          difference?
+        </li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .worksheet {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: q;
+  }
+  .worksheet li {
+    padding-block: var(--space-s);
+  }
+  .worksheet__q {
+    display: flex;
+    gap: var(--space-2xs);
+    font-weight: 600;
+    margin-bottom: var(--space-2xs);
+  }
+  .worksheet__num {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 800;
+    font-size: var(--step--1);
+  }
+  .worksheet__lines {
+    display: grid;
+    gap: 1.6rem;
+    padding-left: 2.4rem;
+  }
+  .worksheet__lines span {
+    display: block;
+    border-bottom: 1px solid var(--paper-sunk);
+  }
+</style>

@@ -103,6 +103,12 @@ export function formatDate(iso?: string): string {
   });
 }
 
+/** Growth with a real sign: "+5.2%" or "-4.1%" (never "+-4.1%"). */
+export function formatGrowth(n?: number): string {
+  if (n == null) return '—';
+  return `${n >= 0 ? '+' : '-'}${Math.abs(n).toFixed(1)}%`;
+}
+
 export function formatMoney(n?: number): string {
   if (n == null) return '—';
   return n.toLocaleString('en-US', {
@@ -115,6 +121,51 @@ export function formatMoney(n?: number): string {
 export function formatNumber(n?: number): string {
   if (n == null) return '—';
   return n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+
+/**
+ * Turn a yearly salary into numbers a student can picture.
+ *
+ * A $70,000 job does not mean much to a 14-year-old. $32 an hour, $1,350 a
+ * week, or "a used car payment" does.
+ */
+export interface PayTranslation {
+  hourly: number;
+  weekly: number;
+  monthly: number;
+  perDay: number;
+  /** Rough comparison a student can picture. */
+  comparison: string;
+}
+
+export function translatePay(annual?: number): PayTranslation | undefined {
+  if (!annual || annual <= 0) return undefined;
+
+  const hourly = annual / 2080;
+  const weekly = annual / 52;
+  const monthly = annual / 12;
+  const perDay = weekly / 5;
+
+  let comparison: string;
+  if (hourly >= 60) {
+    comparison = 'about the price of a nice dinner out';
+  } else if (hourly >= 40) {
+    comparison = 'about the price of a movie ticket and a snack';
+  } else if (hourly >= 25) {
+    comparison = 'about the price of a concert ticket';
+  } else if (hourly >= 18) {
+    comparison = 'about the price of a large pizza';
+  } else {
+    comparison = 'about the price of a fast-food meal';
+  }
+
+  return {
+    hourly: Math.round(hourly),
+    weekly: Math.round(weekly),
+    monthly: Math.round(monthly),
+    perDay: Math.round(perDay),
+    comparison,
+  };
 }
 
 /**

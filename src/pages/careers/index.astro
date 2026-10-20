@@ -1,7 +1,7 @@
 ---
 import { withBase } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
-import { allStateData, formatMoney, formatNumber } from '../../lib/data';
+import { allStateData, formatMoney, formatNumber, formatGrowth } from '../../lib/data';
 import { CATEGORIES, STATES } from '../../data/states';
 
 interface Career {
@@ -97,11 +97,7 @@ const groups = CATEGORIES.map((c) => ({
                         <td class="num">{formatNumber(c.employment)}</td>
                         <td class="num">{formatMoney(c.medianWage)}</td>
                         <td class="num">{formatMoney(c.entryWage)}</td>
-                        <td class="num">
-                          {typeof c.growth === 'number'
-                            ? `+${c.growth.toFixed(1)}%`
-                            : '—'}
-                        </td>
+                        <td class="num">{formatGrowth(c.growth)}</td>
                       </tr>
                     ))}
                   </tbody>

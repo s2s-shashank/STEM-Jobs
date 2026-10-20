@@ -1,0 +1,51 @@
+[
+  {
+    "id": "computing",
+    "label": "Computing & Software",
+    "color": "#2f7df6",
+    "icon": "💻",
+    "blurb": "Building software, websites, networks and cyber security."
+  },
+  {
+    "id": "data",
+    "label": "Data & Math",
+    "color": "#7c5cff",
+    "icon": "📊",
+    "blurb": "Finding patterns in numbers and making sense of them."
+  },
+  {
+    "id": "engineering",
+    "label": "Engineering",
+    "color": "#f2801d",
+    "icon": "⚙️",
+    "blurb": "Designing the machines, systems and structures we use."
+  },
+  {
+    "id": "architecture",
+    "label": "Architecture & Surveying",
+    "color": "#b25a1e",
+    "icon": "📐",
+    "blurb": "Designing buildings, maps and the spaces where we live."
+  },
+  {
+    "id": "science",
+    "label": "Science & Research",
+    "color": "#10a37f",
+    "icon": "🔬",
+    "blurb": "Studying the physical world, living things and the environment."
+  },
+  {
+    "id": "health",
+    "label": "Health & Medicine",
+    "color": "#e04f7f",
+    "icon": "🩺",
+    "blurb": "Caring for people and the technology that keeps them healthy."
+  },
+  {
+    "id": "trades",
+    "label": "Skilled Trades & Technical",
+    "color": "#0f9bb4",
+    "icon": "🔧",
+    "blurb": "Installing, repairing and operating the equipment that keeps things running."
+  }
+]

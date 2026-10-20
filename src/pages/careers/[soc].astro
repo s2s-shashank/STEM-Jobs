@@ -1,7 +1,9 @@
 ---
-import { withBase } from '../../lib/url';
 import Base from '../../layouts/Base.astro';
-import { allStateData, formatMoney, formatNumber, formatDate } from '../../lib/data';
+import Bars from '../../components/Bars.astro';
+import PayTranslation from '../../components/PayTranslation.astro';
+import { withBase } from '../../lib/url';
+import { allStateData, formatMoney, formatNumber, formatDate, formatGrowth } from '../../lib/data';
 import { CATEGORY_MAP, STATES } from '../../data/states';
 
 export async function getStaticPaths() {
@@ -24,14 +26,27 @@ if (perState.length === 0) {
   return Astro.redirect('/careers');
 }
 
-const title = perState[0].occ!.title;
-const category = CATEGORY_MAP[perState[0].occ!.category];
+const primary = perState[0].occ!;
+const title = primary.title;
+const category = CATEGORY_MAP[primary.category];
 const blurb =
-  perState[0].occ!.blurb ??
-  `${title} is part of the ${category?.label ?? 'STEM'} field. Below is what the data says about this career in each state we track.`;
+  primary.blurb ??
+  `${title} is part of the ${category?.label ?? 'STEM'} field. Here is what the data says about this career in each state we track.`;
 const education =
-  perState[0].occ!.education ??
+  primary.education ??
   'Most people in this field start with a two-year degree, a certificate or an apprenticeship, then move to a four-year degree once they are working.';
+const bestPay = perState.reduce((best, row) =>
+  (row.occ!.medianWage ?? 0) > (best.occ!.medianWage ?? 0) ? row : best,
+);
+
+// Live postings that look like this job, from the first state that has them.
+const liveSamples = perState
+  .flatMap((row) =>
+    (row.data?.live.postings ?? [])
+      .filter((p) => p.title.toLowerCase().includes(title.split(' ')[0].toLowerCase()))
+      .map((p) => ({ ...p, state: row.state.short })),
+  )
+  .slice(0, 6);
 ---
 
 <Base
@@ -74,16 +89,37 @@ const education =
                   <td class="num">{formatMoney(occ!.medianWage)}</td>
                   <td class="num">{formatMoney(occ!.meanWage)}</td>
                   <td class="num">{formatMoney(occ!.entryWage)}</td>
-                  <td class="num">
-                    {typeof occ!.growth === 'number'
-                      ? `+${occ!.growth.toFixed(1)}%`
-                      : '—'}
-                  </td>
+                  <td class="num">{formatGrowth(occ!.growth)}</td>
                 </tr>
               ))
             }
           </tbody>
         </table>
+      </div>
+
+      <div class="grid grid--2 two-col">
+        <div>
+          <h2>What that salary feels like</h2>
+          <PayTranslation annual={bestPay.occ!.medianWage} label="a year" />
+          <p class="source-note">
+            Based on the median pay in {bestPay.state.name}. Before taxes, and
+            it varies a lot with experience and where you live.
+          </p>
+        </div>
+        <div>
+          <h2>Median pay compared</h2>
+          <div class="card">
+            <Bars
+              items={perState.map((row) => ({
+                label: row.state.name,
+                value: row.occ!.medianWage ?? 0,
+                color: row.state.color,
+              }))}
+              label={`Median pay for ${title} in each state`}
+              format="currency"
+            />
+          </div>
+        </div>
       </div>
 
       <div class="grid grid--2 two-col">
@@ -95,7 +131,7 @@ const education =
             <li>Do I want to work with my hands, with data, or with people?</li>
             <li>Is there a local apprenticeship or certificate program?</li>
             <li>Which classes should I sign up for next year?</li>
-            <li>Who is already working in this job near me — could I ask them?</li>
+            <li>Who is already working in this job near me - could I ask them?</li>
           </ul>
         </article>
 
@@ -104,7 +140,7 @@ const education =
           <p class="muted">
             <strong>Starting pay</strong> is what a new graduate with no
             experience typically earns. <strong>Median pay</strong> is what the
-            person in the middle of the pay range earns — usually a better
+            person in the middle of the pay range earns - usually a better
             target than the average, which can be pulled up by a few very high
             earners.
           </p>
@@ -114,10 +150,34 @@ const education =
             Statistics.
           </p>
           <p class="source-note">
-            Data as of {formatDate(perState[0].data?.asOf)}. <a href={withBase("/sources")}>Sources</a>
+            Data as of {formatDate(perState[0].data?.asOf)}. <a href={withBase('/sources')}>Sources</a>
           </p>
         </article>
       </div>
+
+      {
+        liveSamples.length > 0 && (
+          <section class="live">
+            <h2>Jobs like this, open right now</h2>
+            <ul class="postings">
+              {liveSamples.map((p) => (
+                <li class="posting">
+                  <a class="posting__title" href={p.url} rel="noopener">
+                    {p.title}
+                  </a>
+                  <span class="posting__meta">
+                    {p.employer}
+                    {p.location ? ` · ${p.location}` : ''} · {p.state}
+                    {p.salaryMin && p.salaryMax
+                      ? ` · ${formatMoney(p.salaryMin)}–${formatMoney(p.salaryMax)}`
+                      : ''}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
     </div>
   </section>
 </Base>
@@ -125,5 +185,34 @@ const education =
 <style>
   .two-col {
     margin-top: var(--space-l);
+    align-items: start;
+  }
+  .live {
+    margin-top: var(--space-xl);
+  }
+  .postings {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .posting {
+    padding-block: 0.6rem;
+    border-bottom: 1px solid var(--paper-sunk);
+  }
+  .posting:last-child {
+    border-bottom: 0;
+  }
+  .posting__title {
+    display: block;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .posting__title:hover {
+    text-decoration: underline;
+  }
+  .posting__meta {
+    display: block;
+    font-size: var(--step--1);
+    color: var(--ink-500);
   }
 </style>

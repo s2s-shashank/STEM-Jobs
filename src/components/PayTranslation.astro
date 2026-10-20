@@ -1,0 +1,86 @@
+---
+import { translatePay, formatMoney } from '../lib/data';
+
+interface Props {
+  annual?: number;
+  label?: string;
+}
+
+const { annual, label = 'a year' } = Astro.props;
+const pay = translatePay(annual);
+---
+
+{
+  pay && (
+    <div class="pay">
+      <p class="pay__lead">
+        <strong>{formatMoney(annual)}</strong> {label} works out to about{' '}
+        <strong>${pay.hourly} an hour</strong>, or{' '}
+        <strong>${pay.weekly} a week</strong> before taxes.
+      </p>
+      <div class="pay__grid">
+        <div class="pay__cell">
+          <span class="pay__value">${pay.hourly}</span>
+          <span class="pay__label">per hour</span>
+        </div>
+        <div class="pay__cell">
+          <span class="pay__value">${pay.daily ?? pay.perDay}</span>
+          <span class="pay__label">per day</span>
+        </div>
+        <div class="pay__cell">
+          <span class="pay__value">${pay.weekly}</span>
+          <span class="pay__label">per week</span>
+        </div>
+        <div class="pay__cell">
+          <span class="pay__value">${pay.monthly.toLocaleString('en-US')}</span>
+          <span class="pay__label">per month</span>
+        </div>
+      </div>
+      <p class="pay__note">That is {pay.comparison}.</p>
+    </div>
+  )
+}
+
+<style>
+  .pay {
+    background: var(--paper-alt);
+    border: var(--border);
+    border-radius: var(--radius-m);
+    padding: var(--space-m);
+  }
+  .pay__lead {
+    margin: 0 0 var(--space-s);
+    font-size: var(--step-1);
+    line-height: 1.45;
+  }
+  .pay__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: var(--space-2xs);
+  }
+  .pay__cell {
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius-s);
+    padding: var(--space-s);
+    text-align: center;
+  }
+  .pay__value {
+    display: block;
+    font-size: var(--step-2);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .pay__label {
+    display: block;
+    font-size: var(--step--1);
+    color: var(--ink-500);
+    font-weight: 600;
+  }
+  .pay__note {
+    margin: var(--space-s) 0 0;
+    color: var(--ink-500);
+    font-size: var(--step--1);
+  }
+</style>

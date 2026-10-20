@@ -2,8 +2,16 @@
 import { withBase } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import StateCard from '../components/StateCard.astro';
+import StatTile from '../components/StatTile.astro';
+import Bars from '../components/Bars.astro';
 import { STATES } from '../data/states';
-import { getStateData, formatNumber, lastUpdated } from '../lib/data';
+import {
+  getStateData,
+  formatNumber,
+  formatMoney,
+  lastUpdated,
+  byEmployment,
+} from '../lib/data';
 import { CATEGORIES } from '../data/states';
 
 const stateData = STATES.map((s) => {
@@ -17,6 +25,20 @@ const stateData = STATES.map((s) => {
 });
 
 const updated = lastUpdated();
+
+// A few numbers to put on the front page.
+const nj = getStateData('nj');
+const allOccupations = nj?.occupations ?? [];
+const totalStemWorkers = allOccupations.reduce((sum, o) => sum + o.employment, 0);
+const openNow = STATES.reduce((sum, s) => sum + (getStateData(s.code)?.live.total ?? 0), 0);
+const bestPay = [...allOccupations]
+  .filter((o) => o.employment >= 500)
+  .sort((a, b) => b.meanWage - a.meanWage)[0];
+const topJob = byEmployment(allOccupations)[0];
+const biggestJob = byEmployment(allOccupations).filter((o) => o.employment > 5000)[0];
+const fastestGrowing = [...allOccupations]
+  .filter((o) => typeof o.growth === 'number')
+  .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))[0];
 ---
 
 <Base
@@ -42,6 +64,33 @@ const updated = lastUpdated();
     </div>
   </section>
 
+  {
+    totalStemWorkers > 0 && (
+      <section class="section section--tight">
+        <div class="wrap">
+          <div class="grid grid--3">
+            <StatTile
+              accent
+              value={formatNumber(openNow)}
+              label="STEM jobs open right now"
+              note="Across New Jersey, New York and Pennsylvania"
+            />
+            <StatTile
+              value={formatNumber(totalStemWorkers)}
+              label="People work in STEM jobs in New Jersey"
+              note="Bureau of Labor Statistics, May 2025"
+            />
+            <StatTile
+              value={formatNumber(biggestJob?.employment)}
+              label={`Biggest STEM job in NJ: ${biggestJob?.title ?? ''}`}
+              note="How many people do that job in New Jersey"
+            />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <section class="section">
     <div class="wrap">
       <div class="section-head">
@@ -63,7 +112,7 @@ const updated = lastUpdated();
   <section class="section section--alt">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">The eight kinds of STEM work</span>
+        <span class="eyebrow">The seven kinds of STEM work</span>
         <h2>STEM is not one thing</h2>
         <p class="lede">
           A civil engineer and a cybersecurity analyst both count as STEM, and

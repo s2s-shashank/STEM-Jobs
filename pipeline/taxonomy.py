@@ -17,38 +17,36 @@ from __future__ import annotations
 import re
 
 # ---------------------------------------------------------------------------
-# Categories (keep in sync with src/data/states.ts)
+# Categories
+#
+# The list itself lives in src/data/categories.json so the site and the
+# pipeline always agree on names, colours and ids. This module only decides
+# which category an occupation belongs to.
 # ---------------------------------------------------------------------------
-CATEGORIES: dict[str, dict[str, str]] = {
-    "computing": {
-        "label": "Computing & Software",
-        "blurb": "Building software, websites, networks and cyber security.",
-    },
-    "data": {
-        "label": "Data & Math",
-        "blurb": "Finding patterns in numbers and making sense of them.",
-    },
-    "engineering": {
-        "label": "Engineering",
-        "blurb": "Designing and building the machines, systems and structures we use.",
-    },
-    "architecture": {
-        "label": "Architecture & Surveying",
-        "blurb": "Designing buildings, maps and the spaces where we live.",
-    },
-    "science": {
-        "label": "Science & Research",
-        "blurb": "Studying the physical world, living things and the environment.",
-    },
-    "health": {
-        "label": "Health & Medicine",
-        "blurb": "Caring for people and the technology that keeps them healthy.",
-    },
-    "trades": {
-        "label": "Skilled Trades & Technical",
-        "blurb": "Installing, repairing and operating the equipment that keeps things running.",
-    },
-}
+import json
+import os
+
+_CATEGORIES_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "src",
+    "data",
+    "categories.json",
+)
+
+
+def _load_categories() -> dict[str, dict[str, str]]:
+    try:
+        with open(_CATEGORIES_PATH, encoding="utf-8") as handle:
+            raw = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return {entry["id"]: entry for entry in raw}
+
+
+CATEGORIES: dict[str, dict[str, str]] = _load_categories()
+
+#: Every category id the pipeline is allowed to use.
+CATEGORY_IDS: set[str] = set(CATEGORIES)
 
 # ---------------------------------------------------------------------------
 # Detailed SOC code -> category
@@ -279,6 +277,16 @@ def category_for_code(code: str) -> str | None:
     return CODES.get(code.strip())
 
 
+def _check_categories() -> None:
+    """Fail loudly if a code points at a category the site does not know."""
+    unknown = {c for c in CODES.values()} - CATEGORY_IDS
+    if unknown:
+        raise RuntimeError(
+            "Unknown STEM categories used by the occupation codes: "
+            f"{sorted(unknown)}. Add them to src/data/categories.json."
+        )
+
+
 # ---------------------------------------------------------------------------
 # Job title keywords, used to sort live postings into categories.
 #
@@ -374,6 +382,9 @@ def category_for_title(title: str) -> str | None:
         if pattern.search(title):
             return category
     return None
+
+
+_check_categories()
 
 
 def is_stem_title(title: str) -> bool:

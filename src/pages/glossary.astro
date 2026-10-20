@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/url';
+
+const terms = [
+  {
+    term: 'STEM',
+    def: 'Science, Technology, Engineering and Math. A loose group of careers that use math, science and problem solving. There is no single official list, so every site picks its own - ours is described on the <a href="/sources">sources page</a>.',
+  },
+  {
+    term: 'Occupation',
+    def: 'A kind of job, not a company. "Registered Nurse" is an occupation whether you work at a hospital in Newark or a clinic in Boise.',
+  },
+  {
+    term: 'SOC code',
+    def: 'A six-digit number the government uses to sort every job into a box - for example 29-1141 is Registered Nurses. On this site the code is the link in each job\'s address, like /careers/29-1141.',
+  },
+  {
+    term: 'Employment',
+    def: 'How many people are working in a job right now, counted by the Bureau of Labor Statistics in their May survey of employers.',
+  },
+  {
+    term: 'Median pay',
+    def: 'The pay of the person in the middle of the range. Half earn more, half earn less. It is usually a fairer number than the average, because one very high salary can drag the average up.',
+  },
+  {
+    term: 'Mean (average) pay',
+    def: 'All the salaries added together and divided by how many people there are. Handy, but easily pulled up by a handful of very high earners.',
+  },
+  {
+    term: 'Entry wage',
+    def: 'What people usually earn when they are brand new at the job - the 10th percentile of the pay range.',
+  },
+  {
+    term: 'Job growth',
+    def: 'The Bureau of Labor Statistics prediction for how many more jobs there will be in a decade. It is a projection, not a promise.',
+  },
+  {
+    term: 'Job openings',
+    def: 'How many jobs are expected to open each year - not only new jobs, but also jobs people leave behind. A lot of openings in a field means a lot of hiring.',
+  },
+  {
+    term: 'Metro area',
+    def: 'A city and everything around it that shares one job market. "New York-Newark-Jersey City" is one metro area that covers parts of two states.',
+  },
+  {
+    term: 'Civil service',
+    def: 'Government jobs that have to be filled through a hiring list. Applying for a civil service exam puts you on the list, and agencies hire from it.',
+  },
+  {
+    term: 'USAJOBS',
+    def: 'The official website for federal government jobs - the Department of Defense, NASA, the FAA and about 500 other agencies.',
+  },
+  {
+    term: 'CareerOneStop',
+    def: 'A Department of Labor website that collects job postings from many private-sector job boards into one search.',
+  },
+  {
+    term: 'Posting vs announcement',
+    def: 'A posting is a specific job you can apply for. An announcement (like a New Jersey civil service exam) is an invitation to take a test so you can be considered for a list of jobs.',
+  },
+  {
+    term: 'Apprenticeship',
+    def: 'A paid training program where you work and learn at the same time, usually for several years. Many skilled trades and some STEM jobs are built on apprenticeships.',
+  },
+  {
+    term: 'Industry',
+    def: 'The kind of business an employer is in - a hospital, a software company, a construction firm. The same job title can exist in many industries.',
+  },
+];
+---
+
+<Base
+  title="STEM words explained"
+  description="A plain-English glossary of the data and job words used on this site, for students and teachers."
+>
+  <section class="hero">
+    <div class="wrap">
+      <span class="hero__tag"><span aria-hidden="true">●</span> Glossary</span>
+      <h1>The words we use, explained</h1>
+      <p class="lede">
+        Every data site has jargon. Here is ours, in plain English - the kind
+        you could explain to a friend in one sentence.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <dl class="glossary">
+        {
+          terms.map((entry) => (
+            <div class="glossary__item">
+              <dt>{entry.term}</dt>
+              <dd set:html={entry.def} />
+            </div>
+          ))
+        }
+      </dl>
+      <p class="source-note">
+        Something missing or confusing? <a href={withBase('/sources')}>Tell us where the data comes from</a>
+        and we will add it here.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .glossary {
+    margin: 0;
+  }
+  .glossary__item {
+    padding-block: var(--space-m);
+    border-bottom: 1px solid var(--paper-sunk);
+  }
+  .glossary__item:last-child {
+    border-bottom: 0;
+  }
+  .glossary dt {
+    font-weight: 800;
+    font-size: var(--step-1);
+    letter-spacing: -0.01em;
+  }
+  .glossary dd {
+    margin: 0.3rem 0 0;
+    color: var(--ink-700);
+  }
+</style>

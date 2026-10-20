@@ -22,6 +22,7 @@ from pipeline.env import load_env  # noqa: E402
 from pipeline.sources import (  # noqa: E402
     bls_ep,
     bls_oews,
+    careeronestop,
     nj_csc,
     ny_statejobs,
     pa_commonwealth,
@@ -38,16 +39,21 @@ STATES = {
 }
 
 LIVE_SOURCES = {
-    "nj": [(usajobs, "USAJOBS"), (nj_csc, "NJ Civil Service")],
-    "ny": [(usajobs, "USAJOBS"), (ny_statejobs, "StateJobsNY")],
-    "pa": [(usajobs, "USAJOBS"), (pa_commonwealth, "Commonwealth Careers")],
+    "nj": [(usajobs, "USAJOBS"), (nj_csc, "NJ Civil Service"), (careeronestop, "CareerOneStop")],
+    "ny": [(usajobs, "USAJOBS"), (ny_statejobs, "StateJobsNY"), (careeronestop, "CareerOneStop")],
+    "pa": [(usajobs, "USAJOBS"), (pa_commonwealth, "Commonwealth Careers"), (careeronestop, "CareerOneStop")],
 }
+
+# CareerOneStop answers "how many jobs match this word?", so its numbers can
+# overlap with each other. We keep them separate instead of adding them up.
+SEARCH_SOURCES = {"CareerOneStop"}
 
 SOURCE_URLS = {
     "USAJOBS": "https://www.usajobs.gov/",
     "NJ Civil Service": "https://info.csc.nj.gov/jobannouncements/",
     "StateJobsNY": "https://statejobs.ny.gov/",
     "Commonwealth Careers": "https://careers.employment.pa.gov/",
+    "CareerOneStop": "https://www.careeronestop.org/",
 }
 
 
@@ -139,6 +145,7 @@ def main() -> int:
                     "name": label,
                     "count": result["total"],
                     "url": SOURCE_URLS.get(label, ""),
+                    "kind": "search" if label in SEARCH_SOURCES else "postings",
                 }
             )
             postings.extend(result["postings"])

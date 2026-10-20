@@ -1,0 +1,323 @@
+---
+import { STATES } from '../../data/states';
+import { allStateData, formatNumber, formatMoney } from '../../lib/data';
+
+const byState = STATES.map((state) => {
+  const data = allStateData().find((d) => d.state === state.code);
+  const occupations = data?.occupations ?? [];
+  const total = occupations.reduce((sum, o) => sum + o.employment, 0);
+  const top = [...occupations].sort((a, b) => b.employment - a.employment).slice(0, 4);
+  const open = data?.live.total ?? 0;
+  return { state, total, top, open };
+});
+
+const questions = [
+  'Pick a STEM job you have never heard of. Look it up in the career list. What does the person actually do all day?',
+  'Find the median pay for that job in your state. Convert it to an hourly rate. Would that pay cover rent, a car payment and some fun money?',
+  'Is that job growing or shrinking? What would have to happen for the answer to change?',
+  'Find one real opening in that field on your state page. What did the employer ask for? Which of those things can you start this year?',
+  'Compare two states on the same job. Why might the pay be different? (Think about cost of living, and who is hiring.)',
+  'Which of the three states has the most people working in STEM jobs? Why might that be?',
+];
+
+const topCareers = [
+  { soc: '15-1252', title: 'Software Developers' },
+  { soc: '29-1141', title: 'Registered Nurses' },
+  { soc: '17-2051', title: 'Civil Engineers' },
+  { soc: '15-2051', title: 'Data Scientists' },
+  { soc: '19-1021', title: 'Biochemists and Biophysicists' },
+  { soc: '15-1211', title: 'Computer Systems Analysts' },
+  { soc: '17-2112', title: 'Industrial Engineers' },
+  { soc: '19-5011', title: 'Occupational Health and Safety Specialists' },
+  { soc: '15-2041', title: 'Statisticians' },
+  { soc: '17-2071', title: 'Electrical Engineers' },
+];
+
+const salaryRows = topCareers.map((career) => {
+  const rows = STATES.map((state) => {
+    const data = allStateData().find((d) => d.state === state.code);
+    const occ = data?.occupations.find((o) => o.soc === career.soc);
+    return { state: state.short, occ };
+  });
+  return { career, rows };
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>STEM Jobs worksheet | STEM Jobs</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      :root {
+        --ink: #111827;
+        --muted: #4b5563;
+        --line: #d1d5db;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 2rem;
+        font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+          Arial, sans-serif;
+        color: var(--ink);
+        line-height: 1.55;
+        background: #fff;
+        max-width: 46rem;
+        margin-inline: auto;
+      }
+      header {
+        border-bottom: 3px solid var(--ink);
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      h1 {
+        margin: 0 0 0.25rem;
+        font-size: 1.6rem;
+        letter-spacing: -0.02em;
+      }
+      .sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      h2 {
+        font-size: 1.05rem;
+        margin: 2rem 0 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 0.3rem;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 0.4rem 0.5rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      thead th {
+        background: #f3f4f6;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      td.num,
+      th.num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      ol.questions {
+        padding-left: 1.2rem;
+      }
+      ol.questions li {
+        margin-bottom: 1.6rem;
+        break-inside: avoid;
+      }
+      .lines {
+        margin-top: 0.6rem;
+        display: grid;
+        gap: 1.5rem;
+      }
+      .lines span {
+        border-bottom: 1px solid var(--line);
+      }
+      .name {
+        margin-top: 2.5rem;
+        display: flex;
+        gap: 2rem;
+        font-size: 0.95rem;
+      }
+      .name div {
+        flex: 1;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 0.2rem;
+      }
+      .tools {
+        margin: 1.5rem 0;
+      }
+      .tools a,
+      .tools button {
+        font: inherit;
+        padding: 0.55rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--ink);
+        background: var(--ink);
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .tools button + a,
+      .tools a + button {
+        margin-left: 0.5rem;
+      }
+      .source {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 2rem;
+        border-top: 1px solid var(--line);
+        padding-top: 0.75rem;
+      }
+      @media print {
+        body {
+          padding: 0;
+          max-width: none;
+          font-size: 11pt;
+        }
+        .tools {
+          display: none;
+        }
+        @page {
+          margin: 1.6cm;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>STEM Jobs: what are the numbers telling you?</h1>
+      <p class="sub">
+        A worksheet using real data from New Jersey, New York and Pennsylvania.
+        All the answers are on <strong>stemjobs.netlify.app</strong> - or search
+        "STEM Jobs" in your browser.
+      </p>
+    </header>
+
+    <div class="tools">
+      <button onclick="window.print()">Print this page</button>
+      <a href="../../">Back to the site</a>
+    </div>
+
+    <h2>1. The big picture</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>State</th>
+          <th class="num">People working in STEM jobs</th>
+          <th class="num">STEM jobs open right now</th>
+          <th>Biggest STEM jobs there</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          byState.map((row) => (
+            <tr>
+              <td>{row.state.name}</td>
+              <td class="num">{formatNumber(row.total)}</td>
+              <td class="num">{formatNumber(row.open)}</td>
+              <td>{row.top.map((o) => o.title).join(', ')}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <h2>2. Pay for ten real STEM jobs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Job</th>
+          {
+            STATES.map((state) => (
+              <th class="num">
+                {state.short} median
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          salaryRows.map((row) => (
+            <tr>
+              <td>{row.career.title}</td>
+              {row.rows.map((cell) => (
+                <td class="num">{formatMoney(cell.occ?.medianWage)}</td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <h2>3. Questions</h2>
+    <ol class="questions">
+      {
+        questions.map((question, index) => (
+          <li>
+            <div>
+              {index + 1}. {question}
+            </div>
+            <div class="lines" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <h2>4. Think like a data detective</h2>
+    <ol class="questions">
+      <li>
+        <div>
+          1. The median pay for a job in New York is higher than in New
+          Jersey. Does that mean the job is better? List two other things that
+          could explain it.
+        </div>
+        <div class="lines" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      </li>
+      <li>
+        <div>
+          2. A state board says there are 600 open STEM jobs. A news article
+          says there are 2,000. Who is right, and how could you find out?
+        </div>
+        <div class="lines" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      </li>
+      <li>
+        <div>
+          3. Your cousin says "STEM jobs are only for genius kids." Use the
+          data on this sheet to write a better sentence.
+        </div>
+        <div class="lines" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      </li>
+    </ol>
+
+    <div class="name">
+      <div>Name</div>
+      <div>Class</div>
+      <div>Date</div>
+    </div>
+
+    <p class="source">
+      Employment and wage data: U.S. Bureau of Labor Statistics, Occupational
+      Employment and Wage Statistics (May 2025) and Employment Projections
+      (2025-2035). Open job counts: USAJOBS, NJ Civil Service Commission,
+      StateJobsNY and Commonwealth Careers. See the "Sources" page on the site
+      for the full details.
+    </p>
+  </body>
+</html>

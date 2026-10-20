@@ -9,6 +9,7 @@ import {
   formatDate,
   formatMoney,
   formatNumber,
+  formatGrowth,
   formatMetro,
   byEmployment,
   byCategory,
@@ -30,7 +31,7 @@ const topPay = [...occ]
   .sort((a, b) => b.meanWage - a.meanWage)
   .slice(0, 10);
 const growing = [...occ]
-  .filter((o) => typeof o.growth === 'number')
+  .filter((o) => typeof o.growth === 'number' && (o.growth ?? 0) > 0)
   .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))
   .slice(0, 8);
 
@@ -79,6 +80,8 @@ const SOURCE_NOTES: Record<string, string> = {
     'Open New York State government vacancies - these are positions you can apply for today.',
   'Commonwealth Careers':
     'Open Pennsylvania state government jobs - these are positions you can apply for today.',
+  CareerOneStop:
+    'Private-sector jobs, counted by searching for STEM words - the same job can be counted twice, so this number is kept separate.',
 };
 ---
 
@@ -169,7 +172,7 @@ const SOURCE_NOTES: Record<string, string> = {
               <Bars
                 items={liveBars}
                 label={`Open STEM postings in ${state.name} by field`}
-                suffix=" jobs"
+                suffix=" job"
               />
               <table class="sources-table">
                 <caption class="sr-only">
@@ -195,6 +198,11 @@ const SOURCE_NOTES: Record<string, string> = {
                   ))}
                 </tbody>
               </table>
+              <p class="source-note">
+                The big number above counts actual postings we could see. Where
+                a source only gives a search count, we show it separately
+                instead of adding it in.
+              </p>
             </div>
             <div class="card">
               <h3 class="card__title">Fresh examples</h3>
@@ -319,7 +327,7 @@ const SOURCE_NOTES: Record<string, string> = {
                 items={growing.map((o) => ({
                   label: o.title,
                   value: o.growth ?? 0,
-                  display: `+${(o.growth ?? 0).toFixed(1)}%`,
+                  display: formatGrowth(o.growth),
                   color: 'var(--c-good)',
                 }))}
                 label={`Fastest growing STEM jobs for ${state.name}`}
