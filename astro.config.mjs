@@ -9,7 +9,7 @@ export default defineConfig({
   output: 'static',
   site: 'https://s2s-shashank.github.io',
   // GitHub Pages project sites live under /<repo-name>/
-  base: '/STEM-Jobs/',
+  base: '/stem-jobs/',
   trailingSlash: 'never',
   build: {
     // Keep the output small and cache-friendly.
