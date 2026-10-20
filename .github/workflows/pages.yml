@@ -43,7 +43,11 @@ jobs:
 
       - name: Commit refreshed data
         id: commit
+        # Only commit on a scheduled or manual run. The push is best-effort:
+        # the deploy below uses the artifact, so a failed push must not stop
+        # the site from updating.
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
