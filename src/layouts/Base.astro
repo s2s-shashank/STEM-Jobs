@@ -15,6 +15,10 @@ const { title, description, raw = false } = Astro.props;
 const fullTitle = raw ? title : `${title} | STEM Jobs`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const updated = formatDate(lastUpdated());
+// The finder popup opens itself on the home page only.
+const homePath = withBase('/');
+const isHome =
+  Astro.url.pathname === homePath || Astro.url.pathname === homePath.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -114,7 +118,7 @@ const updated = formatDate(lastUpdated());
       </div>
     </footer>
 
-    <!-- The Career Finder popup, on every page of the site. -->
-    <CareerFinder />
+    <!-- The Career Finder popup. It opens itself once, on the home page. -->
+    <CareerFinder autoOpen={isHome} />
   </body>
 </html>
