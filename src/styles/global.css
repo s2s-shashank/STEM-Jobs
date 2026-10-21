@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import './finder.css';
 
 /* ------------------------------------------------------------------
    Base
@@ -216,14 +217,12 @@ hr {
 }
 
 .brand__mark {
-  display: grid;
-  place-items: center;
   width: 2.1rem;
   height: 2.1rem;
+  padding: 0.15rem;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--c-computing), var(--c-data));
-  color: #fff;
-  font-size: 1.05rem;
+  background: #fff;
+  object-fit: contain;
   flex: none;
 }
 
@@ -252,6 +251,21 @@ hr {
 .nav a[aria-current='page'] {
   background: rgb(255 255 255 / 16%);
   color: #fff;
+}
+
+.nav__finder {
+  font: inherit;
+  font-size: var(--step--1);
+  font-weight: 800;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s ease;
+}
+
+.nav__finder:hover {
+  transform: translateY(-1px);
 }
 
 @media (max-width: 640px) {
@@ -387,6 +401,17 @@ hr {
 
 .btn--outline:hover {
   background: var(--accent-soft);
+}
+
+/* The yellow "Find my career" button, in the header and in the hero. */
+.btn--sun {
+  background: linear-gradient(135deg, #ffd166, #ff9f45);
+  color: var(--navy-900);
+  border-color: transparent;
+}
+
+.btn--sun:hover {
+  filter: brightness(1.06);
 }
 
 /* ------------------------------------------------------------------

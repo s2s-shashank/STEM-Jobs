@@ -1,0 +1,84 @@
+---
+/**
+ * "Your matches" - the results the student just got from the popup.
+ *
+ * The finder hands its results over with a `stemjobs:finder-results`
+ * event. Nothing is stored, so this section stays hidden until the
+ * student has actually finished a run on this page.
+ */
+---
+
+<section class="section section--alt" id="my-matches" hidden>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">From the Career Finder</span>
+      <h2>Your career matches</h2>
+      <p class="lede">
+        These are the STEM jobs that match the answers you just gave, with
+        what they pay and whether they are growing.
+      </p>
+    </div>
+
+    <div class="my-matches__bar">
+      <p class="my-matches__note" id="my-matches-note"></p>
+      <button type="button" class="btn btn--outline" data-open-finder>
+        Do it again
+      </button>
+    </div>
+
+    <div class="my-matches__list" id="my-matches-list"></div>
+  </div>
+</section>
+
+<script>
+  import { matchCardHtml, type Match } from '../lib/finder-client';
+
+  const section = document.getElementById('my-matches');
+  const list = document.getElementById('my-matches-list');
+  const note = document.getElementById('my-matches-note');
+
+  if (section && list && note) {
+    document.addEventListener('stemjobs:finder-results', (e) => {
+      const { matches, state } = (e as CustomEvent<{
+        matches: Match[];
+        state: string;
+      }>).detail;
+
+      if (!matches?.length) return;
+
+      list.innerHTML = matches.map((m) => matchCardHtml(m, state)).join('');
+      section.hidden = false;
+
+      const where =
+        state === 'other'
+          ? 'New Jersey, New York and Pennsylvania'
+          : { nj: 'New Jersey', ny: 'New York', pa: 'Pennsylvania' }[state] ??
+            'your area';
+
+      note.textContent = `${matches.length} jobs, priced for ${where}.`;
+    });
+  }
+</script>
+
+<style>
+  .my-matches__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-bottom: var(--space-l);
+  }
+
+  .my-matches__note {
+    margin: 0;
+    font-weight: 700;
+    color: var(--ink-700);
+  }
+
+  .my-matches__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--space-s);
+  }
+</style>

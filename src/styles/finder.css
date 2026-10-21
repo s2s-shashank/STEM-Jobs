@@ -1,0 +1,514 @@
+/* ------------------------------------------------------------------
+   Career Finder
+   The popup builds its options with JavaScript, so Astro's scoped
+   styles never reach them. These rules live here instead: the result
+   cards (used in the popup and on the home page) and the answer
+   buttons the quiz draws at runtime.
+   ------------------------------------------------------------------ */
+
+.finder__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-2xs);
+}
+
+.finder__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+  font: inherit;
+  font-weight: 650;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-m);
+  border: 2px solid var(--paper-sunk);
+  background: var(--paper);
+  color: var(--ink-900);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.finder__option:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+}
+
+.finder__option.is-picked {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.finder__emoji {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex: none;
+}
+
+.finder__option-label {
+  flex: 1;
+}
+
+.finder__tick {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--paper-sunk);
+  color: transparent;
+  font-size: 0.8rem;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+.finder__option.is-picked .finder__tick {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.finder__hint {
+  font-size: var(--step--1);
+  color: var(--ink-500);
+  margin: -0.4rem 0 var(--space-s);
+}
+
+.finder__fact {
+  margin: var(--space-s) 0 0;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--warn) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warn) 35%, transparent);
+  font-weight: 600;
+  color: var(--ink-900);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.finder__fact.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.finder__cards {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.finder__note {
+  font-size: var(--step--1);
+  color: var(--ink-500);
+  margin: var(--space-m) 0 0;
+}
+
+.finder__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  margin-top: var(--space-s);
+}
+
+.finder[hidden] {
+display: none;
+}
+
+.finder {
+position: fixed;
+inset: 0;
+z-index: 200;
+display: grid;
+place-items: center;
+padding: var(--space-s);
+}
+
+.finder__scrim {
+position: absolute;
+inset: 0;
+background: rgb(11 18 32 / 62%);
+backdrop-filter: blur(4px);
+animation: finder-fade 0.2s ease;
+}
+
+.finder__panel {
+position: relative;
+width: min(100%, 46rem);
+max-height: min(92vh, 54rem);
+overflow: hidden;
+display: flex;
+flex-direction: column;
+background: var(--paper);
+color: var(--ink-900);
+border-radius: var(--radius-l);
+box-shadow: var(--shadow-l);
+animation: finder-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.finder__head {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: var(--space-s);
+padding: var(--space-s) var(--space-m);
+border-bottom: 1px solid var(--paper-sunk);
+}
+
+.finder__brand {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-weight: 800;
+letter-spacing: -0.01em;
+}
+
+.finder__spark {
+font-size: 1.15rem;
+}
+
+.finder__x {
+font: inherit;
+font-size: 1rem;
+line-height: 1;
+width: 2.25rem;
+height: 2.25rem;
+border-radius: var(--radius-pill);
+border: 1px solid var(--paper-sunk);
+background: var(--paper);
+color: var(--ink-500);
+cursor: pointer;
+}
+
+.finder__x:hover {
+background: var(--paper-alt);
+color: var(--ink-900);
+}
+
+.finder__dots {
+display: flex;
+gap: 0.35rem;
+padding: 0.7rem var(--space-m) 0;
+}
+
+.finder__dots[hidden] {
+display: none;
+}
+
+.finder__dot {
+flex: 1;
+height: 0.3rem;
+border-radius: var(--radius-pill);
+background: var(--paper-sunk);
+transition: background 0.2s ease;
+}
+
+.finder__dot.is-done {
+background: color-mix(in srgb, var(--accent) 45%, var(--paper-sunk));
+}
+
+.finder__dot.is-current {
+background: var(--accent);
+}
+
+.finder__viewport {
+position: relative;
+flex: 1;
+overflow-y: auto;
+padding: var(--space-m);
+}
+
+.finder__slide {
+display: none;
+}
+
+.finder__slide.is-active {
+display: block;
+animation: finder-slide 0.28s ease;
+}
+
+.finder__kicker {
+font-size: var(--step--1);
+font-weight: 800;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(--accent);
+margin: 0 0 0.4rem;
+}
+
+.finder__title {
+font-size: var(--step-2);
+margin: 0 0 0.5rem;
+}
+
+.finder__lede {
+color: var(--ink-700);
+margin: 0 0 var(--space-m);
+}
+
+.finder__lede--sm {
+font-size: var(--step-0);
+margin-bottom: var(--space-s);
+}
+
+.finder__promise {
+list-style: none;
+padding: 0;
+margin: 0 0 var(--space-m);
+display: flex;
+flex-wrap: wrap;
+gap: var(--space-2xs) var(--space-s);
+font-weight: 650;
+color: var(--ink-700);
+}
+
+.finder__cta {
+margin-right: var(--space-2xs);
+}
+
+.finder__cta[hidden] {
+  display: none;
+}
+
+.finder__promise[hidden],
+.finder__loading[hidden] {
+  display: none;
+}
+
+.finder__skip {
+font: inherit;
+background: none;
+border: 0;
+color: var(--ink-500);
+text-decoration: underline;
+cursor: pointer;
+padding: 0.5rem;
+}
+
+/* Options, hint, fact and results cards are styled in
+ src/styles/finder.css because JavaScript draws them at runtime and
+ Astro's scoped styles would not reach them. */
+
+/* Footer nav ------------------------------------------------- */
+
+.finder__foot {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: var(--space-s);
+padding: var(--space-s) var(--space-m);
+border-top: 1px solid var(--paper-sunk);
+background: var(--paper-alt);
+}
+
+/* display:flex above would otherwise beat the hidden attribute. */
+.finder__foot[hidden] {
+display: none;
+}
+
+.finder__nav {
+font: inherit;
+font-weight: 700;
+background: none;
+border: 0;
+color: var(--accent);
+cursor: pointer;
+padding: 0.5rem 0;
+}
+
+.finder__nav:disabled {
+opacity: 0.35;
+cursor: default;
+}
+
+.finder__pips {
+display: flex;
+gap: 0.3rem;
+}
+
+.finder__pip {
+width: 0.5rem;
+height: 0.5rem;
+border-radius: var(--radius-pill);
+background: var(--paper-sunk);
+}
+
+.finder__pip.is-done {
+background: color-mix(in srgb, var(--accent) 45%, var(--paper-sunk));
+}
+
+.finder__pip.is-current {
+background: var(--accent);
+transform: scale(1.25);
+}
+
+/* Results ---------------------------------------------------- */
+
+body.finder-open {
+overflow: hidden;
+}
+
+@keyframes finder-fade {
+from {
+  opacity: 0;
+}
+}
+
+@keyframes finder-pop {
+from {
+  opacity: 0;
+  transform: translateY(14px) scale(0.98);
+}
+}
+
+@keyframes finder-slide {
+from {
+  opacity: 0;
+  transform: translateX(14px);
+}
+}
+
+@media (max-width: 560px) {
+.finder__panel {
+  max-height: 94vh;
+  border-radius: var(--radius-m);
+}
+.finder__viewport {
+  padding: var(--space-s);
+}
+.match__stats {
+  grid-template-columns: 1fr 1fr;
+}
+}
+
+/* ------------------------------------------------------------------
+   Result cards
+   ------------------------------------------------------------------ */
+
+.match {
+  border: 1px solid var(--paper-sunk);
+  border-left: 6px solid var(--cat, var(--accent));
+  border-radius: var(--radius-m);
+  padding: var(--space-s);
+  background: var(--paper);
+}
+
+.match__head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.match__icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.match__title {
+  font-size: var(--step-0);
+  margin: 0;
+}
+
+.match__title a {
+  color: var(--ink-900);
+  text-decoration: none;
+}
+
+.match__title a:hover {
+  text-decoration: underline;
+}
+
+.match__cat {
+  margin: 0;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--cat, var(--accent));
+}
+
+.match__blurb {
+  margin: var(--space-2xs) 0 0;
+  color: var(--ink-700);
+  font-size: var(--step--1);
+}
+
+.match__why {
+  margin: var(--space-2xs) 0 0;
+  font-size: var(--step--1);
+  color: var(--ink-700);
+}
+
+.match__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2xs);
+  margin: var(--space-s) 0 0;
+  padding: var(--space-2xs) 0 0;
+  border-top: 1px dashed var(--paper-sunk);
+}
+
+.match__stats dt {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+
+.match__stats dd {
+  margin: 0.1rem 0 0;
+}
+
+.match__pay,
+.match__growth,
+.match__jobs {
+  font-size: var(--step-1);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.match__pay span {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--ink-500);
+}
+
+.match__growth.is-good {
+  color: var(--good);
+}
+
+.match__growth.is-steady {
+  color: var(--ink-700);
+}
+
+.match__growth.is-down {
+  color: #b91c1c;
+}
+
+.match__sub {
+  font-size: 0.72rem;
+  color: var(--ink-500);
+}
+
+.match__foot {
+  margin: var(--space-s) 0 0;
+  font-size: var(--step--1);
+  color: var(--ink-700);
+}
+
+.match__link {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-weight: 700;
+}
+
+/* In the popup the cards are one per row, so the title can be bigger. */
+.finder__cards .match__title {
+  font-size: var(--step-1);
+}
+
+@media (max-width: 560px) {
+  .match__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -41,6 +41,10 @@ export interface LivePosting {
   salaryMax?: number;
   url: string;
   category: string;
+  /** When the posting went up, if the source says. */
+  posted?: string;
+  /** When the posting closes, if the source says. */
+  closes?: string;
 }
 
 export interface PrivateSector {

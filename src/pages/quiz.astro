@@ -1,7 +1,7 @@
 ---
 import { withBase } from '../lib/url';
 import Base from '../layouts/Base.astro';
-import { allStateData, formatMoney } from '../lib/data';
+import { allStateData } from '../lib/data';
 
 interface QuizItem {
   soc: string;
@@ -82,9 +82,13 @@ for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
         questions.length === 0 ? (
           <p class="lede">The quiz is being loaded with new questions — check back soon.</p>
         ) : (
-          <div class="quiz card" id="quiz">
+          <div class="quiz" id="quiz">
+            <div class="quiz__progress" aria-hidden="true">
+              <span class="quiz__progress-fill" id="q-fill" />
+            </div>
+
             <div class="quiz__top">
-              <span class="quiz__score">
+              <span class="quiz__count">
                 Question <strong id="q-num">1</strong> of {questions.length}
               </span>
               <span class="quiz__score">
@@ -96,10 +100,13 @@ for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
             <div class="quiz__options" id="q-options"></div>
             <p class="quiz__feedback" id="q-feedback" role="status" aria-live="polite" />
 
-            <p class="quiz__final" id="q-final" hidden>
-              <span id="q-final-text" />
+            <div class="quiz__final" id="q-final" hidden>
+              <div class="quiz__final-body">
+                <p class="quiz__final-kicker">Your result</p>
+                <p class="quiz__final-text" id="q-final-text" />
+              </div>
               <a class="btn btn--primary" href={withBase("/quiz")}>Play again</a>
-            </p>
+            </div>
           </div>
         )
       }
@@ -118,11 +125,13 @@ for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
   const dataEl = document.getElementById('quiz-data');
   if (root && dataEl) {
     const questions = JSON.parse(dataEl.textContent || '[]');
+    const LETTERS = ['A', 'B', 'C'];
     let index = 0;
     let score = 0;
 
     const numEl = document.getElementById('q-num')!;
     const scoreEl = document.getElementById('q-score')!;
+    const fillEl = document.getElementById('q-fill')!;
     const optionsEl = document.getElementById('q-options')!;
     const feedbackEl = document.getElementById('q-feedback')!;
     const finalEl = document.getElementById('q-final')!;
@@ -135,45 +144,70 @@ for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
       const q = questions[index];
       numEl.textContent = String(index + 1);
       scoreEl.textContent = String(score);
+      fillEl.style.width = `${((index + 1) / questions.length) * 100}%`;
       feedbackEl.textContent = '';
       feedbackEl.className = 'quiz__feedback';
       optionsEl.innerHTML = '';
 
-      for (const item of q.trio) {
+      q.trio.forEach((item: any, i: number) => {
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'quiz__option';
-        btn.textContent = item.title;
+        btn.dataset.soc = item.soc;
+
+        const key = document.createElement('span');
+        key.className = 'quiz__key';
+        key.setAttribute('aria-hidden', 'true');
+        key.textContent = LETTERS[i] ?? String(i + 1);
+
+        const name = document.createElement('span');
+        name.className = 'quiz__name';
+        name.textContent = item.title;
+
+        const pay = document.createElement('span');
+        pay.className = 'quiz__pay';
+        pay.textContent = money(item.median);
+
+        const mark = document.createElement('span');
+        mark.className = 'quiz__mark';
+        mark.setAttribute('aria-hidden', 'true');
+
+        btn.append(key, name, pay, mark);
         btn.addEventListener('click', () => answer(btn, item, q));
         optionsEl.appendChild(btn);
-      }
+      });
     }
 
     function answer(btn: HTMLButtonElement, item: any, q: any) {
       const buttons = Array.from(
         optionsEl.querySelectorAll<HTMLButtonElement>('.quiz__option'),
       );
-      buttons.forEach((b) => (b.disabled = true));
+      buttons.forEach((b) => {
+        b.disabled = true;
+        b.classList.add('is-revealed');
+      });
 
+      const best = q.trio.find((t: any) => t.soc === q.best);
       const correct = item.soc === q.best;
+
+      for (const b of buttons) {
+        if (b.dataset.soc === q.best) {
+          b.classList.add('is-correct');
+          b.querySelector('.quiz__mark')!.textContent = '✓';
+        }
+      }
+
       if (correct) {
         score += 1;
-        btn.classList.add('is-correct');
         feedbackEl.classList.add('is-good');
-        feedbackEl.textContent = `Correct! ${item.title} pays ${money(
+        feedbackEl.textContent = `Correct! The middle salary for ${item.title} is ${money(
           item.median,
         )} a year.`;
       } else {
         btn.classList.add('is-wrong');
-        buttons.forEach((b) => {
-          if (b.textContent === item.title) b.classList.add('is-wrong');
-        });
-        const best = q.trio.find((t: any) => t.soc === q.best);
-        buttons.forEach((b) => {
-          if (b.textContent === best.title) b.classList.add('is-correct');
-        });
+        btn.querySelector('.quiz__mark')!.textContent = '✕';
         feedbackEl.classList.add('is-bad');
-        feedbackEl.textContent = `Not quite. ${best.title} pays ${money(
+        feedbackEl.textContent = `Not quite. The middle salary for ${best.title} is ${money(
           best.median,
         )} a year — ${money(best.median - item.median)} more.`;
       }
@@ -191,76 +225,304 @@ for (let i = 0; i + 2 < items.length && questions.length < 5; i += 3) {
           finalText.textContent = `You scored ${score} out of ${questions.length}. ${msg}`;
           finalEl.hidden = false;
           optionsEl.innerHTML = '';
+          feedbackEl.className = 'quiz__feedback';
         } else {
           render();
         }
       }, 2600);
     }
 
+    // Keys 1, 2 and 3 pick an option, so you can play without the mouse.
+    document.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const tag = (document.activeElement?.tagName ?? '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+      const i = ['1', '2', '3'].indexOf(e.key);
+      if (i < 0) return;
+      const btn = optionsEl.querySelectorAll<HTMLButtonElement>(
+        '.quiz__option',
+      )[i];
+      if (btn && !btn.disabled) btn.click();
+    });
+
     render();
   }
 </script>
 
-<style>
+<!-- is:global: the option buttons are built in JS, so Astro's scoped
+     style attribute never lands on them and scoped rules would not match. -->
+<style is:global>
+  .quiz {
+    position: relative;
+    overflow: hidden;
+    background: var(--paper);
+    border: var(--border);
+    border-radius: var(--radius-l);
+    box-shadow: var(--shadow-m);
+    padding: var(--space-l);
+  }
+
+  .quiz__progress {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: var(--paper-sunk);
+  }
+
+  .quiz__progress-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--c-computing), var(--c-data));
+    transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   .quiz__top {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    font-weight: 700;
+    gap: var(--space-s);
+    margin-bottom: var(--space-m);
+  }
+
+  .quiz__count {
+    font-size: var(--step--1);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--ink-500);
-    margin-bottom: var(--space-s);
   }
-  .quiz__ask {
-    font-size: var(--step-1);
+
+  .quiz__count strong {
+    color: var(--ink-900);
+  }
+
+  .quiz__score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: var(--step--1);
     font-weight: 700;
-    margin-bottom: var(--space-s);
   }
+
+  .quiz__score strong {
+    font-size: var(--step-0);
+    font-weight: 850;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .quiz__ask {
+    font-size: var(--step-2);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-m);
+  }
+
   .quiz__options {
     display: grid;
     gap: var(--space-2xs);
   }
+
   .quiz__option {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
     text-align: left;
     font: inherit;
     font-weight: 650;
-    padding: 0.9rem 1.1rem;
+    padding: 0.9rem 1.05rem;
     border-radius: var(--radius-m);
-    border: 2px solid var(--paper-sunk);
+    border: 1.5px solid var(--paper-sunk);
     background: var(--paper);
     color: var(--ink-900);
     cursor: pointer;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    box-shadow: var(--shadow-s);
+    transition: transform 0.15s ease, border-color 0.15s ease,
+      box-shadow 0.15s ease, background 0.15s ease;
+    animation: quiz-in 0.3s ease backwards;
   }
+
+  .quiz__option:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+
+  .quiz__option:nth-child(3) {
+    animation-delay: 0.12s;
+  }
+
   .quiz__option:hover:not(:disabled) {
+    transform: translateY(-2px);
     border-color: var(--accent);
-    background: var(--accent-soft);
+    box-shadow: var(--shadow-m);
   }
+
   .quiz__option:disabled {
     cursor: default;
   }
+
+  .quiz__key {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--paper-sunk);
+    background: var(--paper-alt);
+    color: var(--ink-500);
+    font-size: var(--step--1);
+    font-weight: 800;
+    transition: background 0.15s ease, color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .quiz__option:hover:not(:disabled) .quiz__key {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .quiz__name {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .quiz__pay {
+    flex: none;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-700);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .quiz__option.is-revealed .quiz__pay {
+    opacity: 1;
+    transform: none;
+  }
+
+  .quiz__mark {
+    flex: none;
+    width: 1.35rem;
+    text-align: center;
+    font-weight: 900;
+  }
+
   .quiz__option.is-correct {
     border-color: var(--good);
-    background: color-mix(in srgb, var(--good) 12%, transparent);
+    background: color-mix(in srgb, var(--good) 10%, transparent);
   }
-  .quiz__option.is-wrong {
-    border-color: #dc2626;
-    background: color-mix(in srgb, #dc2626 10%, transparent);
-  }
-  .quiz__feedback {
-    min-height: 3.5rem;
-    margin-top: var(--space-s);
-    font-weight: 600;
-  }
-  .quiz__feedback.is-good {
+
+  .quiz__option.is-correct .quiz__mark {
     color: var(--good);
   }
-  .quiz__feedback.is-bad {
-    color: #b91c1c;
+
+  .quiz__option.is-wrong {
+    border-color: var(--bad);
+    background: color-mix(in srgb, var(--bad) 10%, transparent);
   }
+
+  .quiz__option.is-wrong .quiz__mark {
+    color: var(--bad);
+  }
+
+  .quiz__feedback {
+    margin: var(--space-s) 0 0;
+    padding: var(--space-s);
+    border-radius: var(--radius-m);
+    font-weight: 650;
+    border-left: 4px solid transparent;
+    background: var(--paper-alt);
+    color: var(--ink-900);
+  }
+
+  .quiz__feedback:empty {
+    padding: 0;
+    margin: 0;
+    background: none;
+  }
+
+  .quiz__feedback.is-good {
+    border-left-color: var(--good);
+    background: color-mix(in srgb, var(--good) 10%, transparent);
+  }
+
+  .quiz__feedback.is-bad {
+    border-left-color: var(--bad);
+    background: color-mix(in srgb, var(--bad) 8%, transparent);
+  }
+
+  /* display:flex above would otherwise beat the hidden attribute. */
+  .quiz__final[hidden] {
+    display: none;
+  }
+
   .quiz__final {
-    margin-top: var(--space-s);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     gap: var(--space-s);
+    margin-top: var(--space-m);
+    padding: var(--space-m);
+    border-radius: var(--radius-m);
+    background: var(--paper-alt);
+    border: var(--border);
+  }
+
+  .quiz__final-kicker {
+    margin: 0 0 0.15rem;
+    font-size: var(--step--1);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .quiz__final-text {
+    margin: 0;
+    font-weight: 650;
+  }
+
+  @keyframes quiz-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .quiz {
+      padding: var(--space-m);
+    }
+    /* Stack the salary under the job name, key on the left, tick on the right. */
+    .quiz__option {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas:
+        'key name mark'
+        'key pay mark';
+      align-items: center;
+      column-gap: 0.8rem;
+      row-gap: 0.1rem;
+    }
+    .quiz__key {
+      grid-area: key;
+    }
+    .quiz__name {
+      grid-area: name;
+    }
+    .quiz__pay {
+      grid-area: pay;
+      transform: none;
+    }
+    .quiz__mark {
+      grid-area: mark;
+    }
   }
 </style>

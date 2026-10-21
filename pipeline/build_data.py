@@ -12,12 +12,13 @@ import json
 import os
 import sys
 import traceback
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pipeline import taxonomy  # noqa: E402
+from pipeline.dates import is_stale, parse_posted  # noqa: E402
 from pipeline.env import load_env  # noqa: E402
 from pipeline.sources import (  # noqa: E402
     bls_ep,
@@ -87,6 +88,7 @@ def safe(label: str, function, *args, **kwargs):
 def main() -> int:
     load_env()
     now = datetime.now(timezone.utc)
+    today = now.date()
     as_of = now.strftime("%B %-d, %Y") if os.name != "nt" else now.strftime("%B %d, %Y")
 
     print("=" * 60)
@@ -161,6 +163,13 @@ def main() -> int:
                 )
                 continue
 
+            # curation: drop postings that are no longer open
+            fresh = [p for p in result["postings"] if not is_stale(p, today)]
+            if len(fresh) != len(result["postings"]):
+                print(f"  dropped {len(result['postings']) - len(fresh)} old postings")
+            result["postings"] = fresh
+            result["total"] = len(fresh)
+
             source_rows.append(
                 {
                     "name": label,
@@ -176,7 +185,9 @@ def main() -> int:
             by_category[posting["category"]] = by_category.get(posting["category"], 0) + 1
 
         # a sample of the freshest postings for the page
-        sample = sorted(postings, key=lambda p: (p.get("posted") or "", p["title"]), reverse=True)[:40]
+        sample = sorted(postings, key=lambda p: p["title"])
+        sample.sort(key=lambda p: parse_posted(p.get("posted") or "") or date.min, reverse=True)
+        sample = sample[:40]
 
         payload = {
             "state": slug,

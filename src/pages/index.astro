@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import StateCard from '../components/StateCard.astro';
 import StatTile from '../components/StatTile.astro';
 import Bars from '../components/Bars.astro';
+import MyMatches from '../components/MyMatches.astro';
 import { STATES } from '../data/states';
 import {
   getStateData,
@@ -62,6 +63,9 @@ const fastestGrowing = [...allOccupations]
       <div class="hero__actions">
         <a class="btn btn--primary" href={withBase("/nj")}>Start with New Jersey</a>
         <a class="btn btn--ghost" href={withBase("/compare")}>Compare all three states</a>
+        <button type="button" class="btn btn--sun" data-open-finder>
+          Find my career
+        </button>
       </div>
       {updated && <p class="stamp">Last updated {updated.slice(0, 10)}</p>}
     </div>
@@ -93,6 +97,8 @@ const fastestGrowing = [...allOccupations]
       </section>
     )
   }
+
+  <MyMatches />
 
   <section class="section">
     <div class="wrap">

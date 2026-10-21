@@ -141,6 +141,8 @@ def collect(state: str, max_pages: int = 8, page_size: int = 500) -> dict[str, A
                     "salaryMax": int(salary_max) if salary_max and str(salary_max).isdigit() else None,
                     "url": (descriptor.get("PositionURI") or "").replace(":443", ""),
                     "category": category or "engineering",
+                    "posted": (descriptor.get("PublicationStartDate") or "")[:10],
+                    "closes": (descriptor.get("ApplicationCloseDate") or "")[:10],
                 }
             )
 
