@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any
@@ -44,6 +45,17 @@ DAYS = 30
 
 #: How many API calls to make at once.
 WORKERS = 6
+
+#: Wall-clock budget for one state's worth of calls, in seconds. A normal
+#: run needs about 20s; this is a stop so a stalled API cannot hang CI for
+#: an hour. Whatever has not been asked about yet is left out of the totals.
+#: shortcut: skipped occupations are missing from the private-sector totals;
+#: raise the budget if CareerOneStop gets slower than it is today.
+BUDGET_SECONDS = 120
+
+#: How long to wait for one answer. The API normally replies in under a
+#: second, so a slow answer means trouble.
+TIMEOUT = 20
 
 LOCATION_NAMES = {
     "NJ": "New Jersey",
@@ -76,7 +88,7 @@ def _query(user_id: str, token: str, keyword: str, location: str) -> dict[str, A
         days=DAYS,
     )
     try:
-        body = fetch(url, headers=_headers(token), timeout=60, retries=2).decode(
+        body = fetch(url, headers=_headers(token), timeout=TIMEOUT, retries=2).decode(
             "utf-8", errors="replace"
         )
         return json.loads(body)
@@ -108,9 +120,14 @@ def collect(state: str = "", occupations: list[dict[str, Any]] | None = None) ->
     occupations = occupations or []
 
     results: dict[str, dict[str, Any]] = {}
+    deadline = time.monotonic() + BUDGET_SECONDS
+    skipped: list[str] = []
 
     def fetch_one(occupation: dict[str, Any]) -> tuple[str, dict[str, Any] | None]:
         soc = occupation.get("soc", "")
+        if time.monotonic() > deadline:
+            skipped.append(soc)
+            return soc, None
         return soc, _query(user_id, token, f"{soc}.00", location)
 
     if occupations:
@@ -118,6 +135,9 @@ def collect(state: str = "", occupations: list[dict[str, Any]] | None = None) ->
             for soc, payload in pool.map(fetch_one, occupations):
                 if payload is not None:
                     results[soc] = payload
+
+    if skipped:
+        print(f"  {len(skipped)} occupations not asked about (time budget reached)")
 
     counts: dict[str, int] = {}
     by_category: dict[str, int] = {}

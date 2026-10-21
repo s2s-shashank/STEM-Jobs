@@ -16,6 +16,10 @@ from ..fetcher import fetch
 
 API = "https://data.usajobs.gov/api/search"
 
+#: How long to wait for one page. The API normally answers in a second or
+#: two, so a slow page means the service is unwell.
+TIMEOUT = 45
+
 # State name -> the codes that appear in CountrySubDivisionCode.
 STATE_CODES: dict[str, list[str]] = {
     "NJ": ["NJ", "New Jersey"],
@@ -94,7 +98,9 @@ def collect(state: str, max_pages: int = 8, page_size: int = 500) -> dict[str, A
             f"&ResultsPerPage={page_size}&Page={page}"
         )
         try:
-            payload = json.loads(fetch(url, headers=headers, timeout=90).decode("utf-8"))
+            payload = json.loads(
+                fetch(url, headers=headers, timeout=TIMEOUT, retries=2).decode("utf-8")
+            )
         except Exception as exc:  # noqa: BLE001 - a broken API should not kill the run
             print(f"  page {page} failed: {exc}")
             break

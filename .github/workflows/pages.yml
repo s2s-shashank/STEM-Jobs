@@ -39,7 +39,7 @@ jobs:
           CAREERONESTOP_USER_ID: ${{ secrets.CAREERONESTOP_USER_ID }}
           CAREERONESTOP_TOKEN: ${{ secrets.CAREERONESTOP_TOKEN }}
         run: |
-          python3 -m pipeline.build_data
+          python3 -u -m pipeline.build_data
 
       - name: Commit refreshed data
         id: commit
