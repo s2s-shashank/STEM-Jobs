@@ -1,7 +1,7 @@
 {
  "state": "nj",
  "name": "New Jersey",
- "generated": "2026-10-21T09:47:35.508179+00:00",
+ "generated": "2026-10-21T13:20:56.600376+00:00",
  "asOf": "October 21, 2026",
  "occupations": [
   {
@@ -2350,36 +2350,311 @@
   },
   "postings": [
    {
-    "title": "Traffic Engineer",
+    "title": "GENERAL ENGINEER",
+    "employer": "Department of the Navy",
+    "location": "Moorestown, New Jersey",
+    "salaryMin": 98630,
+    "salaryMax": 152471,
+    "url": "https://www.usajobs.gov/job/889455800",
+    "category": "engineering",
+    "posted": "2026-10-21",
+    "closes": "2026-11-03"
+   },
+   {
+    "title": "GENERAL ENGINEER",
+    "employer": "Department of the Navy",
+    "location": "Lakehurst, New Jersey",
+    "salaryMin": 200499,
+    "salaryMax": 209600,
+    "url": "https://www.usajobs.gov/job/889269600",
+    "category": "engineering",
+    "posted": "2026-10-20",
+    "closes": "2026-11-03"
+   },
+   {
+    "title": "Biological Science Technician (Wildlife)(Seasonal)",
+    "employer": "Department of the Interior",
+    "location": "Highlands, New Jersey",
+    "salaryMin": null,
+    "salaryMax": null,
+    "url": "https://www.usajobs.gov/job/889012900",
+    "category": "science",
+    "posted": "2026-10-19",
+    "closes": "2026-10-26"
+   },
+   {
+    "title": "Mathematical Statistician (Data Scientist)",
+    "employer": "Department of the Treasury",
+    "location": "Cherry Hill, New Jersey",
+    "salaryMin": 125776,
+    "salaryMax": 197200,
+    "url": "https://www.usajobs.gov/job/889308400",
+    "category": "data",
+    "posted": "2026-10-19",
+    "closes": "2026-10-23"
+   },
+   {
+    "title": "Quality Assurance Specialist (Deployable)",
+    "employer": "Department of Defense",
+    "location": "Clifton, New Jersey",
+    "salaryMin": 82289,
+    "salaryMax": 114413,
+    "url": "https://www.usajobs.gov/job/889245300",
+    "category": "computing",
+    "posted": "2026-10-19",
+    "closes": "2026-10-26"
+   },
+   {
+    "title": "IT Specialist",
+    "employer": "Department of Transportation",
+    "location": "Atlantic City, New Jersey",
+    "salaryMin": 99775,
+    "salaryMax": 154637,
+    "url": "https://www.usajobs.gov/job/888919400",
+    "category": "engineering",
+    "posted": "2026-10-16",
+    "closes": "2026-10-29"
+   },
+   {
+    "title": "Registered Nurse (CLC)",
+    "employer": "Department of Veterans Affairs",
+    "location": "Lyons, New Jersey",
+    "salaryMin": 96242,
+    "salaryMax": 161650,
+    "url": "https://www.usajobs.gov/job/889134800",
+    "category": "health",
+    "posted": "2026-10-16",
+    "closes": "2026-10-26"
+   },
+   {
+    "title": "Registered Nurse - Community Living Center",
+    "employer": "Department of Veterans Affairs",
+    "location": "Lyons, New Jersey",
+    "salaryMin": 96242,
+    "salaryMax": 161650,
+    "url": "https://www.usajobs.gov/job/889027600",
+    "category": "health",
+    "posted": "2026-10-16",
+    "closes": "2026-10-21"
+   },
+   {
+    "title": "Occupational Therapist (Clinical Specialist)",
+    "employer": "Department of Veterans Affairs",
+    "location": "East Orange, New Jersey",
+    "salaryMin": 127295,
+    "salaryMax": 165486,
+    "url": "https://www.usajobs.gov/job/888836200",
+    "category": "health",
+    "posted": "2026-10-15",
+    "closes": "2026-10-23"
+   },
+   {
+    "title": "Assistant Special Agent in Charge (ASAC) - TSOFO/Cyber Crimes Unit (CCU)",
+    "employer": "Other Agencies and Independent Organizations",
+    "location": "Bellmawr, New Jersey",
+    "salaryMin": 131629,
+    "salaryMax": 197200,
+    "url": "https://www.usajobs.gov/job/888455700",
+    "category": "computing",
+    "posted": "2026-10-13",
+    "closes": "2026-10-27"
+   },
+   {
+    "title": "Supervisory Life Scientist/Environmental Engineer/Physical Scientist",
+    "employer": "Other Agencies and Independent Organizations",
+    "location": "Edison, New Jersey",
+    "salaryMin": 148222,
+    "salaryMax": 192694,
+    "url": "https://www.usajobs.gov/job/888053800",
+    "category": "engineering",
+    "posted": "2026-10-07",
+    "closes": "2026-10-21"
+   },
+   {
+    "title": "Clinical Assistant Nurse Manager (O-5 Billet) Supervisory",
+    "employer": "Department of Homeland Security",
+    "location": "Elizabeth, New Jersey",
+    "salaryMin": 1,
+    "salaryMax": 150000,
+    "url": "https://www.usajobs.gov/job/887567200",
+    "category": "health",
+    "posted": "2026-10-05",
+    "closes": "2026-11-05"
+   },
+   {
+    "title": "IT SPECIALIST (SYSTEMS ADMINISTRATION)",
+    "employer": "Department of the Army",
+    "location": "Fort Dix, New Jersey",
+    "salaryMin": 88005,
+    "salaryMax": 114413,
+    "url": "https://www.usajobs.gov/job/887436700",
+    "category": "engineering",
+    "posted": "2026-10-02",
+    "closes": "2026-11-03"
+   },
+   {
+    "title": "Meteorologist",
+    "employer": "Department of Commerce",
+    "location": "Mount Holly, New Jersey",
+    "salaryMin": 40736,
+    "salaryMax": 100315,
+    "url": "https://www.usajobs.gov/job/887393400",
+    "category": "engineering",
+    "posted": "2026-10-02",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Advance Practice Nurse (Mid-Level Practitioner) Recruitment Incentive - Direct Hire",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 63780,
+    "salaryMax": 135189,
+    "url": "https://www.usajobs.gov/job/887125900",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Assistant Municipal Engineer",
     "employer": "All Departments",
-    "location": "Jersey City",
+    "location": "Paterson",
     "salaryMin": null,
     "salaryMax": null,
     "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
     "category": "engineering",
-    "symbol": "M1075H",
+    "symbol": "M1144H",
     "posted": "10/01/2026"
    },
    {
-    "title": "Surveyor Physical Plant/Life Safety Code/Health Care Facilities Code",
+    "title": "Biological Scientist (Environmental)",
+    "employer": "Department of the Air Force",
+    "location": "McGuire AFB, New Jersey",
+    "salaryMin": 50460,
+    "salaryMax": 100315,
+    "url": "https://www.usajobs.gov/job/889460700",
+    "category": "science",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Dentist (Dental Officer)",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 124308,
+    "salaryMax": 315000,
+    "url": "https://www.usajobs.gov/job/887124600",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Engineer (Place Acquire Intern)",
+    "employer": "Department of the Air Force",
+    "location": "McGuire AFB, New Jersey",
+    "salaryMin": 56039,
+    "salaryMax": 100315,
+    "url": "https://www.usajobs.gov/job/888775700",
+    "category": "engineering",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Environmental Scientist 4 Consumer And Environmental Health Svc",
     "employer": "All Departments",
     "location": "State",
     "salaryMin": null,
     "salaryMax": null,
     "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "architecture",
-    "symbol": "S1067H",
+    "category": "science",
+    "symbol": "S1177H",
     "posted": "10/01/2026"
    },
    {
-    "title": "Senior Maintenance Repairer Heating And Air Conditioning",
+    "title": "Health Technician (Paramedic)",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 63780,
+    "salaryMax": 102887,
+    "url": "https://www.usajobs.gov/job/887126100",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Information Technology Specialist (Computer Specialist)",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 75278,
+    "salaryMax": 145468,
+    "url": "https://www.usajobs.gov/job/887129000",
+    "category": "computing",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Nurse (Registered Nurse) Recruitment Incentive - Direct Hire",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 50241,
+    "salaryMax": 122314,
+    "url": "https://www.usajobs.gov/job/887126600",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Physician (Clinical Director) - Direct Hire",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 145000,
+    "salaryMax": 350000,
+    "url": "https://www.usajobs.gov/job/887135100",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Physician (Medical Officer) - Direct Hire",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 124308,
+    "salaryMax": 315000,
+    "url": "https://www.usajobs.gov/job/887131000",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Physician (Psychiatric Physician) - Direct Hire",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 124308,
+    "salaryMax": 315000,
+    "url": "https://www.usajobs.gov/job/887140400",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Physician Assistant (Mid-Level Practitioner) - Recruitment Incentive",
+    "employer": "Department of Justice",
+    "location": "Fairton, New Jersey",
+    "salaryMin": 57188,
+    "salaryMax": 129383,
+    "url": "https://www.usajobs.gov/job/887125600",
+    "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "Principal Engineer",
     "employer": "All Departments",
-    "location": "Vineland",
+    "location": "Ocean County",
     "salaryMin": null,
     "salaryMax": null,
     "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "trades",
-    "symbol": "M1079H",
+    "category": "engineering",
+    "symbol": "C1065H",
     "posted": "10/01/2026"
    },
    {
@@ -2394,244 +2669,48 @@
     "posted": "10/01/2026"
    },
    {
-    "title": "Principal Engineer",
+    "title": "Senior Maintenance Repairer Heating And Air Conditioning",
     "employer": "All Departments",
-    "location": "Ocean County",
+    "location": "Vineland",
     "salaryMin": null,
     "salaryMax": null,
     "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "engineering",
-    "symbol": "C1065H",
+    "category": "trades",
+    "symbol": "M1079H",
     "posted": "10/01/2026"
    },
    {
-    "title": "Environmental Scientist 4 Consumer And Environmental Health Svc",
+    "title": "Surveyor Physical Plant/Life Safety Code/Health Care Facilities Code",
     "employer": "All Departments",
     "location": "State",
     "salaryMin": null,
     "salaryMax": null,
     "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "science",
-    "symbol": "S1177H",
+    "category": "architecture",
+    "symbol": "S1067H",
     "posted": "10/01/2026"
    },
    {
-    "title": "Assistant Municipal Engineer",
+    "title": "Traffic Engineer",
     "employer": "All Departments",
-    "location": "Paterson",
+    "location": "Jersey City",
     "salaryMin": null,
     "salaryMax": null,
     "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
     "category": "engineering",
-    "symbol": "M1144H",
+    "symbol": "M1075H",
     "posted": "10/01/2026"
    },
    {
-    "title": "Supervisory Life Scientist/Environmental Engineer/Physical Scientist",
-    "employer": "Other Agencies and Independent Organizations",
-    "location": "Edison, New Jersey",
-    "salaryMin": 148222,
-    "salaryMax": 192694,
-    "url": "https://www.usajobs.gov/job/888053800",
-    "category": "engineering"
-   },
-   {
-    "title": "SUPERVISORY GENERAL ENGINEER/ARCHITECT",
-    "employer": "Department of the Navy",
-    "location": "Colts Neck, New Jersey",
-    "salaryMin": 125776,
-    "salaryMax": 163514,
-    "url": "https://www.usajobs.gov/job/872973200",
-    "category": "engineering"
-   },
-   {
-    "title": "Registered Nurse - Community Living Center",
-    "employer": "Department of Veterans Affairs",
-    "location": "Lyons, New Jersey",
-    "salaryMin": 96242,
-    "salaryMax": 161650,
-    "url": "https://www.usajobs.gov/job/889027600",
-    "category": "health"
-   },
-   {
-    "title": "Registered Nurse (CLC)",
-    "employer": "Department of Veterans Affairs",
-    "location": "Lyons, New Jersey",
-    "salaryMin": 96242,
-    "salaryMax": 161650,
-    "url": "https://www.usajobs.gov/job/889134800",
-    "category": "health"
-   },
-   {
-    "title": "Registered Nurse",
+    "title": "IT Specialist",
     "employer": "Department of Veterans Affairs",
     "location": "East Orange, New Jersey",
-    "salaryMin": 38871,
-    "salaryMax": 228000,
-    "url": "https://www.usajobs.gov/job/870448500",
-    "category": "health"
-   },
-   {
-    "title": "Quality Assurance Specialist (Deployable)",
-    "employer": "Department of Defense",
-    "location": "Clifton, New Jersey",
-    "salaryMin": 82289,
-    "salaryMax": 114413,
-    "url": "https://www.usajobs.gov/job/889245300",
-    "category": "computing"
-   },
-   {
-    "title": "Public Notice for Safety Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/864894100",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Mechanical Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/858633700",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Industrial Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/864906500",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for General Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 34454,
-    "salaryMax": 162672,
-    "url": "https://www.usajobs.gov/job/852270000",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for General Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 52998,
-    "salaryMax": 172257,
-    "url": "https://www.usajobs.gov/job/852270300",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Environmental Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/864912000",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Engineering Technician (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 46830,
-    "salaryMax": 82976,
-    "url": "https://www.usajobs.gov/job/858693800",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Electronics Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/858672400",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Electronics Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 34799,
-    "salaryMax": 164301,
-    "url": "https://www.usajobs.gov/job/858682400",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Electrical Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/858635700",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Computer Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/858636600",
-    "category": "computing"
-   },
-   {
-    "title": "Public Notice for Civil Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 53528,
-    "salaryMax": 173980,
-    "url": "https://www.usajobs.gov/job/864890800",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Chemist (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic City, New Jersey",
-    "salaryMin": 64308,
-    "salaryMax": 173890,
-    "url": "https://www.usajobs.gov/job/864463400",
-    "category": "science"
-   },
-   {
-    "title": "Public Notice for Aerospace Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 34454,
-    "salaryMax": 162672,
-    "url": "https://www.usajobs.gov/job/852272900",
-    "category": "engineering"
-   },
-   {
-    "title": "Public Notice for Aerospace Engineer (Direct Hire)",
-    "employer": "Department of Transportation",
-    "location": "Atlantic County, New Jersey",
-    "salaryMin": 52998,
-    "salaryMax": 172257,
-    "url": "https://www.usajobs.gov/job/852274600",
-    "category": "engineering"
-   },
-   {
-    "title": "Physician Assistant (Mid-Level Practitioner) - Recruitment Incentive",
-    "employer": "Department of Justice",
-    "location": "Fairton, New Jersey",
-    "salaryMin": 57188,
-    "salaryMax": 129383,
-    "url": "https://www.usajobs.gov/job/887125600",
-    "category": "health"
-   },
-   {
-    "title": "Physician - Psychiatrist",
-    "employer": "Department of Veterans Affairs",
-    "location": "Toms River, New Jersey",
-    "salaryMin": 270000,
-    "salaryMax": 285000,
-    "url": "https://www.usajobs.gov/job/884085400",
-    "category": "health"
+    "salaryMin": 89508,
+    "salaryMax": 116362,
+    "url": "https://www.usajobs.gov/job/885839500",
+    "category": "engineering",
+    "posted": "2026-09-29",
+    "closes": "2026-12-29"
    },
    {
     "title": "Physician - PACT",
@@ -2640,7 +2719,42 @@
     "salaryMin": 240000,
     "salaryMax": 250000,
     "url": "https://www.usajobs.gov/job/886814200",
-    "category": "health"
+    "category": "health",
+    "posted": "2026-09-29",
+    "closes": "2026-10-30"
+   },
+   {
+    "title": "Physician - Psychiatrist",
+    "employer": "Department of Veterans Affairs",
+    "location": "Toms River, New Jersey",
+    "salaryMin": 270000,
+    "salaryMax": 285000,
+    "url": "https://www.usajobs.gov/job/884085400",
+    "category": "health",
+    "posted": "2026-09-10",
+    "closes": "2026-12-31"
+   },
+   {
+    "title": "Intermittent Physician (Neurology)",
+    "employer": "Department of Veterans Affairs",
+    "location": "Hamilton, New Jersey",
+    "salaryMin": 220000,
+    "salaryMax": 260000,
+    "url": "https://www.usajobs.gov/job/883567500",
+    "category": "health",
+    "posted": "2026-09-04",
+    "closes": "2026-12-31"
+   },
+   {
+    "title": "IT Specialist 6 month Register-Direct Hire",
+    "employer": "Department of the Treasury",
+    "location": "Cherry Hill, New Jersey",
+    "salaryMin": 106437,
+    "salaryMax": 197200,
+    "url": "https://www.usajobs.gov/job/882910800",
+    "category": "engineering",
+    "posted": "2026-08-31",
+    "closes": "2027-03-01"
    },
    {
     "title": "Physician (Specialty Care-Cardiology)",
@@ -2649,79 +2763,31 @@
     "salaryMin": 350000,
     "salaryMax": 400000,
     "url": "https://www.usajobs.gov/job/881537300",
-    "category": "health"
+    "category": "health",
+    "posted": "2026-08-19",
+    "closes": "2026-12-30"
    },
    {
-    "title": "Physician (Psychiatric Physician) - Direct Hire",
-    "employer": "Department of Justice",
-    "location": "Fairton, New Jersey",
-    "salaryMin": 124308,
-    "salaryMax": 315000,
-    "url": "https://www.usajobs.gov/job/887140400",
-    "category": "health"
+    "title": "Emergency Medical Technician (Motor Vehicle Operator)",
+    "employer": "Department of the Army",
+    "location": "Picatinny Arsenal, New Jersey",
+    "salaryMin": 50460,
+    "salaryMax": 75059,
+    "url": "https://www.usajobs.gov/job/877444600",
+    "category": "health",
+    "posted": "2026-07-23",
+    "closes": "2027-07-22"
    },
    {
-    "title": "Physician (Medical Officer) - Direct Hire",
-    "employer": "Department of Justice",
-    "location": "Fairton, New Jersey",
-    "salaryMin": 124308,
-    "salaryMax": 315000,
-    "url": "https://www.usajobs.gov/job/887131000",
-    "category": "health"
-   },
-   {
-    "title": "Physician (Clinical Director) - Direct Hire",
-    "employer": "Department of Justice",
-    "location": "Fairton, New Jersey",
-    "salaryMin": 145000,
-    "salaryMax": 350000,
-    "url": "https://www.usajobs.gov/job/887135100",
-    "category": "health"
-   },
-   {
-    "title": "Physical Scientist",
-    "employer": "Department of the Air Force",
+    "title": "Dental Hygienist",
+    "employer": "Department of Defense",
     "location": "McGuire AFB, New Jersey",
-    "salaryMin": 74678,
-    "salaryMax": 192331,
-    "url": "https://www.usajobs.gov/job/853082300",
-    "category": "science"
-   },
-   {
-    "title": "Occupational Therapist (Clinical Specialist)",
-    "employer": "Department of Veterans Affairs",
-    "location": "East Orange, New Jersey",
-    "salaryMin": 127295,
-    "salaryMax": 165486,
-    "url": "https://www.usajobs.gov/job/888836200",
-    "category": "health"
-   },
-   {
-    "title": "Nurse (Registered Nurse) Recruitment Incentive - Direct Hire",
-    "employer": "Department of Justice",
-    "location": "Fairton, New Jersey",
-    "salaryMin": 50241,
-    "salaryMax": 122314,
-    "url": "https://www.usajobs.gov/job/887126600",
-    "category": "health"
-   },
-   {
-    "title": "Meteorologist",
-    "employer": "Department of Commerce",
-    "location": "Mount Holly, New Jersey",
-    "salaryMin": 40736,
-    "salaryMax": 100315,
-    "url": "https://www.usajobs.gov/job/887393400",
-    "category": "engineering"
-   },
-   {
-    "title": "Mathematician",
-    "employer": "Department of the Air Force",
-    "location": "McGuire AFB, New Jersey",
-    "salaryMin": 63795,
-    "salaryMax": 164301,
-    "url": "https://www.usajobs.gov/job/852876400",
-    "category": "engineering"
+    "salaryMin": 59465,
+    "salaryMax": 77306,
+    "url": "https://www.usajobs.gov/job/874515600",
+    "category": "health",
+    "posted": "2026-06-26",
+    "closes": "2026-12-31"
    }
   ],
   "sources": [
@@ -2739,108 +2805,109 @@
    },
    {
     "name": "CareerOneStop",
-    "count": 14680,
+    "count": 14791,
     "url": "https://www.careeronestop.org/",
     "kind": "search"
    }
   ],
   "private": {
    "occupationCounts": {
-    "29-1141": 962,
-    "15-1252": 1569,
-    "11-3021": 863,
-    "15-1232": 282,
-    "29-2061": 169,
-    "15-1211": 654,
+    "29-1141": 963,
+    "15-1252": 1568,
+    "11-3021": 870,
+    "15-1232": 285,
+    "29-2061": 171,
+    "15-1211": 657,
     "29-2052": 589,
     "15-1299": 5,
-    "11-9121": 122,
-    "29-1171": 170,
+    "11-9121": 120,
+    "29-1171": 171,
     "29-1123": 149,
-    "29-1229": 24,
+    "29-1229": 23,
     "29-1051": 391,
-    "15-1244": 471,
-    "49-9041": 161,
+    "15-1244": 474,
+    "49-9041": 164,
     "29-1292": 10,
     "29-1129": 1,
-    "17-2051": 241,
-    "17-2112": 486,
+    "17-2051": 242,
+    "17-2112": 500,
     "29-1127": 16,
-    "15-1253": 570,
+    "15-1253": 573,
     "15-2051": 44,
-    "29-2034": 114,
-    "29-1122": 124,
+    "29-2034": 115,
+    "29-1122": 123,
     "19-1042": 390,
     "29-2042": 45,
-    "15-1241": 110,
+    "29-2099": 34,
+    "15-1241": 117,
     "19-2031": 69,
-    "15-1212": 458,
-    "29-1071": 92,
-    "11-9041": 379,
+    "15-1212": 473,
+    "29-1071": 94,
+    "11-9041": 378,
     "17-2199": 4,
-    "29-2072": 326,
-    "17-2141": 295,
+    "29-2072": 327,
+    "17-2141": 300,
     "29-2057": 6,
     "15-1251": 206,
-    "19-5011": 62,
+    "19-5011": 63,
     "51-4121": 8,
     "17-2011": 98,
-    "15-1231": 52,
-    "29-2032": 38,
+    "15-1231": 54,
+    "29-2032": 39,
     "29-1126": 55,
-    "15-2031": 265,
-    "51-4041": 43,
+    "15-2031": 268,
+    "51-4041": 44,
     "19-2041": 77,
     "15-1243": 12,
     "29-1215": 20,
     "29-1021": 2,
     "17-2071": 193,
     "29-1216": 16,
-    "29-2056": 38,
-    "29-1031": 320,
+    "29-2056": 37,
+    "29-1031": 321,
     "29-2055": 68,
-    "49-2098": 13,
+    "49-2098": 12,
     "19-4031": 46,
-    "49-2022": 34,
+    "49-2022": 33,
     "19-1021": 53,
     "49-9052": 3,
-    "29-2053": 46,
-    "51-8031": 17,
+    "29-2053": 47,
+    "51-8031": 14,
     "29-2031": 119,
-    "49-9062": 51,
+    "49-9062": 53,
     "17-1011": 27,
     "17-3011": 23,
-    "15-1254": 207,
-    "17-3023": 92,
-    "15-1255": 7,
+    "15-1254": 206,
+    "17-3023": 91,
+    "15-1255": 8,
     "29-2081": 22,
     "29-1131": 11,
     "49-3011": 9,
     "17-2072": 166,
     "15-1242": 62,
     "29-9021": 10,
-    "15-1221": 125,
-    "51-8021": 8,
+    "15-1221": 126,
+    "51-8021": 7,
     "29-1041": 8,
     "49-9051": 3,
-    "19-4021": 82,
+    "19-4021": 84,
     "29-1223": 7,
     "49-2094": 33,
     "29-1221": 4,
     "15-2011": 30,
     "29-2035": 35,
-    "17-2081": 150,
-    "17-3026": 136,
+    "17-2081": 149,
+    "17-3026": 137,
     "17-1022": 23,
-    "29-9091": 16,
+    "29-9091": 17,
     "15-2041": 14,
     "17-3029": 14,
-    "19-4042": 109,
+    "19-4042": 108,
     "19-1022": 38,
-    "17-3022": 35,
+    "17-3022": 34,
     "17-3031": 25,
-    "29-1218": 6,
-    "17-3013": 7,
+    "29-1218": 7,
+    "17-3013": 8,
     "17-2031": 18,
     "19-1012": 5,
     "29-1124": 6,
@@ -2856,16 +2923,16 @@
     "19-2012": 7,
     "29-1299": 3,
     "49-2095": 1,
-    "17-2041": 31,
+    "17-2041": 32,
     "19-2032": 24,
-    "17-2111": 56,
-    "29-1125": 38,
+    "17-2111": 57,
+    "29-1125": 39,
     "29-1242": 4,
-    "17-3025": 24,
+    "17-3025": 23,
     "29-2051": 284,
     "17-3028": 5,
     "17-1012": 1,
-    "29-1213": 1,
+    "29-1213": 2,
     "51-8091": 6,
     "49-9043": 1,
     "19-2042": 6,
@@ -2888,47 +2955,47 @@
     "19-2021": 6
    },
    "byCategory": {
-    "health": 4407,
-    "computing": 5653,
+    "health": 4453,
+    "computing": 5696,
     "science": 1139,
     "trades": 424,
-    "engineering": 2627,
-    "data": 353,
+    "engineering": 2646,
+    "data": 356,
     "architecture": 77
    },
-   "total": 14680,
+   "total": 14791,
    "topLocations": [
     {
      "name": "Trenton, NJ",
-     "count": 2429
+     "count": 2460
     },
     {
      "name": "Jersey City, NJ",
-     "count": 1214
+     "count": 1216
     },
     {
      "name": "Morristown, NJ",
-     "count": 770
+     "count": 782
     },
     {
      "name": "Princeton, NJ",
-     "count": 516
+     "count": 528
     },
     {
      "name": "Newark, NJ",
-     "count": 406
+     "count": 407
     },
     {
      "name": "Edison, NJ",
-     "count": 269
+     "count": 271
     },
     {
      "name": "Bridgewater, NJ",
-     "count": 231
+     "count": 234
     },
     {
      "name": "Florham Park, NJ",
-     "count": 227
+     "count": 230
     }
    ],
    "topEmployers": [
@@ -2938,7 +3005,7 @@
     },
     {
      "name": "Hackensack Meridian Health",
-     "count": 607
+     "count": 617
     },
     {
      "name": "JPMorgan Chase",
@@ -2958,7 +3025,7 @@
     },
     {
      "name": "Atlantic Health System",
-     "count": 323
+     "count": 337
     },
     {
      "name": "Deloitte",
