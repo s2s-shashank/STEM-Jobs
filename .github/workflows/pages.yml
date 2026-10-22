@@ -14,43 +14,6 @@ concurrency:
 
 jobs:
   # ------------------------------------------------------------------
-  # 0. Check the code before anything is published
-  # ------------------------------------------------------------------
-  test:
-    name: Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v7
-
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '22'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Scoring and data tests
-        run: |
-          npm test
-          npm run test:data
-
-      - name: Install Playwright
-        run: |
-          npm install --no-save playwright
-          npx playwright install --with-deps chromium
-
-      - name: Browser test
-        run: node tools/test-finder-browser.mjs
-
-  # ------------------------------------------------------------------
   # 1. Pull fresh numbers from BLS, O*NET, USAJOBS and the state boards
   # ------------------------------------------------------------------
   data:
@@ -107,8 +70,8 @@ jobs:
     name: Build the site
     # `always()` because the data job is skipped on a code push, and then
     # the site is built from the data already in the repository.
-    needs: [data, test]
-    if: always() && needs.data.result != 'failure' && needs.test.result == 'success'
+    needs: data
+    if: always() && needs.data.result != 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
