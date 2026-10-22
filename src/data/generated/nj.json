@@ -1,8 +1,8 @@
 {
  "state": "nj",
  "name": "New Jersey",
- "generated": "2026-10-21T13:20:56.600376+00:00",
- "asOf": "October 21, 2026",
+ "generated": "2026-10-22T09:48:10.878935+00:00",
+ "asOf": "October 22, 2026",
  "occupations": [
   {
    "soc": "29-1141",
@@ -2338,17 +2338,37 @@
   "Vineland, NJ": 4760
  },
  "live": {
-  "total": 68,
+  "total": 63,
   "byCategory": {
-   "engineering": 31,
+   "engineering": 29,
    "computing": 7,
    "science": 7,
-   "health": 20,
-   "data": 1,
-   "architecture": 1,
-   "trades": 1
+   "health": 19,
+   "data": 1
   },
   "postings": [
+   {
+    "title": "IT Specialist (DataMgmt/SysAnalysis)",
+    "employer": "Department of Commerce",
+    "location": "Highlands, New Jersey",
+    "salaryMin": 74678,
+    "salaryMax": 192694,
+    "url": "https://www.usajobs.gov/job/889733500",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-10-28"
+   },
+   {
+    "title": "Supervisory IT Specialist",
+    "employer": "Department of Veterans Affairs",
+    "location": "Eatontown, New Jersey",
+    "salaryMin": 125776,
+    "salaryMax": 163514,
+    "url": "https://www.usajobs.gov/job/889754200",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-10-28"
+   },
    {
     "title": "GENERAL ENGINEER",
     "employer": "Department of the Navy",
@@ -2359,6 +2379,17 @@
     "category": "engineering",
     "posted": "2026-10-21",
     "closes": "2026-11-03"
+   },
+   {
+    "title": "Registered Respiratory Therapist",
+    "employer": "Department of Veterans Affairs",
+    "location": "Lyons, New Jersey",
+    "salaryMin": 88005,
+    "salaryMax": 114413,
+    "url": "https://www.usajobs.gov/job/882766000",
+    "category": "health",
+    "posted": "2026-10-21",
+    "closes": "2026-10-29"
    },
    {
     "title": "GENERAL ENGINEER",
@@ -2427,17 +2458,6 @@
     "closes": "2026-10-26"
    },
    {
-    "title": "Registered Nurse - Community Living Center",
-    "employer": "Department of Veterans Affairs",
-    "location": "Lyons, New Jersey",
-    "salaryMin": 96242,
-    "salaryMax": 161650,
-    "url": "https://www.usajobs.gov/job/889027600",
-    "category": "health",
-    "posted": "2026-10-16",
-    "closes": "2026-10-21"
-   },
-   {
     "title": "Occupational Therapist (Clinical Specialist)",
     "employer": "Department of Veterans Affairs",
     "location": "East Orange, New Jersey",
@@ -2458,17 +2478,6 @@
     "category": "computing",
     "posted": "2026-10-13",
     "closes": "2026-10-27"
-   },
-   {
-    "title": "Supervisory Life Scientist/Environmental Engineer/Physical Scientist",
-    "employer": "Other Agencies and Independent Organizations",
-    "location": "Edison, New Jersey",
-    "salaryMin": 148222,
-    "salaryMax": 192694,
-    "url": "https://www.usajobs.gov/job/888053800",
-    "category": "engineering",
-    "posted": "2026-10-07",
-    "closes": "2026-10-21"
    },
    {
     "title": "Clinical Assistant Nurse Manager (O-5 Billet) Supervisory",
@@ -2515,17 +2524,6 @@
     "closes": "2027-09-30"
    },
    {
-    "title": "Assistant Municipal Engineer",
-    "employer": "All Departments",
-    "location": "Paterson",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "engineering",
-    "symbol": "M1144H",
-    "posted": "10/01/2026"
-   },
-   {
     "title": "Biological Scientist (Environmental)",
     "employer": "Department of the Air Force",
     "location": "McGuire AFB, New Jersey",
@@ -2559,17 +2557,6 @@
     "closes": "2027-09-30"
    },
    {
-    "title": "Environmental Scientist 4 Consumer And Environmental Health Svc",
-    "employer": "All Departments",
-    "location": "State",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "science",
-    "symbol": "S1177H",
-    "posted": "10/01/2026"
-   },
-   {
     "title": "Health Technician (Paramedic)",
     "employer": "Department of Justice",
     "location": "Fairton, New Jersey",
@@ -2599,6 +2586,17 @@
     "salaryMax": 122314,
     "url": "https://www.usajobs.gov/job/887126600",
     "category": "health",
+    "posted": "2026-10-01",
+    "closes": "2027-09-30"
+   },
+   {
+    "title": "PHYSICAL SCIENTIST (ENVIRONMENTAL)",
+    "employer": "Department of the Air Force",
+    "location": "McGuire AFB, New Jersey",
+    "salaryMin": 55934,
+    "salaryMax": 94563,
+    "url": "https://www.usajobs.gov/job/889734500",
+    "category": "science",
     "posted": "2026-10-01",
     "closes": "2027-09-30"
    },
@@ -2645,61 +2643,6 @@
     "category": "health",
     "posted": "2026-10-01",
     "closes": "2027-09-30"
-   },
-   {
-    "title": "Principal Engineer",
-    "employer": "All Departments",
-    "location": "Ocean County",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "engineering",
-    "symbol": "C1065H",
-    "posted": "10/01/2026"
-   },
-   {
-    "title": "Public Health Nurse",
-    "employer": "All Departments",
-    "location": "Clifton",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "health",
-    "symbol": "M1174H",
-    "posted": "10/01/2026"
-   },
-   {
-    "title": "Senior Maintenance Repairer Heating And Air Conditioning",
-    "employer": "All Departments",
-    "location": "Vineland",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "trades",
-    "symbol": "M1079H",
-    "posted": "10/01/2026"
-   },
-   {
-    "title": "Surveyor Physical Plant/Life Safety Code/Health Care Facilities Code",
-    "employer": "All Departments",
-    "location": "State",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "architecture",
-    "symbol": "S1067H",
-    "posted": "10/01/2026"
-   },
-   {
-    "title": "Traffic Engineer",
-    "employer": "All Departments",
-    "location": "Jersey City",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://info.csc.nj.gov/jobannouncements/DefaultJobAnnouncement/JobList",
-    "category": "engineering",
-    "symbol": "M1075H",
-    "posted": "10/01/2026"
    },
    {
     "title": "IT Specialist",
@@ -2788,160 +2731,215 @@
     "category": "health",
     "posted": "2026-06-26",
     "closes": "2026-12-31"
+   },
+   {
+    "title": "SUPERVISORY GENERAL ENGINEER/ARCHITECT",
+    "employer": "Department of the Navy",
+    "location": "Colts Neck, New Jersey",
+    "salaryMin": 125776,
+    "salaryMax": 163514,
+    "url": "https://www.usajobs.gov/job/872973200",
+    "category": "engineering",
+    "posted": "2026-06-15",
+    "closes": "2027-06-11"
+   },
+   {
+    "title": "Registered Nurse",
+    "employer": "Department of Veterans Affairs",
+    "location": "East Orange, New Jersey",
+    "salaryMin": 38871,
+    "salaryMax": 228000,
+    "url": "https://www.usajobs.gov/job/870448500",
+    "category": "health",
+    "posted": "2026-05-22",
+    "closes": "2026-10-30"
+   },
+   {
+    "title": "ENGINEERING TECHNICIAN",
+    "employer": "Department of the Navy",
+    "location": "Colts Neck, New Jersey",
+    "salaryMin": 89508,
+    "salaryMax": 116362,
+    "url": "https://www.usajobs.gov/job/867865200",
+    "category": "engineering",
+    "posted": "2026-05-07",
+    "closes": "2027-05-06"
+   },
+   {
+    "title": "Public Notice for Civil Engineer (Direct Hire)",
+    "employer": "Department of Transportation",
+    "location": "Atlantic County, New Jersey",
+    "salaryMin": 53528,
+    "salaryMax": 173980,
+    "url": "https://www.usajobs.gov/job/864890800",
+    "category": "engineering",
+    "posted": "2026-04-14",
+    "closes": "2027-04-13"
+   },
+   {
+    "title": "Public Notice for Environmental Engineer (Direct Hire)",
+    "employer": "Department of Transportation",
+    "location": "Atlantic County, New Jersey",
+    "salaryMin": 53528,
+    "salaryMax": 173980,
+    "url": "https://www.usajobs.gov/job/864912000",
+    "category": "engineering",
+    "posted": "2026-04-14",
+    "closes": "2027-04-13"
    }
   ],
   "sources": [
    {
     "name": "USAJOBS",
-    "count": 61,
+    "count": 63,
     "url": "https://www.usajobs.gov/",
     "kind": "postings"
    },
    {
     "name": "NJ Civil Service",
-    "count": 7,
+    "count": 0,
     "url": "https://info.csc.nj.gov/jobannouncements/",
     "kind": "postings"
    },
    {
     "name": "CareerOneStop",
-    "count": 14791,
+    "count": 15079,
     "url": "https://www.careeronestop.org/",
     "kind": "search"
    }
   ],
   "private": {
    "occupationCounts": {
-    "29-1141": 963,
-    "15-1252": 1568,
-    "11-3021": 870,
-    "15-1232": 285,
-    "29-2061": 171,
-    "15-1211": 657,
-    "29-2052": 589,
-    "15-1299": 5,
-    "11-9121": 120,
-    "29-1171": 171,
-    "29-1123": 149,
-    "29-1229": 23,
-    "29-1051": 391,
-    "15-1244": 474,
-    "49-9041": 164,
-    "29-1292": 10,
+    "29-1141": 1001,
+    "15-1252": 1644,
+    "11-3021": 875,
+    "15-1232": 288,
+    "29-2061": 174,
+    "15-1211": 696,
+    "29-2052": 590,
+    "15-1299": 4,
+    "11-9121": 118,
+    "29-1171": 180,
+    "29-1123": 147,
+    "29-1229": 21,
+    "29-1051": 390,
+    "15-1244": 492,
+    "49-9041": 161,
+    "29-1292": 11,
     "29-1129": 1,
-    "17-2051": 242,
+    "17-2051": 245,
     "17-2112": 500,
-    "29-1127": 16,
-    "15-1253": 573,
+    "29-1127": 15,
+    "15-1253": 594,
     "15-2051": 44,
-    "29-2034": 115,
-    "29-1122": 123,
-    "19-1042": 390,
-    "29-2042": 45,
-    "29-2099": 34,
-    "15-1241": 117,
+    "29-2034": 116,
+    "29-1122": 120,
+    "19-1042": 399,
+    "29-2042": 46,
+    "29-2099": 32,
+    "15-1241": 134,
     "19-2031": 69,
-    "15-1212": 473,
-    "29-1071": 94,
-    "11-9041": 378,
+    "15-1212": 474,
+    "29-1071": 95,
+    "11-9041": 369,
     "17-2199": 4,
-    "29-2072": 327,
-    "17-2141": 300,
-    "29-2057": 6,
-    "15-1251": 206,
-    "19-5011": 63,
-    "51-4121": 8,
+    "29-2072": 328,
+    "17-2141": 312,
+    "29-2057": 5,
+    "15-1251": 212,
+    "19-5011": 68,
+    "51-4121": 6,
     "17-2011": 98,
-    "15-1231": 54,
-    "29-2032": 39,
+    "15-1231": 51,
+    "29-2032": 40,
     "29-1126": 55,
-    "15-2031": 268,
-    "51-4041": 44,
-    "19-2041": 77,
-    "15-1243": 12,
-    "29-1215": 20,
+    "15-2031": 270,
+    "51-4041": 42,
+    "19-2041": 78,
+    "15-1243": 13,
+    "29-1215": 19,
     "29-1021": 2,
-    "17-2071": 193,
+    "17-2071": 191,
     "29-1216": 16,
-    "29-2056": 37,
-    "29-1031": 321,
-    "29-2055": 68,
-    "49-2098": 12,
-    "19-4031": 46,
-    "49-2022": 33,
+    "29-2056": 36,
+    "29-1031": 316,
+    "29-2055": 63,
+    "49-2098": 13,
+    "19-4031": 49,
+    "49-2022": 31,
     "19-1021": 53,
     "49-9052": 3,
-    "29-2053": 47,
+    "29-2053": 48,
     "51-8031": 14,
-    "29-2031": 119,
+    "29-2031": 113,
     "49-9062": 53,
-    "17-1011": 27,
-    "17-3011": 23,
-    "15-1254": 206,
-    "17-3023": 91,
+    "17-1011": 31,
+    "17-3011": 25,
+    "15-1254": 215,
+    "17-3023": 92,
     "15-1255": 8,
-    "29-2081": 22,
-    "29-1131": 11,
-    "49-3011": 9,
-    "17-2072": 166,
-    "15-1242": 62,
-    "29-9021": 10,
-    "15-1221": 126,
-    "51-8021": 7,
+    "29-2081": 21,
+    "29-1131": 10,
+    "49-3011": 10,
+    "17-2072": 176,
+    "15-1242": 64,
+    "29-9021": 8,
+    "15-1221": 129,
+    "51-8021": 6,
     "29-1041": 8,
     "49-9051": 3,
-    "19-4021": 84,
-    "29-1223": 7,
-    "49-2094": 33,
+    "19-4021": 83,
+    "29-1223": 8,
+    "49-2094": 36,
     "29-1221": 4,
-    "15-2011": 30,
-    "29-2035": 35,
-    "17-2081": 149,
-    "17-3026": 137,
+    "15-2011": 27,
+    "29-2035": 38,
+    "17-2081": 154,
+    "17-3026": 135,
     "17-1022": 23,
     "29-9091": 17,
-    "15-2041": 14,
+    "15-2041": 13,
     "17-3029": 14,
-    "19-4042": 108,
-    "19-1022": 38,
-    "17-3022": 34,
+    "19-4042": 109,
+    "19-1022": 39,
+    "17-3022": 37,
     "17-3031": 25,
     "29-1218": 7,
     "17-3013": 8,
-    "17-2031": 18,
-    "19-1012": 5,
+    "17-2031": 16,
+    "19-1012": 8,
     "29-1124": 6,
     "19-2099": 1,
-    "19-4013": 9,
-    "49-2021": 3,
-    "17-2061": 97,
-    "29-2033": 15,
+    "19-4013": 10,
+    "49-2021": 4,
+    "17-2061": 120,
+    "29-2033": 14,
     "29-2043": 10,
-    "51-4111": 11,
+    "51-4111": 10,
     "19-1031": 3,
     "29-1214": 1,
-    "19-2012": 7,
+    "19-2012": 4,
     "29-1299": 3,
     "49-2095": 1,
-    "17-2041": 32,
-    "19-2032": 24,
-    "17-2111": 57,
-    "29-1125": 39,
+    "17-2041": 30,
+    "19-2032": 26,
+    "17-2111": 59,
+    "29-1125": 42,
     "29-1242": 4,
-    "17-3025": 23,
-    "29-2051": 284,
+    "17-3025": 25,
+    "29-2051": 282,
     "17-3028": 5,
     "17-1012": 1,
-    "29-1213": 2,
+    "29-1213": 1,
     "51-8091": 6,
     "49-9043": 1,
     "19-2042": 6,
     "19-1041": 17,
     "51-8099": 4,
-    "19-5012": 11,
-    "17-2131": 22,
+    "19-5012": 13,
+    "17-2131": 19,
     "17-3027": 26,
-    "49-2091": 9,
+    "49-2091": 10,
     "17-3012": 10,
     "29-1181": 1,
     "17-3024": 19,
@@ -2950,66 +2948,66 @@
     "29-1217": 4,
     "51-2031": 2,
     "29-1128": 2,
-    "29-1161": 9,
-    "19-1023": 2,
-    "19-2021": 6
+    "29-1161": 10,
+    "19-1023": 1,
+    "19-2021": 7
    },
    "byCategory": {
-    "health": 4453,
-    "computing": 5696,
-    "science": 1139,
-    "trades": 424,
-    "engineering": 2646,
-    "data": 356,
-    "architecture": 77
+    "health": 4481,
+    "computing": 5893,
+    "science": 1161,
+    "trades": 420,
+    "engineering": 2689,
+    "data": 354,
+    "architecture": 81
    },
-   "total": 14791,
+   "total": 15079,
    "topLocations": [
     {
      "name": "Trenton, NJ",
-     "count": 2460
+     "count": 2562
     },
     {
      "name": "Jersey City, NJ",
-     "count": 1216
+     "count": 1232
     },
     {
      "name": "Morristown, NJ",
-     "count": 782
+     "count": 778
     },
     {
      "name": "Princeton, NJ",
-     "count": 528
+     "count": 538
     },
     {
      "name": "Newark, NJ",
-     "count": 407
+     "count": 404
     },
     {
      "name": "Edison, NJ",
-     "count": 271
+     "count": 267
     },
     {
      "name": "Bridgewater, NJ",
-     "count": 234
+     "count": 237
     },
     {
      "name": "Florham Park, NJ",
-     "count": 230
+     "count": 228
     }
    ],
    "topEmployers": [
     {
      "name": "CVS Health",
-     "count": 727
+     "count": 735
     },
     {
      "name": "Hackensack Meridian Health",
-     "count": 617
+     "count": 604
     },
     {
      "name": "JPMorgan Chase",
-     "count": 572
+     "count": 577
     },
     {
      "name": "Elior North America",
@@ -3017,19 +3015,19 @@
     },
     {
      "name": "Oracle",
-     "count": 372
+     "count": 394
     },
     {
      "name": "Walgreens",
-     "count": 372
-    },
-    {
-     "name": "Atlantic Health System",
-     "count": 337
+     "count": 375
     },
     {
      "name": "Deloitte",
-     "count": 315
+     "count": 353
+    },
+    {
+     "name": "Atlantic Health System",
+     "count": 328
     }
    ]
   }
