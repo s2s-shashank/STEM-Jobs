@@ -10,20 +10,6 @@ interface QuizItem {
   category: string;
 }
 
-const bySoc = new Map<string, QuizItem>();
-for (const state of allStateData()) {
-  for (const o of state.occupations) {
-    if (!bySoc.has(o.soc) && o.medianWage > 0) {
-      bySoc.set(o.soc, {
-        soc: o.soc,
-        title: o.title,
-        median: o.medianWage,
-        category: o.category,
-      });
-    }
-  }
-}
-
 // Use the most common jobs, so students recognise them, then shuffle.
 // Only use jobs common enough that a student may have heard of them.
 const common = new Map<string, QuizItem>();

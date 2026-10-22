@@ -2424,10 +2424,17 @@
   "Binghamton, NY": 13090
  },
  "live": {
+<<<<<<< HEAD
   "total": 586,
   "byCategory": {
    "engineering": 142,
    "computing": 50,
+=======
+  "total": 573,
+  "byCategory": {
+   "engineering": 130,
+   "computing": 49,
+>>>>>>> d9d1e51 (Ponytail audit changes)
    "science": 33,
    "health": 312,
    "trades": 9,
@@ -2442,6 +2449,7 @@
     "salaryMin": 92344,
     "salaryMax": 120050,
     "url": "https://www.usajobs.gov/job/882186500",
+<<<<<<< HEAD
     "category": "engineering",
     "posted": "2026-10-22",
     "closes": "2026-11-02"
@@ -2651,11 +2659,15 @@
     "salaryMin": 106437,
     "salaryMax": 138370,
     "url": "https://www.usajobs.gov/job/889577100",
+=======
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "category": "engineering",
-    "posted": "2026-10-21",
-    "closes": "2026-10-27"
+    "posted": "2026-10-22",
+    "closes": "2026-11-02",
+    "source": "USAJOBS"
    },
    {
+<<<<<<< HEAD
     "title": "IT Specialist (SYS ANALYSIS)",
     "employer": "Department of Health and Human Services",
     "location": "New York, New York",
@@ -2874,30 +2886,165 @@
     "category": "health",
     "grade": "10",
     "posted": "10/20/26"
+=======
+    "title": "IT Specialist (CUSTSPT)",
+    "employer": "Department of Homeland Security",
+    "location": "New York, New York",
+    "salaryMin": 105481,
+    "salaryMax": 137128,
+    "url": "https://www.usajobs.gov/job/889783900",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-11-02",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "IT Specialist (Network)",
+    "employer": "Department of Veterans Affairs",
+    "location": "New York, New York",
+    "salaryMin": 89508,
+    "salaryMax": 145468,
+    "url": "https://www.usajobs.gov/job/889723600",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-11-02",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Lead Meteorologist",
+    "employer": "Department of Commerce",
+    "location": "Albany, New York",
+    "salaryMin": 106437,
+    "salaryMax": 142755,
+    "url": "https://www.usajobs.gov/job/889594100",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-11-04",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Physician-Research (GRECC)",
+    "employer": "Department of Veterans Affairs",
+    "location": "Bronx, New York",
+    "salaryMin": 245000,
+    "salaryMax": 315000,
+    "url": "https://www.usajobs.gov/job/889775600",
+    "category": "health",
+    "posted": "2026-10-22",
+    "closes": "2027-01-29",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Practical Nurse",
+    "employer": "Department of Defense",
+    "location": "Fort Drum, New York",
+    "salaryMin": 50434,
+    "salaryMax": 65565,
+    "url": "https://www.usajobs.gov/job/889686700",
+    "category": "health",
+    "posted": "2026-10-22",
+    "closes": "2026-10-29",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Senior Super Intelligence Architect",
+    "employer": "Department of the Interior",
+    "location": "New York, New York",
+    "salaryMin": 151661,
+    "salaryMax": 228000,
+    "url": "https://www.usajobs.gov/job/889627100",
+    "category": "architecture",
+    "posted": "2026-10-22",
+    "closes": "2026-11-05",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Senior Super Intelligence Architect",
+    "employer": "Department of the Interior",
+    "location": "New York, New York",
+    "salaryMin": 151661,
+    "salaryMax": 228000,
+    "url": "https://www.usajobs.gov/job/889656900",
+    "category": "architecture",
+    "posted": "2026-10-22",
+    "closes": "2026-11-05",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Senior Super Intelligence Engineer / Architect",
+    "employer": "Department of the Interior",
+    "location": "New York, New York",
+    "salaryMin": 151661,
+    "salaryMax": 228000,
+    "url": "https://www.usajobs.gov/job/889628700",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-11-05",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Supervisory IT Specialist",
+    "employer": "Department of Veterans Affairs",
+    "location": "Albany, New York",
+    "salaryMin": 125776,
+    "salaryMax": 163514,
+    "url": "https://www.usajobs.gov/job/889754200",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-10-28",
+    "source": "USAJOBS"
+>>>>>>> d9d1e51 (Ponytail audit changes)
    }
   ],
   "sources": [
    {
     "name": "USAJOBS",
+<<<<<<< HEAD
     "count": 241,
+=======
+    "count": 228,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "url": "https://www.usajobs.gov/",
-    "kind": "postings"
+    "kind": "postings",
+    "byCategory": {
+     "engineering": 53,
+     "computing": 18,
+     "science": 17,
+     "health": 122,
+     "trades": 6,
+     "data": 10,
+     "architecture": 2
+    }
    },
    {
     "name": "StateJobsNY",
     "count": 345,
     "url": "https://statejobs.ny.gov/",
-    "kind": "postings"
+    "kind": "postings",
+    "byCategory": {
+     "engineering": 77,
+     "architecture": 6,
+     "science": 16,
+     "computing": 31,
+     "data": 22,
+     "health": 190,
+     "trades": 3
+    }
    },
    {
     "name": "CareerOneStop",
+<<<<<<< HEAD
     "count": 46285,
+=======
+    "count": 46264,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "url": "https://www.careeronestop.org/",
     "kind": "search"
    }
   ],
   "private": {
    "occupationCounts": {
+<<<<<<< HEAD
     "29-1141": 3969,
     "15-1252": 4210,
     "11-3021": 2717,
@@ -2907,6 +3054,17 @@
     "15-1211": 1220,
     "15-2051": 224,
     "29-1171": 847,
+=======
+    "29-1141": 3964,
+    "15-1252": 4210,
+    "11-3021": 2717,
+    "29-2061": 1101,
+    "15-1232": 1021,
+    "29-2052": 877,
+    "15-1211": 1219,
+    "15-2051": 224,
+    "29-1171": 846,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "29-1123": 396,
     "29-1051": 523,
     "29-1071": 836,
@@ -2918,22 +3076,38 @@
     "29-2042": 102,
     "29-1292": 49,
     "29-2034": 543,
+<<<<<<< HEAD
     "49-9041": 652,
+=======
+    "49-9041": 654,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "29-2099": 127,
     "17-2112": 1664,
     "29-1122": 317,
     "15-1299": 14,
+<<<<<<< HEAD
     "15-1253": 1500,
+=======
+    "15-1253": 1499,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "17-1011": 206,
     "15-1212": 1178,
     "29-1216": 102,
     "15-1241": 353,
     "51-4041": 245,
+<<<<<<< HEAD
     "29-2072": 836,
     "17-2071": 769,
     "17-2141": 1145,
     "49-9052": 20,
     "51-4121": 97,
+=======
+    "29-2072": 835,
+    "17-2071": 769,
+    "17-2141": 1145,
+    "49-9052": 20,
+    "51-4121": 98,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "11-9041": 1336,
     "19-1042": 970,
     "19-4099": 3,
@@ -2953,18 +3127,30 @@
     "17-2199": 4,
     "11-9121": 180,
     "29-2056": 160,
+<<<<<<< HEAD
     "29-1031": 120,
+=======
+    "29-1031": 119,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "51-8031": 36,
     "19-4021": 387,
     "29-1221": 19,
     "29-1249": 2,
     "51-8021": 35,
+<<<<<<< HEAD
     "17-3023": 450,
+=======
+    "17-3023": 446,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "49-3011": 17,
     "29-2057": 54,
     "19-2031": 110,
     "29-1223": 80,
+<<<<<<< HEAD
     "17-3026": 578,
+=======
+    "17-3026": 574,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "29-1215": 100,
     "15-1254": 441,
     "29-1214": 7,
@@ -2992,9 +3178,15 @@
     "29-1213": 6,
     "29-2053": 188,
     "29-1224": 40,
+<<<<<<< HEAD
     "17-3029": 37,
     "29-9021": 30,
     "19-4042": 359,
+=======
+    "17-3029": 33,
+    "29-9021": 30,
+    "19-4042": 360,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "15-1221": 789,
     "17-3013": 46,
     "17-3022": 150,
@@ -3004,7 +3196,11 @@
     "29-1081": 2,
     "17-1022": 21,
     "29-1242": 44,
+<<<<<<< HEAD
     "19-5012": 33,
+=======
+    "19-5012": 32,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "29-9091": 61,
     "29-1011": 3,
     "51-2031": 5,
@@ -3044,7 +3240,11 @@
     "19-1023": 12,
     "19-2021": 28,
     "29-1128": 1,
+<<<<<<< HEAD
     "29-1161": 43,
+=======
+    "29-1161": 42,
+>>>>>>> d9d1e51 (Ponytail audit changes)
     "51-8099": 7,
     "29-2036": 15,
     "29-2091": 6,
@@ -3062,6 +3262,7 @@
     "29-1243": 2
    },
    "byCategory": {
+<<<<<<< HEAD
     "health": 13990,
     "computing": 15427,
     "data": 1361,
@@ -3071,6 +3272,17 @@
     "science": 3242
    },
    "total": 46285,
+=======
+    "health": 13981,
+    "computing": 15424,
+    "data": 1361,
+    "engineering": 10221,
+    "trades": 1775,
+    "architecture": 260,
+    "science": 3242
+   },
+   "total": 46264,
+>>>>>>> d9d1e51 (Ponytail audit changes)
    "topLocations": [
     {
      "name": "New York, NY",
@@ -3082,11 +3294,19 @@
     },
     {
      "name": "Rochester, NY",
+<<<<<<< HEAD
      "count": 3436
     },
     {
      "name": "Buffalo, NY",
      "count": 2426
+=======
+     "count": 3428
+    },
+    {
+     "name": "Buffalo, NY",
+     "count": 2427
+>>>>>>> d9d1e51 (Ponytail audit changes)
     },
     {
      "name": "Syracuse, NY",

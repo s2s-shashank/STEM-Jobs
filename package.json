@@ -12,7 +12,7 @@
     "data": "python3 pipeline/build_data.py",
     "test": "npm run build && node --experimental-strip-types --import ./tools/ts-resolver.mjs tools/test-finder.mjs",
     "test:browser": "npm run build && node tools/test-finder-browser.mjs",
-    "test:data": "python3 tools/test-dates.py"
+    "test:data": "python3 tools/test-dates.py && python3 tools/test-pipeline.py"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

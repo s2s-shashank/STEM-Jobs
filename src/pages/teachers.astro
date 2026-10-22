@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { withBase } from '../lib/url';
 import { STATES } from '../data/states';
 import { allStateData, formatNumber, formatMoney } from '../lib/data';
+import { WORKSHEET_QUESTIONS } from '../data/worksheet-questions';
 
 const byState = STATES.map((state) => {
   const data = allStateData().find((d) => d.state === state.code);
@@ -11,29 +12,6 @@ const byState = STATES.map((state) => {
   const top = [...occupations].sort((a, b) => b.employment - a.employment).slice(0, 3);
   return { state, data, total, top };
 });
-
-const questions = [
-  {
-    q: 'Pick a STEM job you have never heard of. Look it up in the career list. What does the person actually do all day?',
-    space: 4,
-  },
-  {
-    q: 'Find the median pay for that job in your state. Convert it to an hourly rate. Would that pay cover your rent, a car payment and some fun money?',
-    space: 4,
-  },
-  {
-    q: 'Is that job growing or shrinking? What would have to happen for the answer to change?',
-    space: 3,
-  },
-  {
-    q: 'Find one real opening in that field on your state page. What did the employer ask for? Which of those things can you start this year?',
-    space: 4,
-  },
-  {
-    q: 'Compare two states on the same job. Why might the pay be different? (Think about cost of living, and who is hiring.)',
-    space: 3,
-  },
-];
 ---
 
 <Base
@@ -90,7 +68,7 @@ const questions = [
       <h2>Part 2 - Pick a job and dig in</h2>
       <ol class="worksheet">
         {
-          questions.map((question, index) => (
+          WORKSHEET_QUESTIONS.map((question, index) => (
             <li>
               <p class="worksheet__q">
                 <span class="worksheet__num">{index + 1}</span>

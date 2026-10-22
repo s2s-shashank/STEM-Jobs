@@ -22,6 +22,13 @@ class ParsePosted(unittest.TestCase):
         self.assertEqual(parse_posted("2026-10-15"), date(2026, 10, 15))
         self.assertEqual(parse_posted("2026-10-15T00:00:00.0000"), date(2026, 10, 15))
 
+    def test_two_digit_years(self):
+        # 26 means 2026, but 99 means 1999 - not 2099, which would never
+        # look old enough to drop.
+        self.assertEqual(parse_posted("01/02/26"), date(2026, 1, 2))
+        self.assertEqual(parse_posted("01/02/99"), date(1999, 1, 2))
+        self.assertTrue(is_stale({"posted": "01/02/99"}, TODAY))
+
     def test_nothing_to_read(self):
         for text in ("", None, "   ", "not a date", "13/40/26"):
             self.assertIsNone(parse_posted(text))

@@ -14,12 +14,15 @@ import urllib.error
 import urllib.request
 
 # A real contact address is required by BLS and appreciated by everyone else.
-# CI passes it in as BLS_CONTACT_EMAIL; locally it comes from .env.
+# CI passes it in as BLS_CONTACT_EMAIL; locally it comes from .env - which is
+# read at call time, because .env is loaded after this module is imported.
 CONTACT_EMAIL = os.environ.get("BLS_CONTACT_EMAIL", "").strip()
 
-USER_AGENT = (
-    f"STEM-Jobs-Project/1.0 (educational project; contact: {CONTACT_EMAIL or 'stemjobs@example.com'})"
-)
+
+def user_agent() -> str:
+    """The User-Agent we send. BLS wants a real contact address in it."""
+    email = os.environ.get("BLS_CONTACT_EMAIL", "").strip() or CONTACT_EMAIL
+    return f"STEM-Jobs-Project/1.0 (educational project; contact: {email})"
 
 BROWSER_HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
@@ -43,7 +46,7 @@ def fetch(
 ) -> bytes:
     """GET a URL and return the raw body, retrying on transient failures."""
     merged = dict(BROWSER_HEADERS if use_browser_headers else {})
-    merged.setdefault("User-Agent", USER_AGENT)
+    merged.setdefault("User-Agent", user_agent())
     merged.setdefault("Accept-Encoding", "gzip")
     if headers:
         merged.update(headers)
@@ -63,7 +66,8 @@ def fetch(
                 raise FetchError(f"{url} -> HTTP {exc.code}") from exc
         except (urllib.error.URLError, TimeoutError, OSError) as exc:
             last_error = exc
-        time.sleep(1.5 * (attempt + 1))
+        if attempt < retries - 1:
+            time.sleep(1.5 * (attempt + 1))
 
     raise FetchError(f"{url} -> {last_error}")
 

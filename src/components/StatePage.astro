@@ -142,8 +142,8 @@ const SOURCE_NOTES: Record<string, string> = {
             />
             <StatTile
               value={formatNumber(priv?.total)}
-              label="private-sector STEM job postings right now"
-              note="Posted in the last 30 days"
+              label="private-sector STEM job matches right now"
+              note="Searched per job, so one job can be counted more than once"
             />
             <StatTile
               value={formatNumber(live?.total)}
@@ -230,8 +230,9 @@ const SOURCE_NOTES: Record<string, string> = {
                     suffix=" posting"
                   />
                   <p class="source-note">
-                    {formatNumber(priv.total)} postings in the last 30 days,
-                    within 50 miles of the state.
+                    {formatNumber(priv.total)} job matches in the last 30 days,
+                    within 50 miles of the state. We search once per job, so
+                    one job can be counted more than once.
                   </p>
                 </div>
                 <div class="card">

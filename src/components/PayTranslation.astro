@@ -24,7 +24,7 @@ const pay = translatePay(annual);
           <span class="pay__label">per hour</span>
         </div>
         <div class="pay__cell">
-          <span class="pay__value">${pay.daily ?? pay.perDay}</span>
+          <span class="pay__value">${pay.perDay.toLocaleString('en-US')}</span>
           <span class="pay__label">per day</span>
         </div>
         <div class="pay__cell">

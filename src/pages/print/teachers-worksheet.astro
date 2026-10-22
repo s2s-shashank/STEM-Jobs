@@ -1,6 +1,7 @@
 ---
 import { STATES } from '../../data/states';
 import { allStateData, formatNumber, formatMoney } from '../../lib/data';
+import { WORKSHEET_QUESTIONS } from '../../data/worksheet-questions';
 
 const byState = STATES.map((state) => {
   const data = allStateData().find((d) => d.state === state.code);
@@ -12,12 +13,11 @@ const byState = STATES.map((state) => {
 });
 
 const questions = [
-  'Pick a STEM job you have never heard of. Look it up in the career list. What does the person actually do all day?',
-  'Find the median pay for that job in your state. Convert it to an hourly rate. Would that pay cover rent, a car payment and some fun money?',
-  'Is that job growing or shrinking? What would have to happen for the answer to change?',
-  'Find one real opening in that field on your state page. What did the employer ask for? Which of those things can you start this year?',
-  'Compare two states on the same job. Why might the pay be different? (Think about cost of living, and who is hiring.)',
-  'Which of the three states has the most people working in STEM jobs? Why might that be?',
+  ...WORKSHEET_QUESTIONS,
+  {
+    q: 'Which of the three states has the most people working in STEM jobs? Why might that be?',
+    space: 3,
+  },
 ];
 
 const topCareers = [
@@ -257,12 +257,12 @@ const salaryRows = topCareers.map((career) => {
         questions.map((question, index) => (
           <li>
             <div>
-              {index + 1}. {question}
+              {index + 1}. {question.q}
             </div>
             <div class="lines" aria-hidden="true">
-              <span />
-              <span />
-              <span />
+              {Array.from({ length: question.space }).map(() => (
+                <span />
+              ))}
             </div>
           </li>
         ))

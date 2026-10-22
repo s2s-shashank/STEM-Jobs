@@ -2797,13 +2797,31 @@
     "name": "USAJOBS",
     "count": 140,
     "url": "https://www.usajobs.gov/",
-    "kind": "postings"
+    "kind": "postings",
+    "byCategory": {
+     "engineering": 52,
+     "architecture": 3,
+     "health": 48,
+     "computing": 17,
+     "science": 2,
+     "trades": 1,
+     "data": 3
+    }
    },
    {
     "name": "Commonwealth Careers",
     "count": 223,
     "url": "https://careers.employment.pa.gov/",
-    "kind": "postings"
+    "kind": "postings",
+    "byCategory": {
+     "engineering": 72,
+     "computing": 43,
+     "science": 45,
+     "architecture": 5,
+     "data": 9,
+     "trades": 2,
+     "health": 47
+    }
    },
    {
     "name": "CareerOneStop",

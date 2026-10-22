@@ -6,7 +6,7 @@
  * need them. This file holds the parts that only run at build time:
  * tagging occupations, building the payload, and filling in real numbers.
  */
-import { allStateData } from './data';
+import { allStateData, lastUpdated } from './data';
 import { CATEGORY_MAP } from '../data/states';
 import {
   QUESTIONS,
@@ -14,34 +14,9 @@ import {
   type FinderOption,
 } from '../data/finder-questions';
 
-export { QUESTIONS };
-export type { FinderQuestion, FinderOption };
-
 /* ------------------------------------------------------------------ */
 /* Interest tags                                                       */
 /* ------------------------------------------------------------------ */
-
-/**
- * Every tag gets a phrase we can show the student, so the results screen
- * can explain *why* a job matched instead of just listing jobs.
- */
-export const TAG_PHRASES: Record<string, string> = {
-  code: 'coding and computers',
-  numbers: 'numbers and patterns',
-  lab: 'labs and experiments',
-  people: 'helping people',
-  build: 'building things from scratch',
-  hands: 'working with your hands',
-  nature: 'the planet and living things',
-  space: 'space and flight',
-  art: 'design and how things look',
-  energy: 'big machines and power',
-  animals: 'animals',
-  safety: 'keeping people safe',
-  food: 'food and how it is made',
-  water: 'water and the environment',
-  manage: 'leading a team',
-};
 
 /**
  * Which tags each category starts with. Every occupation gets these even
@@ -107,7 +82,7 @@ const NOT_BUILDING = /software|database|network|computer/i;
 /**
  * Work out the interest tags for one occupation.
  */
-export function occupationTags(title: string, category: string): string[] {
+function occupationTags(title: string, category: string): string[] {
   const tags = new Set<string>(CATEGORY_TAGS[category] ?? []);
   const building = !NOT_BUILDING.test(title);
 
@@ -177,15 +152,10 @@ export function buildFinderPayload(): {
     a.title.localeCompare(b.title),
   );
 
-  const stamps = allStateData()
-    .map((d) => d.generated)
-    .filter(Boolean)
-    .sort();
-
   return {
     questions: preparedQuestions('nj'),
     occupations,
-    generated: stamps.at(-1) ?? '',
+    generated: lastUpdated() ?? '',
   };
 }
 

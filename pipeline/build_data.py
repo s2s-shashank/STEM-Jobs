@@ -57,6 +57,10 @@ SOURCE_URLS = {
     "CareerOneStop": "https://www.careeronestop.org/",
 }
 
+#: How many postings to keep in the JSON file. The page shows 8, so 10 is
+#: enough and keeps the committed files small.
+POSTING_SAMPLE = 10
+
 
 def write_json(path: str, payload: Any) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -83,6 +87,130 @@ def safe(label: str, function, *args, **kwargs):
         print(f"  !! {label} failed: {exc}")
         traceback.print_exc(limit=2)
         return None
+
+
+def collect_live(
+    slug: str,
+    state_code: str,
+    occupations: list[dict[str, Any]],
+    previous: dict[str, Any],
+    today: date,
+) -> tuple[
+    list[dict[str, Any]],
+    list[dict[str, Any]],
+    dict[str, int],
+    dict[str, Any],
+    int,
+]:
+    """Collect the live postings for one state.
+
+    If a source breaks we keep the numbers from the last run instead of
+    showing a blank page, so the site always has something to show.
+
+    Returns (postings, source_rows, by_category, private, total).
+    """
+    postings: list[dict[str, Any]] = []
+    source_rows: list[dict[str, Any]] = []
+    by_category: dict[str, int] = {}
+    previous_live = previous.get("live", {}) or {}
+    private: dict[str, Any] = previous_live.get("private") or {}
+    previous_sources = {
+        row.get("name", ""): row for row in previous_live.get("sources", [])
+    }
+    previous_postings = previous_live.get("postings", [])
+
+    for module, label in LIVE_SOURCES[slug]:
+        if module is careeronestop:
+            # CareerOneStop is asked about occupations, not job titles,
+            # so it gets the list of occupations to ask about.
+            result = safe(label, module.collect, state_code, occupations)
+            if result is None or not result.get("occupationCounts"):
+                # nothing came back - keep the last good private numbers
+                row = previous_sources.get(label) or {}
+                print(f"  {label} gave no data - keeping the last numbers")
+                source_rows.append(
+                    {
+                        "name": label,
+                        "count": row.get("count", 0),
+                        "url": row.get("url") or SOURCE_URLS.get(label, ""),
+                        "kind": "search",
+                    }
+                )
+                continue
+            private = result
+            source_rows.append(
+                {
+                    "name": label,
+                    "count": result.get("total", 0),
+                    "url": SOURCE_URLS.get(label, ""),
+                    "kind": "search",
+                }
+            )
+            continue
+
+        result = safe(label, module.collect, state_code)
+        row = previous_sources.get(label) or {}
+        previous_count = row.get("count", 0)
+
+        if result is None:
+            # The source broke. Keep the numbers from the last run rather
+            # than showing a blank page.
+            print(f"  {label} failed - keeping the numbers from the last run")
+            source_rows.append(
+                {
+                    "name": label,
+                    "count": previous_count,
+                    "url": row.get("url") or SOURCE_URLS.get(label, ""),
+                    "kind": "postings",
+                    "byCategory": row.get("byCategory", {}),
+                }
+            )
+            for category, count in (row.get("byCategory") or {}).items():
+                by_category[category] = by_category.get(category, 0) + count
+            postings.extend(
+                p for p in previous_postings if p.get("source") == label
+            )
+            continue
+
+        # curation: drop postings that are no longer open
+        fresh = [p for p in result["postings"] if not is_stale(p, today)]
+        if len(fresh) != len(result["postings"]):
+            print(f"  dropped {len(result['postings']) - len(fresh)} old postings")
+        result["postings"] = fresh
+        result["total"] = len(fresh)
+
+        if not fresh and previous_count:
+            # The board answered, but with nothing. That is usually true
+            # (the exams closed), but it can also mean the page changed -
+            # so say so loudly.
+            print(
+                f"  !! {label} gave no postings (it had {previous_count} last run)"
+                " - check that the board still looks the same"
+            )
+
+        source_by_category: dict[str, int] = {}
+        for posting in fresh:
+            posting["source"] = label
+            category = posting["category"]
+            source_by_category[category] = source_by_category.get(category, 0) + 1
+            by_category[category] = by_category.get(category, 0) + 1
+
+        source_rows.append(
+            {
+                "name": label,
+                "count": result["total"],
+                "url": SOURCE_URLS.get(label, ""),
+                "kind": "postings",
+                "byCategory": source_by_category,
+            }
+        )
+        postings.extend(fresh)
+
+    # The headline number is the sum of the sources, so a source that failed
+    # still counts for what it counted for yesterday.
+    total = sum(row["count"] for row in source_rows if row.get("kind") == "postings")
+
+    return postings, source_rows, by_category, private, total
 
 
 def main() -> int:
@@ -112,7 +240,7 @@ def main() -> int:
         else:
             print("  using previous occupation data")
             occupations = previous.get("occupations", [])
-            metros = {}
+            metros = previous.get("metros", {})
 
         merged: list[dict[str, Any]] = []
         for occupation in occupations:
@@ -132,62 +260,14 @@ def main() -> int:
             merged.append(record)
 
         # live postings
-        postings: list[dict[str, Any]] = []
-        source_rows: list[dict[str, Any]] = []
-        private: dict[str, Any] = {}
-
-        for module, label in LIVE_SOURCES[slug]:
-            if module is careeronestop:
-                # CareerOneStop is asked about occupations, not job titles,
-                # so it gets the list of occupations to ask about.
-                result = safe(label, module.collect, state_code, merged)
-            else:
-                result = safe(label, module.collect, state_code)
-
-            if result is None:
-                # keep whatever we had for this source last time
-                for row in previous.get("live", {}).get("sources", []):
-                    if row.get("name") == label:
-                        source_rows.append(row)
-                continue
-
-            if module is careeronestop:
-                private = result
-                source_rows.append(
-                    {
-                        "name": label,
-                        "count": result.get("total", 0),
-                        "url": SOURCE_URLS.get(label, ""),
-                        "kind": "search",
-                    }
-                )
-                continue
-
-            # curation: drop postings that are no longer open
-            fresh = [p for p in result["postings"] if not is_stale(p, today)]
-            if len(fresh) != len(result["postings"]):
-                print(f"  dropped {len(result['postings']) - len(fresh)} old postings")
-            result["postings"] = fresh
-            result["total"] = len(fresh)
-
-            source_rows.append(
-                {
-                    "name": label,
-                    "count": result["total"],
-                    "url": SOURCE_URLS.get(label, ""),
-                    "kind": "postings",
-                }
-            )
-            postings.extend(result["postings"])
-
-        by_category: dict[str, int] = {}
-        for posting in postings:
-            by_category[posting["category"]] = by_category.get(posting["category"], 0) + 1
+        postings, source_rows, by_category, private, total_postings = collect_live(
+            slug, state_code, merged, previous, today
+        )
 
         # a sample of the freshest postings for the page
         sample = sorted(postings, key=lambda p: p["title"])
         sample.sort(key=lambda p: parse_posted(p.get("posted") or "") or date.min, reverse=True)
-        sample = sample[:40]
+        sample = sample[:POSTING_SAMPLE]
 
         payload = {
             "state": slug,
@@ -199,7 +279,7 @@ def main() -> int:
                 sorted(metros.items(), key=lambda item: -item[1])[:8]
             ),
             "live": {
-                "total": len(postings),
+                "total": total_postings,
                 "byCategory": by_category,
                 "postings": sample,
                 "sources": source_rows,
@@ -211,7 +291,7 @@ def main() -> int:
         total_employment = sum(o.get("employment", 0) for o in merged)
         print(
             f"  wrote {slug}.json: {len(merged)} occupations, "
-            f"{total_employment:,} STEM workers, {len(postings)} live postings"
+            f"{total_employment:,} STEM workers, {total_postings} live postings"
         )
 
     print("\nDone.")

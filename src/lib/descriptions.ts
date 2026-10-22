@@ -36,7 +36,3 @@ export function describe(soc: string, category: string): JobDescription {
     school: 'Maths and science, plus a two-year degree, certificate or apprenticeship for most paths.',
   };
 }
-
-export function hasDescription(soc: string): boolean {
-  return soc in TABLE;
-}

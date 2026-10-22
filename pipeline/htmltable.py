@@ -66,38 +66,3 @@ def parse_tables(page: str) -> list[list[list[str]]]:
     parser.feed(page)
     parser.close()
     return parser.tables
-
-
-def table_dicts(table: list[list[str]]) -> list[dict[str, str]]:
-    """Turn a table with a header row into a list of dictionaries."""
-    if not table:
-        return []
-    header = [clean(h) for h in table[0]]
-    out = []
-    for row in table[1:]:
-        if not any(cell.strip() for cell in row):
-            continue
-        record = {}
-        for i, name in enumerate(header):
-            if not name:
-                continue
-            record[name] = row[i] if i < len(row) else ""
-        out.append(record)
-    return out
-
-
-def find_table(
-    tables: list[list[list[str]]],
-    must_contain: str,
-    *,
-    min_rows: int = 2,
-) -> list[list[str]] | None:
-    """Find the first table whose header row contains a given label."""
-    needle = must_contain.lower()
-    for table in tables:
-        if len(table) < min_rows:
-            continue
-        header = " | ".join(table[0]).lower()
-        if needle in header:
-            return table
-    return None

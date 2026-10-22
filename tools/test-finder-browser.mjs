@@ -174,14 +174,17 @@ check(href.startsWith('/stem-jobs/careers/'), `career link keeps the base path (
 const resp = await page.request.get(new URL(href, BASE).href);
 check(resp.ok(), `career page behind the link loads (${resp.status()})`);
 
-// Nothing may be written to the device.
+// Nothing may be written to the device, except one local flag that stops
+// the popup opening itself twice. No answers, no ids, no tracking.
 const stored = await page.evaluate(() => ({
-  local: localStorage.length,
+  keys: Object.keys(localStorage),
   session: sessionStorage.length,
 }));
 check(
-  stored.local === 0 && stored.session === 0,
-  `nothing is stored on the device (local ${stored.local}, session ${stored.session})`,
+  stored.session === 0 &&
+    stored.keys.length === 1 &&
+    stored.keys[0] === 'stemjobs:finder-seen',
+  `only the "seen it before" flag is stored (local ${stored.keys.join(', ') || 'none'}, session ${stored.session})`,
 );
 
 // Close the popup: the home page keeps the results it was just given.
@@ -197,25 +200,42 @@ check(true, '"Your matches" section appears on the home page');
 const shownCount = await page.$$eval('#my-matches-list .match', (n) => n.length);
 check(shownCount >= 5, `"Your matches" shows ${shownCount} cards`);
 
-// A refresh must start a completely fresh run.
+// A refresh must start a completely fresh run. The popup opens by itself
+// once per browser, so after a refresh it waits to be asked for.
 await page.reload({ waitUntil: 'networkidle' });
-await page.waitForSelector('#finder:not([hidden])', { timeout: 8000 });
-check(true, 'the popup opens again after a refresh');
+await page.waitForTimeout(1200);
+const closedAfterReload = await page.evaluate(
+  () => document.getElementById('finder')?.hasAttribute('hidden'),
+);
+check(!!closedAfterReload, 'the popup does not open again after a refresh');
 
+// Open it by hand: the quiz must start from the beginning again.
+await page.click('.nav__finder');
+await page.waitForSelector('#finder:not([hidden])', { timeout: 5000 });
 const freshIntro = await page.evaluate(() =>
   document
     .querySelector('[data-slide="intro"]')
     ?.classList.contains('is-active'),
 );
 check(freshIntro, 'a refresh starts the quiz from the beginning again');
+const noPicked = await page.evaluate(
+  () => document.querySelectorAll('.finder__option.is-picked').length,
+);
+check(noPicked === 0, 'a refresh forgets the answers that were given');
+
+// Close it again before we use the page.
+await page.keyboard.press('Escape');
+await page.waitForFunction(() =>
+  document.getElementById('finder')?.hasAttribute('hidden'),
+);
 
 const nothingSaved = await page.evaluate(() => ({
-  local: localStorage.length,
+  keys: Object.keys(localStorage),
   session: sessionStorage.length,
 }));
 check(
-  nothingSaved.local === 0 && nothingSaved.session === 0,
-  'still nothing stored after a refresh',
+  nothingSaved.keys.length === 1 && nothingSaved.session === 0,
+  'still nothing but the one flag is stored after a refresh',
 );
 
 const noMatches = await page.evaluate(
@@ -224,17 +244,22 @@ const noMatches = await page.evaluate(
 check(!!noMatches, '"Your matches" is empty again after a refresh');
 
 // The nav button re-opens the finder.
-await page.keyboard.press('Escape');
-await page.waitForTimeout(200);
 await page.click('.nav__finder');
 await page.waitForSelector('#finder:not([hidden])', { timeout: 5000 });
 check(true, 'the nav button re-opens the finder');
 
-// The popup opens on other pages of the site too.
+// On other pages the popup waits to be asked for too.
 // The site uses trailingSlash: 'never', so no trailing slash here.
 await page.goto(`${BASE}careers`, { waitUntil: 'networkidle' });
-await page.waitForSelector('#finder:not([hidden])', { timeout: 8000 });
-check(true, 'the popup opens on the careers page too');
+await page.waitForTimeout(1200);
+const closedOnCareers = await page.evaluate(
+  () => document.getElementById('finder')?.hasAttribute('hidden'),
+);
+check(!!closedOnCareers, 'the popup does not open by itself on the careers page');
+
+await page.click('.nav__finder');
+await page.waitForSelector('#finder:not([hidden])', { timeout: 5000 });
+check(true, 'the nav button opens the finder on the careers page too');
 
 // Escape closes the popup.
 await page.keyboard.press('Escape');

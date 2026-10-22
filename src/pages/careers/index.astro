@@ -10,32 +10,55 @@ interface Career {
   title: string;
   category: string;
   employment: number;
-  meanWage: number;
-  medianWage: number;
-  entryWage: number;
+  /** One wage per state that reports one, so we can average them. */
+  medianWages: number[];
+  meanWages: number[];
+  entryWages: number[];
   growth?: number;
 }
 
 const careers = new Map<string, Career>();
 for (const state of allStateData()) {
   for (const o of state.occupations) {
-    const existing = careers.get(o.soc);
-    careers.set(o.soc, {
-      soc: o.soc,
-      title: o.title,
-      category: o.category,
-      employment: (existing?.employment ?? 0) + o.employment,
-      meanWage: o.meanWage,
-      medianWage: o.medianWage,
-      entryWage: o.entryWage,
-      growth: o.growth ?? existing?.growth,
-    });
+    let career = careers.get(o.soc);
+    if (!career) {
+      career = {
+        soc: o.soc,
+        title: o.title,
+        category: o.category,
+        employment: 0,
+        medianWages: [],
+        meanWages: [],
+        entryWages: [],
+      };
+      careers.set(o.soc, career);
+    }
+    career.employment += o.employment;
+    if (o.medianWage > 0) career.medianWages.push(o.medianWage);
+    if (o.meanWage > 0) career.meanWages.push(o.meanWage);
+    if (o.entryWage > 0) career.entryWages.push(o.entryWage);
+    career.growth ??= o.growth;
   }
 }
 
-const list = [...careers.values()].sort(
-  (a, b) => b.employment - a.employment,
-);
+/** The average wage across the states that report one. */
+function average(values: number[]): number {
+  if (!values.length) return 0;
+  return Math.round(values.reduce((sum, v) => sum + v, 0) / values.length);
+}
+
+const list = [...careers.values()]
+  .map((c) => ({
+    soc: c.soc,
+    title: c.title,
+    category: c.category,
+    employment: c.employment,
+    meanWage: average(c.meanWages),
+    medianWage: average(c.medianWages),
+    entryWage: average(c.entryWages),
+    growth: c.growth,
+  }))
+  .sort((a, b) => b.employment - a.employment);
 
 const groups = CATEGORIES.map((c) => ({
   category: c,
@@ -120,7 +143,8 @@ const groups = CATEGORIES.map((c) => ({
         )
       }
       <p class="source-note">
-        Employment and pay are the totals for {STATES.map((s) => s.name).join(', ')}.
+        Employment is the total for {STATES.map((s) => s.name).join(', ')}. Pay
+        is the average of the three states.
         <a href={withBase('/sources')}>See sources</a>
         · <a href={withBase('/glossary')}>Glossary</a>
       </p>

@@ -90,10 +90,6 @@ export function getStateData(code: string): StateData | undefined {
   return DATA[code];
 }
 
-export function hasStateData(code: string): boolean {
-  return Boolean(DATA[code]);
-}
-
 export function allStateData(): StateData[] {
   return Object.values(DATA);
 }

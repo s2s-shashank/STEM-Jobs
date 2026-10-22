@@ -33,7 +33,9 @@ def parse_posted(text: str) -> date | None:
         try:
             year = int(year)
             if year < 100:
-                year += 2000
+                # Two-digit years: 26 means 2026, but 99 means 1999 - a
+                # posting from 1999 must not look like one from 2099.
+                year += 1900 if year >= 30 else 2000
             return date(year, int(month), int(day))
         except ValueError:
             return None

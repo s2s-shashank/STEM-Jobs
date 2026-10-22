@@ -1,11 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import { allStateData, formatDate } from '../lib/data';
+import { formatDate, lastUpdated } from '../lib/data';
 
-const generated = allStateData();
-const updated = generated.length
-  ? generated.map((d) => d.asOf).sort().at(-1)
-  : undefined;
+const updated = lastUpdated();
 ---
 
 <Base

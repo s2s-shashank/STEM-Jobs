@@ -35,14 +35,7 @@ const openNow = STATES.reduce(
   (sum, s) => sum + (getStateData(s.code)?.live.private?.total ?? 0),
   0,
 );
-const bestPay = [...allOccupations]
-  .filter((o) => o.employment >= 500)
-  .sort((a, b) => b.meanWage - a.meanWage)[0];
-const topJob = byEmployment(allOccupations)[0];
 const biggestJob = byEmployment(allOccupations).filter((o) => o.employment > 5000)[0];
-const fastestGrowing = [...allOccupations]
-  .filter((o) => typeof o.growth === 'number')
-  .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))[0];
 ---
 
 <Base
@@ -84,8 +77,8 @@ const fastestGrowing = [...allOccupations]
             />
             <StatTile
               value={formatNumber(openNow)}
-              label="private-sector STEM job postings right now"
-              note="Across all three states, posted in the last 30 days"
+              label="private-sector STEM job matches right now"
+              note="Searched per job and per state, so one job can be counted more than once"
             />
             <StatTile
               value={formatNumber(biggestJob?.employment)}

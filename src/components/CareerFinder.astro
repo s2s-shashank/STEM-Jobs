@@ -109,7 +109,7 @@ const { autoOpen = false } = Astro.props;
     scoreMatches,
     loadPayload,
     matchCardHtml,
-    type ClientQuestion,
+    type FinderQuestion,
     type FinderAnswers,
     type FinderPayload,
   } from '../lib/finder-client';
@@ -135,7 +135,7 @@ const { autoOpen = false } = Astro.props;
     const answers: FinderAnswers = {};
 
     // The questions and the job data arrive together, in one file.
-    let questions: ClientQuestion[] = [];
+    let questions: FinderQuestion[] = [];
     let payload: FinderPayload | null = null;
 
     // Slide order: intro, one per question, results.

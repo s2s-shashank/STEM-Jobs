@@ -5,13 +5,15 @@
  * tested on its own and reused by anything that needs to turn answers into
  * job suggestions.
  */
-import { TAG_PHRASES } from '../data/finder-questions';
-
-export { TAG_PHRASES };
+import {
+  TAG_PHRASES,
+  type FinderQuestion,
+  type FinderOption,
+} from '../data/finder-questions';
 
 export interface FinderPayload {
   /** The questions, with their fun facts already filled with real numbers. */
-  questions: ClientQuestion[];
+  questions: FinderQuestion[];
   occupations: {
     soc: string;
     title: string;
@@ -26,22 +28,6 @@ export interface FinderPayload {
 
 export interface FinderAnswers {
   [questionId: string]: string[];
-}
-
-export interface ClientOption {
-  id: string;
-  emoji: string;
-  label: string;
-  tags: string[];
-  fun?: { soc: string; text: string };
-}
-
-export interface ClientQuestion {
-  id: string;
-  title: string;
-  kicker?: string;
-  multi?: boolean;
-  options: ClientOption[];
 }
 
 export interface Match {
@@ -59,16 +45,16 @@ export interface Match {
 }
 
 /** The question set, kept here so scoring can run without the DOM. */
-let questionCache: ClientQuestion[] = [];
+let questionCache: FinderQuestion[] = [];
 
-export function setQuestions(questions: ClientQuestion[]): void {
+export function setQuestions(questions: FinderQuestion[]): void {
   questionCache = questions;
 }
 
 function findOption(
   questionId: string,
   optionId: string,
-): ClientOption | undefined {
+): FinderOption | undefined {
   const q = questionCache.find((x) => x.id === questionId);
   return q?.options.find((o) => o.id === optionId);
 }

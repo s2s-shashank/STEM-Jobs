@@ -23,7 +23,7 @@ src/               The Astro site
   data/finder-questions.ts  The Career Finder questions
   pages/           /, /nj, /ny, /pa, /compare, /careers, /quiz, /sources
   components/      Charts and page sections (all inline SVG or CSS)
-tools/             Tests for the Career Finder
+tools/             Tests for the Career Finder and the data pipeline
 ```
 
 The pipeline runs on a schedule in GitHub Actions, commits any new numbers,
@@ -77,6 +77,11 @@ asks it about every occupation it tracks - "how many Software Developer
 postings are open in New Jersey?". The answers become the "open now" column on
 each career page and the "who is hiring" charts on the state pages.
 
+Because the search is done once per occupation, one job can be counted more
+than once - a software job can match both "Software Developer" and "Web
+Developer". The site therefore calls these numbers "job matches", not
+postings, and says so where they are shown.
+
 We use the **v1** endpoint on purpose. The v2 endpoint (which returns full
 postings) needs a separate data request to the National Labor Exchange, so
 depending on it would make the site fragile.
@@ -111,10 +116,13 @@ It works with no server and no tracking:
   browser and spreads the results across categories so one field cannot
   take over the whole list.
 
-Nothing is stored. The answers live in memory until the page is refreshed,
-so every visit is a fresh run through the quiz. The popup opens on every
-page load, and the home page shows the results from the run that just
-happened - until the next refresh.
+Your answers are never stored or sent anywhere: they live in memory until the
+page is refreshed, so every visit is a fresh run through the quiz. The only
+thing the site writes to your device is one flag that says "this browser has
+already seen the popup", so it does not open by itself twice. The popup opens
+by itself once, on the home page; the "Find my career" button opens it on any
+page. The home page shows the results from the run that just happened - until
+the next refresh.
 
 Every number a student sees comes from the same government data as the rest
 of the site, and every fun fact in the quiz is filled in with a real
@@ -123,7 +131,7 @@ occupation and a real salary at build time.
 ```bash
 npm test               # scoring rules
 npm run test:browser   # the whole flow in a real browser
-python3 tools/test-dates.py   # posting dates and the cleanup rule
+npm run test:data      # posting dates and the "keep the last numbers" rule
 ```
 
 The browser test needs Playwright once:

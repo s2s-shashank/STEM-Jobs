@@ -13,6 +13,8 @@
  * generated from the same government data the rest of the site uses.
  */
 import { withBase } from './url';
+import { CATEGORY_MAP } from '../data/states';
+import type { FinderQuestion } from '../data/finder-questions';
 import {
   scoreMatches,
   money,
@@ -29,25 +31,7 @@ export {
   type FinderAnswers,
   type FinderPayload,
 } from './finder-score';
-export const CATEGORY_META: Record<
-  string,
-  { label: string; icon: string; color: string }
-> = {  computing: { label: 'Computing & Software', icon: '💻', color: '#2f7df6' },
-  data: { label: 'Data & Math', icon: '📊', color: '#7c5cff' },
-  engineering: { label: 'Engineering', icon: '⚙️', color: '#f2801d' },
-  architecture: {
-    label: 'Architecture & Surveying',
-    icon: '📐',
-    color: '#b25a1e',
-  },
-  science: { label: 'Science & Research', icon: '🔬', color: '#10a37f' },
-  health: { label: 'Health & Medicine', icon: '🩺', color: '#e04f7f' },
-  trades: {
-    label: 'Skilled Trades & Technical',
-    icon: '🔧',
-    color: '#0f9bb4',
-  },
-};
+export type { FinderQuestion };
 
 /* ------------------------------------------------------------------ */
 /* Fetching the data file                                              */
@@ -75,7 +59,7 @@ export function loadPayload(): Promise<FinderPayload> {
 /* ------------------------------------------------------------------ */
 
 export function matchCardHtml(match: Match, state: string): string {
-  const meta = CATEGORY_META[match.category];
+  const meta = CATEGORY_MAP[match.category];
   const hourly = match.medianWage ? Math.round(match.medianWage / 2080) : 0;
   const stateName =
     state === 'other' ? 'across all three states' : state.toUpperCase();

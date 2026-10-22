@@ -8,23 +8,60 @@ on:
     - cron: '0 5 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
   # ------------------------------------------------------------------
+  # 0. Check the code before anything is published
+  # ------------------------------------------------------------------
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Scoring and data tests
+        run: |
+          npm test
+          npm run test:data
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Browser test
+        run: node tools/test-finder-browser.mjs
+
+  # ------------------------------------------------------------------
   # 1. Pull fresh numbers from BLS, O*NET, USAJOBS and the state boards
   # ------------------------------------------------------------------
   data:
+    name: Refresh the data
+    # Only a scheduled or manual run needs the pipeline. A code push must
+    # not spend API quota or write a new data commit.
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
-    outputs:
-      changed: ${{ steps.commit.outputs.changed }}
+    timeout-minutes: 30
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
 
@@ -42,23 +79,18 @@ jobs:
           python3 -u -m pipeline.build_data
 
       - name: Commit refreshed data
-        id: commit
-        # Only commit on a scheduled or manual run. The push is best-effort:
-        # the deploy below uses the artifact, so a failed push must not stop
-        # the site from updating.
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        # The push is best-effort: the deploy below uses the artifact, so a
+        # failed push must not stop the site from updating.
         continue-on-error: true
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add src/data/generated || true
           if git diff --staged --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No data changes - nothing to commit."
           else
             git commit -m "data: refresh statistics ($(date -u +%Y-%m-%d))"
             git push
-            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload data
@@ -72,8 +104,16 @@ jobs:
   # 2. Build the static site
   # ------------------------------------------------------------------
   build:
-    needs: data
+    name: Build the site
+    # `always()` because the data job is skipped on a code push, and then
+    # the site is built from the data already in the repository.
+    needs: [data, test]
+    if: always() && needs.data.result != 'failure' && needs.test.result == 'success'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
     steps:
       - uses: actions/checkout@v7
 
@@ -109,8 +149,13 @@ jobs:
   # 3. Publish to GitHub Pages
   # ------------------------------------------------------------------
   deploy:
+    name: Deploy
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

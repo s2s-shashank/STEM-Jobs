@@ -385,8 +385,3 @@ def category_for_title(title: str) -> str | None:
 
 
 _check_categories()
-
-
-def is_stem_title(title: str) -> bool:
-    """True when a posting title looks like a STEM job at all."""
-    return category_for_title(title) is not None
