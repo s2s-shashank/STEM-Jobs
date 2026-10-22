@@ -1,7 +1,7 @@
 {
  "state": "nj",
  "name": "New Jersey",
- "generated": "2026-10-22T12:01:02.074837+00:00",
+ "generated": "2026-10-22T13:03:56.397466+00:00",
  "asOf": "October 22, 2026",
  "occupations": [
   {
@@ -2338,12 +2338,12 @@
   "Vineland, NJ": 4760
  },
  "live": {
-  "total": 47,
+  "total": 48,
   "byCategory": {
    "engineering": 15,
    "computing": 6,
    "science": 6,
-   "health": 19,
+   "health": 20,
    "data": 1
   },
   "postings": [
@@ -2357,6 +2357,18 @@
     "category": "engineering",
     "posted": "2026-10-22",
     "closes": "2026-10-28",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Nurse (Professional Development Practitioner)",
+    "employer": "Department of Veterans Affairs",
+    "location": "East Orange, New Jersey",
+    "salaryMin": 96242,
+    "salaryMax": 161650,
+    "url": "https://www.usajobs.gov/job/889786700",
+    "category": "health",
+    "posted": "2026-10-22",
+    "closes": "2026-11-02",
     "source": "USAJOBS"
    },
    {
@@ -2394,17 +2406,6 @@
     "posted": "2026-10-21",
     "closes": "2026-10-29",
     "source": "USAJOBS"
-   },
-   {
-    "title": "Registered Respiratory Therapist",
-    "employer": "Department of Veterans Affairs",
-    "location": "Lyons, New Jersey",
-    "salaryMin": 88005,
-    "salaryMax": 114413,
-    "url": "https://www.usajobs.gov/job/882766000",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2026-10-29"
    },
    {
     "title": "GENERAL ENGINEER",
@@ -2465,31 +2466,19 @@
     "posted": "2026-10-16",
     "closes": "2026-10-26",
     "source": "USAJOBS"
-   },
-   {
-    "title": "Occupational Therapist (Clinical Specialist)",
-    "employer": "Department of Veterans Affairs",
-    "location": "East Orange, New Jersey",
-    "salaryMin": 127295,
-    "salaryMax": 165486,
-    "url": "https://www.usajobs.gov/job/888836200",
-    "category": "health",
-    "posted": "2026-10-15",
-    "closes": "2026-10-23",
-    "source": "USAJOBS"
    }
   ],
   "sources": [
    {
     "name": "USAJOBS",
-    "count": 47,
+    "count": 48,
     "url": "https://www.usajobs.gov/",
     "kind": "postings",
     "byCategory": {
      "engineering": 15,
      "computing": 6,
      "science": 6,
-     "health": 19,
+     "health": 20,
      "data": 1
     }
    },
@@ -2512,7 +2501,7 @@
     "29-1141": 1005,
     "15-1252": 1649,
     "11-3021": 876,
-    "15-1232": 285,
+    "15-1232": 284,
     "29-2061": 174,
     "15-1211": 699,
     "29-2052": 590,
@@ -2522,7 +2511,7 @@
     "29-1123": 147,
     "29-1229": 21,
     "29-1051": 390,
-    "15-1244": 491,
+    "15-1244": 490,
     "49-9041": 161,
     "29-1292": 11,
     "29-1129": 1,
@@ -2533,7 +2522,7 @@
     "15-2051": 43,
     "29-2034": 116,
     "29-1122": 120,
-    "19-1042": 399,
+    "19-1042": 400,
     "29-2042": 46,
     "29-2099": 32,
     "15-1241": 133,
@@ -2552,7 +2541,7 @@
     "15-1231": 51,
     "29-2032": 40,
     "29-1126": 55,
-    "15-2031": 270,
+    "15-2031": 269,
     "51-4041": 42,
     "19-2041": 78,
     "15-1243": 13,
@@ -2583,7 +2572,7 @@
     "17-2072": 181,
     "15-1242": 64,
     "29-9021": 8,
-    "15-1221": 129,
+    "15-1221": 130,
     "51-8021": 6,
     "29-1041": 8,
     "49-9051": 3,
@@ -2617,7 +2606,7 @@
     "51-4111": 10,
     "19-1031": 3,
     "29-1214": 1,
-    "19-2012": 4,
+    "19-2012": 5,
     "29-1299": 3,
     "49-2095": 1,
     "17-2041": 30,
@@ -2653,11 +2642,11 @@
    },
    "byCategory": {
     "health": 4487,
-    "computing": 5897,
-    "science": 1163,
+    "computing": 5896,
+    "science": 1165,
     "trades": 420,
     "engineering": 2697,
-    "data": 353,
+    "data": 352,
     "architecture": 81
    },
    "total": 15098,
@@ -2676,7 +2665,7 @@
     },
     {
      "name": "Princeton, NJ",
-     "count": 535
+     "count": 538
     },
     {
      "name": "Newark, NJ",

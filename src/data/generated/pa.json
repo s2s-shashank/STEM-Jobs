@@ -1,7 +1,7 @@
 {
  "state": "pa",
  "name": "Pennsylvania",
- "generated": "2026-10-22T12:01:02.074837+00:00",
+ "generated": "2026-10-22T13:03:56.397466+00:00",
  "asOf": "October 22, 2026",
  "occupations": [
   {
@@ -2340,12 +2340,12 @@
   "Reading, PA": 20760
  },
  "live": {
-  "total": 363,
+  "total": 349,
   "byCategory": {
-   "engineering": 137,
-   "computing": 61,
+   "engineering": 124,
    "architecture": 8,
    "health": 95,
+   "computing": 60,
    "science": 47,
    "trades": 3,
    "data": 12
@@ -2360,7 +2360,8 @@
     "url": "https://www.usajobs.gov/job/889686100",
     "category": "engineering",
     "posted": "2026-10-22",
-    "closes": "2026-11-05"
+    "closes": "2026-11-05",
+    "source": "USAJOBS"
    },
    {
     "title": "Enterprise Architect",
@@ -2371,7 +2372,8 @@
     "url": "https://www.usajobs.gov/job/889732900",
     "category": "architecture",
     "posted": "2026-10-22",
-    "closes": "2026-11-04"
+    "closes": "2026-11-04",
+    "source": "USAJOBS"
    },
    {
     "title": "Enterprise Architect",
@@ -2382,7 +2384,8 @@
     "url": "https://www.usajobs.gov/job/889733600",
     "category": "architecture",
     "posted": "2026-10-22",
-    "closes": "2026-10-28"
+    "closes": "2026-10-28",
+    "source": "USAJOBS"
    },
    {
     "title": "General Engineer",
@@ -2393,7 +2396,8 @@
     "url": "https://www.usajobs.gov/job/889646400",
     "category": "engineering",
     "posted": "2026-10-22",
-    "closes": "2026-11-04"
+    "closes": "2026-11-04",
+    "source": "USAJOBS"
    },
    {
     "title": "IT SPECIALIST",
@@ -2404,7 +2408,8 @@
     "url": "https://www.usajobs.gov/job/889725700",
     "category": "engineering",
     "posted": "2026-10-22",
-    "closes": "2026-10-29"
+    "closes": "2026-10-29",
+    "source": "USAJOBS"
    },
    {
     "title": "Physical Scientist",
@@ -2415,7 +2420,8 @@
     "url": "https://www.usajobs.gov/job/889645000",
     "category": "science",
     "posted": "2026-10-22",
-    "closes": "2026-11-04"
+    "closes": "2026-11-04",
+    "source": "USAJOBS"
    },
    {
     "title": "Supervisory IT Specialist",
@@ -2426,7 +2432,8 @@
     "url": "https://www.usajobs.gov/job/889754200",
     "category": "engineering",
     "posted": "2026-10-22",
-    "closes": "2026-10-28"
+    "closes": "2026-10-28",
+    "source": "USAJOBS"
    },
    {
     "title": "Supervisory IT Specialist (CUSTSPT/PROJMGT)",
@@ -2437,7 +2444,8 @@
     "url": "https://www.usajobs.gov/job/889618000",
     "category": "engineering",
     "posted": "2026-10-22",
-    "closes": "2026-10-29"
+    "closes": "2026-10-29",
+    "source": "USAJOBS"
    },
    {
     "title": "Chief Information Security Officer",
@@ -2448,7 +2456,8 @@
     "url": "https://www.usajobs.gov/job/889577300",
     "category": "computing",
     "posted": "2026-10-21",
-    "closes": "2026-11-06"
+    "closes": "2026-11-06",
+    "source": "USAJOBS"
    },
    {
     "title": "Civil Engineer",
@@ -2459,343 +2468,14 @@
     "url": "https://www.usajobs.gov/job/889731400",
     "category": "engineering",
     "posted": "2026-10-21",
-    "closes": "2026-10-30"
-   },
-   {
-    "title": "Data Analyst",
-    "employer": "General Services Administration",
-    "location": "Philadelphia, Pennsylvania",
-    "salaryMin": 127829,
-    "salaryMax": 197200,
-    "url": "https://www.usajobs.gov/job/889548800",
-    "category": "data",
-    "posted": "2026-10-21",
-    "closes": "2026-10-27"
-   },
-   {
-    "title": "Direct Hire Public Notice - Project Engineer (RIDP)",
-    "employer": "Other Agencies and Independent Organizations",
-    "location": "King of Prussia, Pennsylvania",
-    "salaryMin": 86844,
-    "salaryMax": 154682,
-    "url": "https://www.usajobs.gov/job/889586600",
-    "category": "engineering",
-    "posted": "2026-10-21",
-    "closes": "2027-02-01"
-   },
-   {
-    "title": "Engineering Technician-CADD/GIS",
-    "employer": "Department of Defense",
-    "location": "Fairfield, Pennsylvania",
-    "salaryMin": 85447,
-    "salaryMax": 111087,
-    "url": "https://www.usajobs.gov/job/889723900",
-    "category": "data",
-    "posted": "2026-10-21",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "General Engineer",
-    "employer": "Department of Veterans Affairs",
-    "location": "Philadelphia, Pennsylvania",
-    "salaryMin": 117284,
-    "salaryMax": 152471,
-    "url": "https://www.usajobs.gov/job/889572300",
-    "category": "engineering",
-    "posted": "2026-10-21",
-    "closes": "2026-10-30"
-   },
-   {
-    "title": "IT SPECIALIST (CUSTOMER SUPPORT)",
-    "employer": "Department of the Army",
-    "location": "Indiantown Gap, Pennsylvania",
-    "salaryMin": 76190,
-    "salaryMax": 99053,
-    "url": "https://www.usajobs.gov/job/889603000",
-    "category": "engineering",
-    "posted": "2026-10-21",
-    "closes": "2026-11-18"
-   },
-   {
-    "title": "IT SPECIALIST (NETWORK)",
-    "employer": "Department of the Army",
-    "location": "Adams County, Pennsylvania",
-    "salaryMin": 85477,
-    "salaryMax": 116785,
-    "url": "https://www.usajobs.gov/job/889550400",
-    "category": "engineering",
-    "posted": "2026-10-21",
-    "closes": "2026-11-19"
-   },
-   {
-    "title": "Information Technology Cybersecurity Specialist (Applications Software)",
-    "employer": "Department of the Army",
-    "location": "Tobyhanna, Pennsylvania",
-    "salaryMin": 125431,
-    "salaryMax": 163062,
-    "url": "https://www.usajobs.gov/job/889440500",
-    "category": "computing",
-    "posted": "2026-10-21",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Information Technology Specialist (APPSW), AI Software Engineer, GS-2210-15, FPL 15 (DH) (TERM)",
-    "employer": "Department of Education",
-    "location": "Philadelphia, Pennsylvania",
-    "salaryMin": 147945,
-    "salaryMax": 197200,
-    "url": "https://www.usajobs.gov/job/889525300",
-    "category": "computing",
-    "posted": "2026-10-21",
-    "closes": "2026-10-31"
-   },
-   {
-    "title": "Information Technology Specialist (Policy and Planning)",
-    "employer": "Department of the Army",
-    "location": "New Cumberland Defense Logistics Center, Pennsylvania",
-    "salaryMin": 93216,
-    "salaryMax": 133142,
-    "url": "https://www.usajobs.gov/job/889510000",
-    "category": "computing",
-    "posted": "2026-10-21",
-    "closes": "2026-11-03"
-   },
-   {
-    "title": "Information Technology Specialist (SYSANALYSIS)",
-    "employer": "Department of Defense",
-    "location": "Mechanicsburg, Pennsylvania",
-    "salaryMin": 76190,
-    "salaryMax": 118718,
-    "url": "https://www.usajobs.gov/job/889683300",
-    "category": "computing",
-    "posted": "2026-10-21",
-    "closes": "2026-10-28"
-   },
-   {
-    "title": "Nurse Manager Resource and Recruitment",
-    "employer": "Department of Veterans Affairs",
-    "location": "Lebanon, Pennsylvania",
-    "salaryMin": 83623,
-    "salaryMax": 144308,
-    "url": "https://www.usajobs.gov/job/888917100",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2026-10-30"
-   },
-   {
-    "title": "Physician - Transplant Hepatologist",
-    "employer": "Department of Veterans Affairs",
-    "location": "Pittsburgh, Pennsylvania",
-    "salaryMin": 320000,
-    "salaryMax": 400000,
-    "url": "https://www.usajobs.gov/job/889598500",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2026-11-20"
-   },
-   {
-    "title": "WELDING WORKER",
-    "employer": "Department of the Army",
-    "location": "Tobyhanna, Pennsylvania",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://www.usajobs.gov/job/889281400",
-    "category": "trades",
-    "posted": "2026-10-21",
-    "closes": "2026-10-28"
-   },
-   {
-    "title": "Civil Engineer",
-    "employer": "Department of Homeland Security",
-    "location": "Philadelphia, Pennsylvania",
-    "salaryMin": 117284,
-    "salaryMax": 152471,
-    "url": "https://www.usajobs.gov/job/889417200",
-    "category": "engineering",
-    "posted": "2026-10-20",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Financial Administration Specialist - Database Manager",
-    "employer": "Department of Veterans Affairs",
-    "location": "Lebanon, Pennsylvania",
-    "salaryMin": 62972,
-    "salaryMax": 81868,
-    "url": "https://www.usajobs.gov/job/889448400",
-    "category": "computing",
-    "posted": "2026-10-20",
-    "closes": "2026-10-28"
-   },
-   {
-    "title": "IT CYBERSECURITY SPECIALIST (CUSTSPT/INFOSEC)",
-    "employer": "Department of Defense",
-    "location": "Chambersburg, Pennsylvania",
-    "salaryMin": 57331,
-    "salaryMax": 133142,
-    "url": "https://www.usajobs.gov/job/889218700",
-    "category": "engineering",
-    "posted": "2026-10-20",
-    "closes": "2027-01-18"
-   },
-   {
-    "title": "IT CYBERSECURITY SPECIALIST (NETWORK/INFOSEC)",
-    "employer": "Department of Defense",
-    "location": "Chambersburg, Pennsylvania",
-    "salaryMin": 106437,
-    "salaryMax": 158322,
-    "url": "https://www.usajobs.gov/job/889266100",
-    "category": "engineering",
-    "posted": "2026-10-20",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Quality Assurance Specialist (Deployable)",
-    "employer": "Department of Defense",
-    "location": "Ridley Park, Pennsylvania",
-    "salaryMin": 76777,
-    "salaryMax": 114413,
-    "url": "https://www.usajobs.gov/job/889483300",
-    "category": "computing",
-    "posted": "2026-10-20",
-    "closes": "2026-11-02"
-   },
-   {
-    "title": "Registered Nurse - Associate Chief of Staff, Behavioral Health",
-    "employer": "Department of Veterans Affairs",
-    "location": "Butler, Pennsylvania",
-    "salaryMin": 135772,
-    "salaryMax": 180575,
-    "url": "https://www.usajobs.gov/job/889340200",
-    "category": "health",
-    "posted": "2026-10-20",
-    "closes": "2026-10-23"
-   },
-   {
-    "title": "Registered Nurse-Case Manager, Case Coordinator",
-    "employer": "Department of Veterans Affairs",
-    "location": "Wilkes Barre, Pennsylvania",
-    "salaryMin": 62228,
-    "salaryMax": 116260,
-    "url": "https://www.usajobs.gov/job/889625300",
-    "category": "health",
-    "posted": "2026-10-20",
-    "closes": "2026-10-30"
-   },
-   {
-    "title": "Registered Nurse-Substance Use Disorder",
-    "employer": "Department of Veterans Affairs",
-    "location": "Wilkes Barre, Pennsylvania",
-    "salaryMin": 64058,
-    "salaryMax": 119679,
-    "url": "https://www.usajobs.gov/job/889565000",
-    "category": "health",
-    "posted": "2026-10-20",
-    "closes": "2026-10-30"
-   },
-   {
-    "title": "Computer Assistant",
-    "employer": "Department of the Treasury",
-    "location": "Philadelphia, Pennsylvania",
-    "salaryMin": 50714,
-    "salaryMax": 90882,
-    "url": "https://www.usajobs.gov/job/889303100",
-    "category": "computing",
-    "posted": "2026-10-19",
-    "closes": "2026-10-23"
-   },
-   {
-    "title": "Customer Service System Analyst",
-    "employer": "Department of the Treasury",
-    "location": "Philadelphia, Pennsylvania",
-    "salaryMin": 61722,
-    "salaryMax": 106982,
-    "url": "https://www.usajobs.gov/job/889115200",
-    "category": "computing",
-    "posted": "2026-10-19",
-    "closes": "2026-10-23"
-   },
-   {
-    "title": "Health Technician (Dietetic)",
-    "employer": "Department of Veterans Affairs",
-    "location": "Philadelphia, Pennsylvania",
-    "salaryMin": 44887,
-    "salaryMax": 58354,
-    "url": "https://www.usajobs.gov/job/889229400",
-    "category": "health",
-    "posted": "2026-10-19",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "INFORMATION TECHNOLOGY SPECIALIST (SUCCESS ENGINEER)",
-    "employer": "Department of Defense",
-    "location": "Boyers, Pennsylvania",
-    "salaryMin": 130042,
-    "salaryMax": 187093,
-    "url": "https://www.usajobs.gov/job/889313400",
-    "category": "computing",
-    "posted": "2026-10-19",
-    "closes": "2026-10-29"
-   },
-   {
-    "title": "Mathematical Statistician (Data Scientist)",
-    "employer": "Department of the Treasury",
-    "location": "Bethlehem, Pennsylvania",
-    "salaryMin": 125776,
-    "salaryMax": 197200,
-    "url": "https://www.usajobs.gov/job/889308400",
-    "category": "data",
-    "posted": "2026-10-19",
-    "closes": "2026-10-23"
-   },
-   {
-    "title": "Quality Assurance Specialist (Deployable)",
-    "employer": "Department of Defense",
-    "location": "King of Prussia, Pennsylvania",
-    "salaryMin": 82289,
-    "salaryMax": 114413,
-    "url": "https://www.usajobs.gov/job/889245300",
-    "category": "computing",
-    "posted": "2026-10-19",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Quality Assurance Specialist (Deployable)",
-    "employer": "Department of Defense",
-    "location": "King of Prussia, Pennsylvania",
-    "salaryMin": 74678,
-    "salaryMax": 114413,
-    "url": "https://www.usajobs.gov/job/889310400",
-    "category": "computing",
-    "posted": "2026-10-19",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Registered Nurse - Heart Failure Navigator",
-    "employer": "Department of Veterans Affairs",
-    "location": "Pittsburgh, Pennsylvania",
-    "salaryMin": 71798,
-    "salaryMax": 147862,
-    "url": "https://www.usajobs.gov/job/889252700",
-    "category": "health",
-    "posted": "2026-10-19",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Registered Nurse- Outpatient Comprehensive Social Services",
-    "employer": "Department of Veterans Affairs",
-    "location": "Aspinwall, Pennsylvania",
-    "salaryMin": 71798,
-    "salaryMax": 147862,
-    "url": "https://www.usajobs.gov/job/889254900",
-    "category": "health",
-    "posted": "2026-10-19",
-    "closes": "2026-10-26"
+    "closes": "2026-10-30",
+    "source": "USAJOBS"
    }
   ],
   "sources": [
    {
     "name": "USAJOBS",
-    "count": 140,
+    "count": 126,
     "url": "https://www.usajobs.gov/",
     "kind": "postings",
     "byCategory": {
@@ -2825,7 +2505,7 @@
    },
    {
     "name": "CareerOneStop",
-    "count": 30457,
+    "count": 30317,
     "url": "https://www.careeronestop.org/",
     "kind": "search"
    }
@@ -2836,12 +2516,11 @@
     "15-1252": 1629,
     "29-2061": 834,
     "15-1232": 628,
-    "11-3021": 918,
+    "11-3021": 917,
     "29-1229": 44,
     "49-9041": 812,
     "15-1211": 747,
     "29-2052": 972,
-    "51-4121": 138,
     "17-2051": 706,
     "15-1299": 12,
     "29-1051": 590,
@@ -2884,7 +2563,7 @@
     "49-9051": 11,
     "49-9052": 24,
     "17-1011": 56,
-    "29-2031": 205,
+    "29-2031": 204,
     "29-1131": 32,
     "17-3023": 350,
     "51-4111": 83,
@@ -2991,23 +2670,23 @@
     "29-1217": 3
    },
    "byCategory": {
-    "health": 10730,
-    "computing": 6968,
-    "trades": 2079,
+    "health": 10729,
+    "computing": 6967,
+    "trades": 1941,
     "engineering": 7681,
     "data": 591,
     "science": 2296,
     "architecture": 112
    },
-   "total": 30457,
+   "total": 30317,
    "topLocations": [
     {
      "name": "Pittsburgh, PA",
-     "count": 3662
+     "count": 3658
     },
     {
      "name": "Philadelphia, PA",
-     "count": 3231
+     "count": 3225
     },
     {
      "name": "Harrisburg, PA",
@@ -3015,23 +2694,23 @@
     },
     {
      "name": "Allentown, PA",
-     "count": 677
+     "count": 675
     },
     {
      "name": "Lancaster, PA",
-     "count": 627
+     "count": 623
     },
     {
      "name": "King Of Prussia, PA",
      "count": 587
     },
     {
-     "name": "York, PA",
-     "count": 518
-    },
-    {
      "name": "Cranberry Township, PA",
      "count": 510
+    },
+    {
+     "name": "York, PA",
+     "count": 501
     }
    ],
    "topEmployers": [

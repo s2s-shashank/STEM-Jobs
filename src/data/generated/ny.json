@@ -1,7 +1,7 @@
 {
  "state": "ny",
  "name": "New York",
- "generated": "2026-10-22T12:01:02.074837+00:00",
+ "generated": "2026-10-22T13:03:56.397466+00:00",
  "asOf": "October 22, 2026",
  "occupations": [
   {
@@ -2424,24 +2424,29 @@
   "Binghamton, NY": 13090
  },
  "live": {
-<<<<<<< HEAD
-  "total": 586,
+  "total": 577,
   "byCategory": {
-   "engineering": 142,
-   "computing": 50,
-=======
-  "total": 573,
-  "byCategory": {
-   "engineering": 130,
+   "engineering": 133,
    "computing": 49,
->>>>>>> d9d1e51 (Ponytail audit changes)
    "science": 33,
-   "health": 312,
+   "health": 313,
    "trades": 9,
    "data": 32,
    "architecture": 8
   },
   "postings": [
+   {
+    "title": "Assistant Engineer (Environmental) / Engineer Trainee - NY HELPS",
+    "employer": "Environmental Conservation, Department of",
+    "location": "Jefferson",
+    "salaryMin": null,
+    "salaryMax": null,
+    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
+    "category": "engineering",
+    "grade": "NS",
+    "posted": "10/22/26",
+    "source": "StateJobsNY"
+   },
    {
     "title": "INTERDISCIPLINARY ENGINEER/ARCHITECT",
     "employer": "Department of the Army",
@@ -2449,444 +2454,12 @@
     "salaryMin": 92344,
     "salaryMax": 120050,
     "url": "https://www.usajobs.gov/job/882186500",
-<<<<<<< HEAD
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-11-02"
-   },
-   {
-    "title": "IT Specialist (Network)",
-    "employer": "Department of Veterans Affairs",
-    "location": "New York, New York",
-    "salaryMin": 89508,
-    "salaryMax": 145468,
-    "url": "https://www.usajobs.gov/job/889723600",
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-11-02"
-   },
-   {
-    "title": "Lead Meteorologist",
-    "employer": "Department of Commerce",
-    "location": "Albany, New York",
-    "salaryMin": 106437,
-    "salaryMax": 142755,
-    "url": "https://www.usajobs.gov/job/889594100",
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-11-04"
-   },
-   {
-    "title": "Physician-Research (GRECC)",
-    "employer": "Department of Veterans Affairs",
-    "location": "Bronx, New York",
-    "salaryMin": 245000,
-    "salaryMax": 315000,
-    "url": "https://www.usajobs.gov/job/889775600",
-    "category": "health",
-    "posted": "2026-10-22",
-    "closes": "2027-01-29"
-   },
-   {
-    "title": "Practical Nurse",
-    "employer": "Department of Defense",
-    "location": "Fort Drum, New York",
-    "salaryMin": 50434,
-    "salaryMax": 65565,
-    "url": "https://www.usajobs.gov/job/889686700",
-    "category": "health",
-    "posted": "2026-10-22",
-    "closes": "2026-10-29"
-   },
-   {
-    "title": "Senior Super Intelligence Architect",
-    "employer": "Department of the Interior",
-    "location": "New York, New York",
-    "salaryMin": 151661,
-    "salaryMax": 228000,
-    "url": "https://www.usajobs.gov/job/889627100",
-    "category": "architecture",
-    "posted": "2026-10-22",
-    "closes": "2026-11-05"
-   },
-   {
-    "title": "Senior Super Intelligence Architect",
-    "employer": "Department of the Interior",
-    "location": "New York, New York",
-    "salaryMin": 151661,
-    "salaryMax": 228000,
-    "url": "https://www.usajobs.gov/job/889656900",
-    "category": "architecture",
-    "posted": "2026-10-22",
-    "closes": "2026-11-05"
-   },
-   {
-    "title": "Senior Super Intelligence Engineer / Architect",
-    "employer": "Department of the Interior",
-    "location": "New York, New York",
-    "salaryMin": 151661,
-    "salaryMax": 228000,
-    "url": "https://www.usajobs.gov/job/889628700",
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-11-05"
-   },
-   {
-    "title": "Supervisory IT Specialist",
-    "employer": "Department of Veterans Affairs",
-    "location": "Albany, New York",
-    "salaryMin": 125776,
-    "salaryMax": 163514,
-    "url": "https://www.usajobs.gov/job/889754200",
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-10-28"
-   },
-   {
-    "title": "Supervisory IT Specialist (CUSTSPT/PROJMGT)",
-    "employer": "Department of Defense",
-    "location": "Rome, New York",
-    "salaryMin": 133233,
-    "salaryMax": 173208,
-    "url": "https://www.usajobs.gov/job/889618000",
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-10-29"
-   },
-   {
-    "title": "Advanced Practice Nurse (CNP) - Cardiology",
-    "employer": "Department of Veterans Affairs",
-    "location": "Syracuse, New York",
-    "salaryMin": 109498,
-    "salaryMax": 176633,
-    "url": "https://www.usajobs.gov/job/889680500",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2027-01-21"
-   },
-   {
-    "title": "Assistant Engineer (Environmental) / Engineer Trainee - NY HELPS",
-    "employer": "Environmental Conservation, Department of",
-    "location": "Schenectady",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "engineering",
-    "grade": "NS",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Assistant Research Scientist / Research Scientist 1 (Air Pollution)",
-    "employer": "Environmental Conservation, Department of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "science",
-    "grade": "NS",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Business Systems Analyst 1 (NY HELPS) - 15298, 15408, 88436",
-    "employer": "Health, Department of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "computing",
-    "grade": "18",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Data Analyst",
-    "employer": "General Services Administration",
-    "location": "New York, New York",
-    "salaryMin": 127829,
-    "salaryMax": 197200,
-    "url": "https://www.usajobs.gov/job/889548800",
-    "category": "data",
-    "posted": "2026-10-21",
-    "closes": "2026-10-27"
-   },
-   {
-    "title": "Data Analyst 2, SG-23 - DIGIT/RAISE",
-    "employer": "Financial Services, Department of",
-    "location": "To Be Determined",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "data",
-    "grade": "23",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Data Analyst 2; Central Office",
-    "employer": "Mental Health, Office of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "data",
-    "grade": "23",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Engineer Trainee/Assistant Engineer (Civil/Transportation) NY HELPS (Region 4)",
-    "employer": "Transportation, Department of",
-    "location": "Monroe",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "engineering",
-    "grade": "NS",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Health Care Surveyor 2 (Nursing) (NY HELPS) - 47051",
-    "employer": "Health, Department of",
-    "location": "New York",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "architecture",
-    "grade": "20",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "IT Specialist",
-    "employer": "Department of Veterans Affairs",
-    "location": "New York, New York",
-    "salaryMin": 106437,
-    "salaryMax": 138370,
-    "url": "https://www.usajobs.gov/job/889577100",
-=======
->>>>>>> d9d1e51 (Ponytail audit changes)
     "category": "engineering",
     "posted": "2026-10-22",
     "closes": "2026-11-02",
     "source": "USAJOBS"
    },
    {
-<<<<<<< HEAD
-    "title": "IT Specialist (SYS ANALYSIS)",
-    "employer": "Department of Health and Human Services",
-    "location": "New York, New York",
-    "salaryMin": 125776,
-    "salaryMax": 187093,
-    "url": "https://www.usajobs.gov/job/889467600",
-    "category": "engineering",
-    "posted": "2026-10-21",
-    "closes": "2026-10-27"
-   },
-   {
-    "title": "Information Technology Architect 2 (Solutions Architecture)",
-    "employer": "Information Technology Services, Office of",
-    "location": "Schenectady",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "computing",
-    "grade": "27",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Information Technology Cybersecurity Specialist",
-    "employer": "Department of Justice",
-    "location": "New York, New York",
-    "salaryMin": 43106,
-    "salaryMax": 56039,
-    "url": "https://www.usajobs.gov/job/889557000",
-    "category": "computing",
-    "posted": "2026-10-21",
-    "closes": "2026-11-04"
-   },
-   {
-    "title": "Information Technology Specialist (APPSW), AI Software Engineer, GS-2210-15, FPL 15 (DH) (TERM)",
-    "employer": "Department of Education",
-    "location": "New York, New York",
-    "salaryMin": 147945,
-    "salaryMax": 197200,
-    "url": "https://www.usajobs.gov/job/889525300",
-    "category": "computing",
-    "posted": "2026-10-21",
-    "closes": "2026-10-31"
-   },
-   {
-    "title": "Information Technology Specialist 3 Programming",
-    "employer": "Information Technology Services, Office of",
-    "location": "Schenectady",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "computing",
-    "grade": "23",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Mechanical Engineer",
-    "employer": "State University Construction Fund",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "engineering",
-    "grade": "25",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Professional Engineer 1 (Civil/Transportation) NY HELPS (Region 4)",
-    "employer": "Transportation, Department of",
-    "location": "Monroe",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "engineering",
-    "grade": "24",
-    "posted": "10/21/26"
-   },
-   {
-    "title": "Registered Nurse",
-    "employer": "Department of Veterans Affairs",
-    "location": "Buffalo, New York",
-    "salaryMin": 75760,
-    "salaryMax": 139451,
-    "url": "https://www.usajobs.gov/job/889574000",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Registered Nurse - Critical Care",
-    "employer": "Department of Veterans Affairs",
-    "location": "Buffalo, New York",
-    "salaryMin": 75760,
-    "salaryMax": 139451,
-    "url": "https://www.usajobs.gov/job/889749100",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2026-10-26"
-   },
-   {
-    "title": "Speech-Language Pathologist",
-    "employer": "Department of Veterans Affairs",
-    "location": "Buffalo, New York",
-    "salaryMin": 93598,
-    "salaryMax": 121680,
-    "url": "https://www.usajobs.gov/job/889681300",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2026-10-28"
-   },
-   {
-    "title": "Speech-Language Pathologist",
-    "employer": "Department of Veterans Affairs",
-    "location": "Buffalo, New York",
-    "salaryMin": 93598,
-    "salaryMax": 121680,
-    "url": "https://www.usajobs.gov/job/889681700",
-    "category": "health",
-    "posted": "2026-10-21",
-    "closes": "2026-10-28"
-   },
-   {
-    "title": "Supervisory Data Scientist",
-    "employer": "Department of Veterans Affairs",
-    "location": "New York, New York",
-    "salaryMin": 107446,
-    "salaryMax": 139684,
-    "url": "https://www.usajobs.gov/job/889599400",
-    "category": "data",
-    "posted": "2026-10-21",
-    "closes": "2026-10-28"
-   },
-   {
-    "title": "Assistant Geologist / Geologist Trainee - NY HELPS",
-    "employer": "Environmental Conservation, Department of",
-    "location": "Jefferson",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "science",
-    "grade": "NS",
-    "posted": "10/20/26"
-   },
-   {
-    "title": "Biologist 3 (Wildlife)",
-    "employer": "Environmental Conservation, Department of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "science",
-    "grade": "25",
-    "posted": "10/20/26"
-   },
-   {
-    "title": "Data Analyst 1",
-    "employer": "Justice Center For The Protection Of People With Special Needs",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "data",
-    "grade": "18",
-    "posted": "10/20/26"
-   },
-   {
-    "title": "Data Analyst 3, SG-27 - DIGIT/RAISE",
-    "employer": "Financial Services, Department of",
-    "location": "To Be Determined",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "data",
-    "grade": "27",
-    "posted": "10/20/26"
-   },
-   {
-    "title": "Fish and Wildlife Technician 3 (3 Positions)",
-    "employer": "Environmental Conservation, Department of",
-    "location": "Albany",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "science",
-    "grade": "15",
-    "posted": "10/20/26"
-   },
-   {
-    "title": "Information Technology Specialist 4 (Service Desk), SG-25",
-    "employer": "Financial Services, Department of",
-    "location": "New York",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "computing",
-    "grade": "25",
-    "posted": "10/20/26"
-   },
-   {
-    "title": "Licensed Practical Nurse",
-    "employer": "Department of Veterans Affairs",
-    "location": "Catskill, New York",
-    "salaryMin": 42981,
-    "salaryMax": 66565,
-    "url": "https://www.usajobs.gov/job/889402300",
-    "category": "health",
-    "posted": "2026-10-20",
-    "closes": "2026-11-02"
-   },
-   {
-    "title": "Licensed Practical Nurse",
-    "employer": "People With Developmental Disabilities, Office for",
-    "location": "Orange",
-    "salaryMin": null,
-    "salaryMax": null,
-    "url": "https://statejobs.ny.gov/employees/vacancytable.cfm",
-    "category": "health",
-    "grade": "10",
-    "posted": "10/20/26"
-=======
     "title": "IT Specialist (CUSTSPT)",
     "employer": "Department of Homeland Security",
     "location": "New York, New York",
@@ -2920,6 +2493,30 @@
     "category": "engineering",
     "posted": "2026-10-22",
     "closes": "2026-11-04",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Licensed Practical Nurse - CLC",
+    "employer": "Department of Veterans Affairs",
+    "location": "Northport, New York",
+    "salaryMin": 51437,
+    "salaryMax": 87921,
+    "url": "https://www.usajobs.gov/job/889787600",
+    "category": "health",
+    "posted": "2026-10-22",
+    "closes": "2026-11-02",
+    "source": "USAJOBS"
+   },
+   {
+    "title": "Petroleum Engineer",
+    "employer": "Department of the Interior",
+    "location": "New York, New York",
+    "salaryMin": 125776,
+    "salaryMax": 163514,
+    "url": "https://www.usajobs.gov/job/889789000",
+    "category": "engineering",
+    "posted": "2026-10-22",
+    "closes": "2026-10-27",
     "source": "USAJOBS"
    },
    {
@@ -2957,60 +2554,19 @@
     "posted": "2026-10-22",
     "closes": "2026-11-05",
     "source": "USAJOBS"
-   },
-   {
-    "title": "Senior Super Intelligence Architect",
-    "employer": "Department of the Interior",
-    "location": "New York, New York",
-    "salaryMin": 151661,
-    "salaryMax": 228000,
-    "url": "https://www.usajobs.gov/job/889656900",
-    "category": "architecture",
-    "posted": "2026-10-22",
-    "closes": "2026-11-05",
-    "source": "USAJOBS"
-   },
-   {
-    "title": "Senior Super Intelligence Engineer / Architect",
-    "employer": "Department of the Interior",
-    "location": "New York, New York",
-    "salaryMin": 151661,
-    "salaryMax": 228000,
-    "url": "https://www.usajobs.gov/job/889628700",
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-11-05",
-    "source": "USAJOBS"
-   },
-   {
-    "title": "Supervisory IT Specialist",
-    "employer": "Department of Veterans Affairs",
-    "location": "Albany, New York",
-    "salaryMin": 125776,
-    "salaryMax": 163514,
-    "url": "https://www.usajobs.gov/job/889754200",
-    "category": "engineering",
-    "posted": "2026-10-22",
-    "closes": "2026-10-28",
-    "source": "USAJOBS"
->>>>>>> d9d1e51 (Ponytail audit changes)
    }
   ],
   "sources": [
    {
     "name": "USAJOBS",
-<<<<<<< HEAD
-    "count": 241,
-=======
-    "count": 228,
->>>>>>> d9d1e51 (Ponytail audit changes)
+    "count": 231,
     "url": "https://www.usajobs.gov/",
     "kind": "postings",
     "byCategory": {
-     "engineering": 53,
+     "engineering": 55,
      "computing": 18,
      "science": 17,
-     "health": 122,
+     "health": 123,
      "trades": 6,
      "data": 10,
      "architecture": 2
@@ -3018,54 +2574,38 @@
    },
    {
     "name": "StateJobsNY",
-    "count": 345,
+    "count": 346,
     "url": "https://statejobs.ny.gov/",
     "kind": "postings",
     "byCategory": {
-     "engineering": 77,
+     "engineering": 78,
+     "data": 22,
+     "computing": 31,
      "architecture": 6,
      "science": 16,
-     "computing": 31,
-     "data": 22,
      "health": 190,
      "trades": 3
     }
    },
    {
     "name": "CareerOneStop",
-<<<<<<< HEAD
-    "count": 46285,
-=======
-    "count": 46264,
->>>>>>> d9d1e51 (Ponytail audit changes)
+    "count": 46252,
     "url": "https://www.careeronestop.org/",
     "kind": "search"
    }
   ],
   "private": {
    "occupationCounts": {
-<<<<<<< HEAD
-    "29-1141": 3969,
+    "29-1141": 3961,
     "15-1252": 4210,
-    "11-3021": 2717,
-    "29-2061": 1101,
-    "15-1232": 1022,
-    "29-2052": 877,
-    "15-1211": 1220,
-    "15-2051": 224,
-    "29-1171": 847,
-=======
-    "29-1141": 3964,
-    "15-1252": 4210,
-    "11-3021": 2717,
-    "29-2061": 1101,
+    "11-3021": 2716,
+    "29-2061": 1099,
     "15-1232": 1021,
     "29-2052": 877,
     "15-1211": 1219,
     "15-2051": 224,
-    "29-1171": 846,
->>>>>>> d9d1e51 (Ponytail audit changes)
-    "29-1123": 396,
+    "29-1171": 844,
+    "29-1123": 395,
     "29-1051": 523,
     "29-1071": 836,
     "15-1244": 1269,
@@ -3076,38 +2616,22 @@
     "29-2042": 102,
     "29-1292": 49,
     "29-2034": 543,
-<<<<<<< HEAD
-    "49-9041": 652,
-=======
     "49-9041": 654,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "29-2099": 127,
     "17-2112": 1664,
-    "29-1122": 317,
+    "29-1122": 316,
     "15-1299": 14,
-<<<<<<< HEAD
-    "15-1253": 1500,
-=======
     "15-1253": 1499,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "17-1011": 206,
     "15-1212": 1178,
     "29-1216": 102,
     "15-1241": 353,
     "51-4041": 245,
-<<<<<<< HEAD
-    "29-2072": 836,
-    "17-2071": 769,
-    "17-2141": 1145,
-    "49-9052": 20,
-    "51-4121": 97,
-=======
     "29-2072": 835,
     "17-2071": 769,
     "17-2141": 1145,
     "49-9052": 20,
     "51-4121": 98,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "11-9041": 1336,
     "19-1042": 970,
     "19-4099": 3,
@@ -3117,7 +2641,7 @@
     "15-1251": 260,
     "29-1126": 143,
     "29-2032": 168,
-    "19-5011": 210,
+    "19-5011": 209,
     "49-2098": 47,
     "29-2055": 279,
     "49-2022": 124,
@@ -3126,42 +2650,30 @@
     "49-9051": 20,
     "17-2199": 4,
     "11-9121": 180,
-    "29-2056": 160,
-<<<<<<< HEAD
-    "29-1031": 120,
-=======
+    "29-2056": 159,
     "29-1031": 119,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "51-8031": 36,
     "19-4021": 387,
     "29-1221": 19,
     "29-1249": 2,
     "51-8021": 35,
-<<<<<<< HEAD
-    "17-3023": 450,
-=======
     "17-3023": 446,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "49-3011": 17,
     "29-2057": 54,
     "19-2031": 110,
     "29-1223": 80,
-<<<<<<< HEAD
-    "17-3026": 578,
-=======
     "17-3026": 574,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "29-1215": 100,
     "15-1254": 441,
     "29-1214": 7,
     "15-1243": 20,
-    "19-2041": 295,
+    "19-2041": 296,
     "15-1242": 135,
     "29-2031": 408,
     "29-2081": 121,
     "29-1131": 66,
     "29-2035": 263,
-    "17-2081": 757,
+    "17-2081": 756,
     "49-2095": 6,
     "17-2061": 405,
     "29-1217": 5,
@@ -3178,15 +2690,9 @@
     "29-1213": 6,
     "29-2053": 188,
     "29-1224": 40,
-<<<<<<< HEAD
-    "17-3029": 37,
-    "29-9021": 30,
-    "19-4042": 359,
-=======
     "17-3029": 33,
     "29-9021": 30,
     "19-4042": 360,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "15-1221": 789,
     "17-3013": 46,
     "17-3022": 150,
@@ -3196,11 +2702,7 @@
     "29-1081": 2,
     "17-1022": 21,
     "29-1242": 44,
-<<<<<<< HEAD
-    "19-5012": 33,
-=======
     "19-5012": 32,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "29-9091": 61,
     "29-1011": 3,
     "51-2031": 5,
@@ -3240,11 +2742,7 @@
     "19-1023": 12,
     "19-2021": 28,
     "29-1128": 1,
-<<<<<<< HEAD
-    "29-1161": 43,
-=======
     "29-1161": 42,
->>>>>>> d9d1e51 (Ponytail audit changes)
     "51-8099": 7,
     "29-2036": 15,
     "29-2091": 6,
@@ -3262,31 +2760,19 @@
     "29-1243": 2
    },
    "byCategory": {
-<<<<<<< HEAD
-    "health": 13990,
-    "computing": 15427,
+    "health": 13971,
+    "computing": 15423,
     "data": 1361,
-    "engineering": 10233,
-    "trades": 1772,
-    "architecture": 260,
-    "science": 3242
-   },
-   "total": 46285,
-=======
-    "health": 13981,
-    "computing": 15424,
-    "data": 1361,
-    "engineering": 10221,
+    "engineering": 10220,
     "trades": 1775,
     "architecture": 260,
     "science": 3242
    },
-   "total": 46264,
->>>>>>> d9d1e51 (Ponytail audit changes)
+   "total": 46252,
    "topLocations": [
     {
      "name": "New York, NY",
-     "count": 16215
+     "count": 16211
     },
     {
      "name": "Albany, NY",
@@ -3294,19 +2780,11 @@
     },
     {
      "name": "Rochester, NY",
-<<<<<<< HEAD
-     "count": 3436
-    },
-    {
-     "name": "Buffalo, NY",
-     "count": 2426
-=======
      "count": 3428
     },
     {
      "name": "Buffalo, NY",
      "count": 2427
->>>>>>> d9d1e51 (Ponytail audit changes)
     },
     {
      "name": "Syracuse, NY",

@@ -44,16 +44,22 @@ jobs:
       - name: Commit refreshed data
         # The push is best-effort: the deploy below uses the artifact, so a
         # failed push must not stop the site from updating.
+        #
+        # The commit is made on top of the latest main, so a person who is
+        # working on the site can just pull it - the generated files never
+        # turn into a merge conflict with conflict markers inside the JSON.
         continue-on-error: true
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git fetch origin main
+          git reset --mixed origin/main
           git add src/data/generated || true
           if git diff --staged --quiet; then
             echo "No data changes - nothing to commit."
           else
             git commit -m "data: refresh statistics ($(date -u +%Y-%m-%d))"
-            git push
+            git push origin HEAD:main
           fi
 
       - name: Upload data
@@ -99,6 +105,25 @@ jobs:
         with:
           name: data
           path: src/data/generated
+
+      - name: Check the data files
+        # A merge conflict once put conflict markers inside the JSON and
+        # the build failed with a confusing error. This says it plainly.
+        run: |
+          python3 - <<'PY'
+          import glob, json, sys
+          bad = []
+          for path in glob.glob('src/data/generated/*.json'):
+              try:
+                  json.load(open(path, encoding='utf-8'))
+              except ValueError as exc:
+                  bad.append(f"{path}: {exc}")
+          if bad:
+              print("These data files are not valid JSON:")
+              print("\n".join(bad))
+              sys.exit(1)
+          print("Data files are valid JSON.")
+          PY
 
       - name: Build
         run: npm run build
