@@ -259,6 +259,14 @@ def main() -> int:
             record.pop("hourlyMean", None)
             merged.append(record)
 
+        if not merged:
+            # Without a single occupation the site would be published with
+            # empty pages, so stop the run instead.
+            raise RuntimeError(
+                f"No occupation data for {meta['name']} - BLS did not answer "
+                "and there is no previous data to fall back on"
+            )
+
         # live postings
         postings, source_rows, by_category, private, total_postings = collect_live(
             slug, state_code, merged, previous, today

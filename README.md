@@ -19,16 +19,18 @@ pipeline/          Python data pipeline (standard library only)
   dates.py         Reads the dates on postings, so old ones can be dropped
   sources/         One module per data source
 src/               The Astro site
-  data/generated/  JSON written by the pipeline (committed to the repo)
+  data/generated/  JSON written by the pipeline - NOT in the repository.
+                   The workflow downloads it before every build, so you
+                   run the pipeline yourself when you work locally.
   data/finder-questions.ts  The Career Finder questions
   pages/           /, /nj, /ny, /pa, /compare, /careers, /quiz, /sources
   components/      Charts and page sections (all inline SVG or CSS)
 tools/             Tests for the Career Finder and the data pipeline
 ```
 
-The pipeline runs on a schedule in GitHub Actions, commits any new numbers,
-and the site is rebuilt and published. If a source breaks, the site keeps the
-last good numbers instead of going blank.
+The pipeline runs on every push and once a day, commits nothing, and the
+site is rebuilt and published from the numbers it just downloaded. If a
+source breaks, the site keeps the last good numbers instead of going blank.
 
 ## Cleaning out old jobs
 
@@ -49,13 +51,19 @@ newest postings are the ones students see.
 
 ## Running it locally
 
+The data files are not in the repository, so fetch them once before you start:
+
 ```bash
 npm install
 cp .env.example .env    # add your API keys
-python3 -m pipeline.build_data   # refresh the data
+python3 -m pipeline.build_data   # refresh the data (writes src/data/generated/)
 npm run dev             # http://localhost:4321
 npm run build           # static site in dist/
 ```
+
+The data files are ignored by git, so running the pipeline never dirties
+your working copy. If you build without them, the build stops and says so
+rather than publishing a site with empty pages.
 
 ## Data sources
 
@@ -147,8 +155,14 @@ npx playwright install chromium
 
 ## Deploying
 
-`.github/workflows/pages.yml` runs on every push and once a day. It refreshes
-the data, builds the site and publishes it to GitHub Pages.
+`.github/workflows/pages.yml` runs on every push and once a day. It runs the
+data pipeline, hands the numbers it downloaded to the build as an artifact,
+builds the site and publishes it to GitHub Pages.
+
+The data files are never committed: they are in `.gitignore`, the workflow
+downloads them into the build, and there is nothing to merge. The last run's
+data is kept in the workflow cache so that a broken source keeps the previous
+numbers instead of blanking the site.
 
 Repository secrets:
 

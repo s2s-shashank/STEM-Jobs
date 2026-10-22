@@ -15,22 +15,44 @@ concurrency:
 jobs:
   # ------------------------------------------------------------------
   # 1. Pull fresh numbers from BLS, O*NET, USAJOBS and the state boards
+  #
+  # The data files are not in the repository. They are downloaded here,
+  # every time, and handed to the build as an artifact - nothing is ever
+  # committed, so nobody ever has to merge them.
   # ------------------------------------------------------------------
   data:
     name: Refresh the data
-    # Only a scheduled or manual run needs the pipeline. A code push must
-    # not spend API quota or write a new data commit.
-    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v7
 
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+
+      - name: Restore the last run's data
+        # The pipeline keeps the numbers from the last run when a source
+        # breaks, so it needs the previous files. They are cached, not
+        # committed.
+        uses: actions/cache@v4
+        with:
+          path: src/data/generated
+          key: data-${{ github.run_id }}
+          restore-keys: |
+            data-
+
+      - name: Cache the BLS downloads
+        # The file names carry the year (oesm25st.zip), so a new year means
+        # a new file and a new download. Nothing goes stale.
+        uses: actions/cache@v4
+        with:
+          path: pipeline/.cache
+          key: bls-${{ github.run_id }}
+          restore-keys: |
+            bls-
 
       - name: Run the data pipeline
         env:
@@ -41,43 +63,42 @@ jobs:
         run: |
           python3 -u -m pipeline.build_data
 
-      - name: Commit refreshed data
-        # The push is best-effort: the deploy below uses the artifact, so a
-        # failed push must not stop the site from updating.
-        #
-        # The commit is made on top of the latest main, so a person who is
-        # working on the site can just pull it - the generated files never
-        # turn into a merge conflict with conflict markers inside the JSON.
-        continue-on-error: true
+      - name: Check the data files
+        # A broken file used to fail the build with a confusing error.
+        # This says it plainly.
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git fetch origin main
-          git reset --mixed origin/main
-          git add src/data/generated || true
-          if git diff --staged --quiet; then
-            echo "No data changes - nothing to commit."
-          else
-            git commit -m "data: refresh statistics ($(date -u +%Y-%m-%d))"
-            git push origin HEAD:main
-          fi
+          python3 - <<'PY'
+          import glob, json, sys
+          files = sorted(glob.glob('src/data/generated/*.json'))
+          if not files:
+              print("No data files were downloaded - the pipeline did not run.")
+              sys.exit(1)
+          bad = []
+          for path in files:
+              try:
+                  json.load(open(path, encoding='utf-8'))
+              except ValueError as exc:
+                  bad.append(f"{path}: {exc}")
+          if bad:
+              print("These data files are not valid JSON:")
+              print("\n".join(bad))
+              sys.exit(1)
+          print(f"{len(files)} data files are valid JSON.")
+          PY
 
       - name: Upload data
         uses: actions/upload-artifact@v7
         with:
           name: data
           path: src/data/generated
-          if-no-files-found: ignore
+          if-no-files-found: error
 
   # ------------------------------------------------------------------
-  # 2. Build the static site
+  # 2. Build the static site from the data we just downloaded
   # ------------------------------------------------------------------
   build:
     name: Build the site
-    # `always()` because the data job is skipped on a code push, and then
-    # the site is built from the data already in the repository.
     needs: data
-    if: always() && needs.data.result != 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -100,30 +121,12 @@ jobs:
         run: npm ci
 
       - name: Restore refreshed data
+        # No `continue-on-error` on purpose: without the data there is no
+        # site to publish, so the old site stays up instead of a blank one.
         uses: actions/download-artifact@v8
-        continue-on-error: true
         with:
           name: data
           path: src/data/generated
-
-      - name: Check the data files
-        # A merge conflict once put conflict markers inside the JSON and
-        # the build failed with a confusing error. This says it plainly.
-        run: |
-          python3 - <<'PY'
-          import glob, json, sys
-          bad = []
-          for path in glob.glob('src/data/generated/*.json'):
-              try:
-                  json.load(open(path, encoding='utf-8'))
-              except ValueError as exc:
-                  bad.append(f"{path}: {exc}")
-          if bad:
-              print("These data files are not valid JSON:")
-              print("\n".join(bad))
-              sys.exit(1)
-          print("Data files are valid JSON.")
-          PY
 
       - name: Build
         run: npm run build

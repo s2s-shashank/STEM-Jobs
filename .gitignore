@@ -10,6 +10,10 @@ __pycache__/
 .venv/
 venv/
 
+# Data written by the pipeline. The GitHub workflow downloads it before
+# every build; it is never committed.
+src/data/generated/
+
 # Node / Astro
 node_modules/
 dist/
